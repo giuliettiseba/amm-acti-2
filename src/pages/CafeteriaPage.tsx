@@ -4,7 +4,6 @@ import { useCafeteria } from '../hooks/useCafeteria';
 import GaleriaProductos from '../components/GaleriaProductos';
 import { Skeleton } from '../components/Skeleton';
 import { EmptyState } from '../components/EmptyState';
-import type { CategoriaProducto, ProductoCafe } from '../types';
 import {
   Typography,
   Box,
@@ -12,12 +11,10 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Grid,
   Alert,
   CircularProgress,
   IconButton,
-  Fade,
-  Grow
+  Fade
 } from '@mui/material';
 import { Refresh, LocalCafe, ArrowBack } from '@mui/icons-material';
 

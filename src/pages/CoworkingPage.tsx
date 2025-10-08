@@ -11,7 +11,6 @@ import {
   Card,
   CardContent,
   Chip,
-  Grid,
   Alert,
   CircularProgress
 } from '@mui/material';
@@ -54,49 +53,53 @@ export default function CoworkingPage() {
       )}
 
       {showSkeleton && !error && (
-        <Grid container spacing={2}>
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: 2
+        }}>
           {Array.from({ length: 8 }).map((_, i) => (
-            <Grid item xs={12} sm={6} md={4} key={i}>
-              <Card sx={{ minHeight: 120 }}>
-                <CardContent>
-                  <Skeleton width="55%" height={14} />
-                  <Skeleton width="35%" height={10} />
-                  <Skeleton width="25%" height={8} />
-                </CardContent>
-              </Card>
-            </Grid>
+            <Card key={i} sx={{ minHeight: 120 }}>
+              <CardContent>
+                <Skeleton width="55%" height={14} />
+                <Skeleton width="35%" height={10} />
+                <Skeleton width="25%" height={8} />
+              </CardContent>
+            </Card>
           ))}
-        </Grid>
+        </Box>
       )}
 
       {!loading && !error && data && data.length > 0 && (
-        <Grid container spacing={2}>
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: 2
+        }}>
           {data.map(slot => (
-            <Grid item xs={12} sm={6} md={4} key={slot.id}>
-              <Card sx={{ height: '100%' }}>
-                <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                    <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
-                      {slot.fecha}
-                    </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                      {slot.hora}
-                    </Typography>
-                  </Box>
+            <Card key={slot.id} sx={{ height: '100%' }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                  <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
+                    {slot.fecha}
+                  </Typography>
+                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    {slot.hora}
+                  </Typography>
+                </Box>
 
-                  <Chip
-                    label={slot.disponible ? 'Disponible' : 'Ocupado'}
-                    color={slot.disponible ? 'success' : 'error'}
-                    variant={slot.disponible ? 'filled' : 'outlined'}
-                    size="small"
-                    icon={slot.disponible ? <CheckCircle /> : <Cancel />}
-                    sx={{ mt: 1 }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
+                <Chip
+                  label={slot.disponible ? 'Disponible' : 'Ocupado'}
+                  color={slot.disponible ? 'success' : 'error'}
+                  variant={slot.disponible ? 'filled' : 'outlined'}
+                  size="small"
+                  icon={slot.disponible ? <CheckCircle /> : <Cancel />}
+                  sx={{ mt: 1 }}
+                />
+              </CardContent>
+            </Card>
           ))}
-        </Grid>
+        </Box>
       )}
 
       {!loading && !error && (!data || data.length === 0) && (
