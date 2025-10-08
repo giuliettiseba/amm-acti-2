@@ -139,17 +139,20 @@ export default function CafeteriaPage() {
         <>
           {showSkeletonCategorias && !errorCategorias && (
             <Box sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 3,
-              justifyContent: 'flex-start',
-              alignItems: 'stretch'
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: '1fr',
+                sm: 'repeat(auto-fit, minmax(250px, 1fr))',
+                md: 'repeat(auto-fit, minmax(280px, 1fr))',
+                lg: 'repeat(auto-fit, minmax(300px, 1fr))'
+              },
+              gap: { xs: 2, sm: 3 },
+              justifyItems: 'center'
             }}>
               {Array.from({ length: 6 }).map((_, i) => (
                 <Card key={i} sx={{
-                  minWidth: 280,
+                  width: '100%',
                   maxWidth: 320,
-                  flex: '1 1 280px',
                   height: 280
                 }}>
                   <Skeleton width="100%" height={160} />
@@ -169,19 +172,22 @@ export default function CafeteriaPage() {
 
           {!loadingCategorias && !errorCategorias && categorias && categorias.length > 0 && (
             <Box sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 3,
-              justifyContent: 'flex-start',
-              alignItems: 'stretch'
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: '1fr',
+                sm: 'repeat(auto-fit, minmax(250px, 1fr))',
+                md: 'repeat(auto-fit, minmax(280px, 1fr))',
+                lg: 'repeat(auto-fit, minmax(300px, 1fr))'
+              },
+              gap: { xs: 2, sm: 3 },
+              justifyItems: 'center'
             }}>
               {categorias.map((categoria, index) => (
                 <Fade in={visibleCategorias.includes(index)} key={index} timeout={500}>
                   <Card
                     sx={{
-                      minWidth: 280,
+                      width: '100%',
                       maxWidth: 320,
-                      flex: '1 1 280px',
                       height: 280,
                       cursor: 'pointer',
                       transition: 'all 0.2s ease-in-out',
@@ -233,17 +239,20 @@ export default function CafeteriaPage() {
         <>
           {showSkeletonProductos && !errorProductos && (
             <Box sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 3,
-              justifyContent: 'flex-start',
-              alignItems: 'stretch'
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: '1fr',
+                sm: 'repeat(auto-fit, minmax(200px, 1fr))',
+                md: 'repeat(auto-fit, minmax(240px, 1fr))',
+                lg: 'repeat(auto-fit, minmax(280px, 1fr))'
+              },
+              gap: { xs: 2, sm: 3 },
+              justifyItems: 'center'
             }}>
               {Array.from({ length: 8 }).map((_, i) => (
                 <Card key={i} sx={{
-                  minWidth: 240,
+                  width: '100%',
                   maxWidth: 280,
-                  flex: '1 1 240px',
                   height: 300
                 }}>
                   <Skeleton width="100%" height={180} />

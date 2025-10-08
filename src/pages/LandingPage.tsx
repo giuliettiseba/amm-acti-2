@@ -39,20 +39,23 @@ export default function LandingPage() {
       </Box>
 
       <Box sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 3,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
+        display: 'grid',
+        gridTemplateColumns: {
+          xs: '1fr',
+          sm: 'repeat(auto-fit, minmax(280px, 1fr))',
+          md: 'repeat(auto-fit, minmax(300px, 1fr))',
+          lg: 'repeat(auto-fit, minmax(360px, 1fr))'
+        },
+        gap: { xs: 2, sm: 3 },
+        justifyItems: 'center',
         mt: 4
       }}>
         {features.map((feature, index) => (
           <Card
             key={index}
             sx={{
-              minWidth: 300,
+              width: '100%',
               maxWidth: 360,
-              flex: '1 1 300px',
               height: 'auto',
               display: 'flex',
               flexDirection: 'column'

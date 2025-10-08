@@ -55,11 +55,21 @@ export default function CoworkingPage() {
       {showSkeleton && !error && (
         <Box sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 2
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(auto-fit, minmax(200px, 1fr))',
+            md: 'repeat(auto-fit, minmax(240px, 1fr))',
+            lg: 'repeat(auto-fit, minmax(280px, 1fr))'
+          },
+          gap: { xs: 1.5, sm: 2 },
+          justifyContent: 'center',
+          placeItems: 'stretch'
         }}>
           {Array.from({ length: 8 }).map((_, i) => (
-            <Card key={i} sx={{ minHeight: 120 }}>
+            <Card key={i} sx={{
+              minHeight: 120,
+              width: '100%'
+            }}>
               <CardContent>
                 <Skeleton width="55%" height={14} />
                 <Skeleton width="35%" height={10} />
@@ -73,11 +83,21 @@ export default function CoworkingPage() {
       {!loading && !error && data && data.length > 0 && (
         <Box sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 2
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(auto-fit, minmax(200px, 1fr))',
+            md: 'repeat(auto-fit, minmax(240px, 1fr))',
+            lg: 'repeat(auto-fit, minmax(280px, 1fr))'
+          },
+          gap: { xs: 1.5, sm: 2 },
+          justifyContent: 'center',
+          placeItems: 'stretch'
         }}>
           {data.map(slot => (
-            <Card key={slot.id} sx={{ height: '100%' }}>
+            <Card key={slot.id} sx={{
+              height: '100%',
+              width: '100%'
+            }}>
               <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                   <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>

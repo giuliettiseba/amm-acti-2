@@ -124,17 +124,20 @@ export default function CatalogoPage() {
       {/* Skeletons */}
       {showSkeleton && !error && (
         <Box sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 3,
-          justifyContent: 'flex-start',
-          alignItems: 'stretch'
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(auto-fit, minmax(250px, 1fr))',
+            md: 'repeat(auto-fit, minmax(280px, 1fr))',
+            lg: 'repeat(auto-fit, minmax(320px, 1fr))'
+          },
+          gap: { xs: 2, sm: 3 },
+          justifyItems: 'center'
         }}>
           {Array.from({ length: 12 }).map((_, i) => (
             <Card key={i} sx={{
-              minWidth: 280,
+              width: '100%',
               maxWidth: 320,
-              flex: '1 1 280px',
               height: 400
             }}>
               <Skeleton width="100%" height={200} />
@@ -161,19 +164,22 @@ export default function CatalogoPage() {
       {/* Libros */}
       {!loading && !error && librosFiltrados && librosFiltrados.length > 0 && (
         <Box sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 3,
-          justifyContent: 'flex-start',
-          alignItems: 'stretch'
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(auto-fit, minmax(250px, 1fr))',
+            md: 'repeat(auto-fit, minmax(280px, 1fr))',
+            lg: 'repeat(auto-fit, minmax(320px, 1fr))'
+          },
+          gap: { xs: 2, sm: 3 },
+          justifyItems: 'center'
         }}>
           {librosFiltrados.map((libro, index) => (
             <Fade in={visibleLibros.includes(index)} key={libro.id} timeout={500}>
               <Card
                 sx={{
-                  minWidth: 280,
+                  width: '100%',
                   maxWidth: 320,
-                  flex: '1 1 280px',
                   height: 400,
                   cursor: 'pointer',
                   transition: 'all 0.2s ease-in-out',

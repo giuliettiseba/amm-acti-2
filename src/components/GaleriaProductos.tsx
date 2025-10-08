@@ -18,19 +18,22 @@ interface GaleriaProductosProps {
 export default function GaleriaProductos({ productos, visibleItems = [] }: GaleriaProductosProps) {
   return (
     <Box sx={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: 3,
-      justifyContent: 'flex-start',
-      alignItems: 'stretch'
+      display: 'grid',
+      gridTemplateColumns: {
+        xs: '1fr',
+        sm: 'repeat(auto-fit, minmax(200px, 1fr))',
+        md: 'repeat(auto-fit, minmax(240px, 1fr))',
+        lg: 'repeat(auto-fit, minmax(280px, 1fr))'
+      },
+      gap: { xs: 2, sm: 3 },
+      justifyItems: 'center'
     }}>
       {productos.map((producto: ProductoCafe, index) => (
         <Fade in={visibleItems.includes(index)} key={producto.id} timeout={500}>
           <Card
             sx={{
-              minWidth: 240,
+              width: '100%',
               maxWidth: 280,
-              flex: '1 1 240px',
               height: 300,
               display: 'flex',
               flexDirection: 'column',
