@@ -23,7 +23,7 @@ export default function GaleriaProductos({ productos, visibleItems = [] }: Galer
         xs: '1fr',
         sm: 'repeat(auto-fit, minmax(200px, 1fr))',
         md: 'repeat(auto-fit, minmax(240px, 1fr))',
-        lg: 'repeat(auto-fit, minmax(280px, 1fr))'
+        lg: 'repeat(auto-fit, minmax(260px, 1fr))'
       },
       gap: { xs: 2, sm: 3 },
       justifyItems: 'center'
@@ -33,7 +33,18 @@ export default function GaleriaProductos({ productos, visibleItems = [] }: Galer
           <Card
             sx={{
               width: '100%',
-              maxWidth: 280,
+              minWidth: {
+                xs: '100%',
+                sm: '200px',
+                md: '240px',
+                lg: '260px'
+              },
+              maxWidth: {
+                xs: '100%',
+                sm: '250px',
+                md: '280px',
+                lg: '300px'
+              },
               height: 300,
               display: 'flex',
               flexDirection: 'column',

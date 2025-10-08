@@ -1,17 +1,8 @@
 import { Component, type ReactNode } from 'react';
-import { useNotification } from '../context/NotificationContext';
+import ErrorBoundaryNotifier from './ErrorBoundaryNotifier';
 
 interface Props { children: ReactNode }
 interface State { hasError: boolean; error?: Error }
-
-// Wrapper para usar hook dentro de un clase ErrorBoundary (mediante componente funcional intermedio)
-function ErrorBoundaryNotifier({ error }: { error?: Error }) {
-  const { addNotification } = useNotification();
-  if (error) {
-    addNotification({ type: 'error', message: `Error inesperado: ${error.message}` });
-  }
-  return null;
-}
 
 export class ErrorBoundary extends Component<Props, State> {
   state: State = { hasError: false };
@@ -20,7 +11,7 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, info: any) {
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
     console.error('ErrorBoundary atrapó un error', error, info);
   }
 
@@ -38,4 +29,3 @@ export class ErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
-
