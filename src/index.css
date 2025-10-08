@@ -1,0 +1,39 @@
+/* Global base (refactor) */
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.45;
+}
+
+body {
+  margin: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+}
+
+/* Utilidades focus visibles */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Dark/light bridging handled in theme.css variables */

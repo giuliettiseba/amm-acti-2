@@ -1,0 +1,82 @@
+import { useAuthContext } from '../context/AuthContext';
+import {
+  Typography,
+  Box,
+  Card,
+  CardContent,
+  Button,
+  Avatar,
+  Divider,
+  Alert
+} from '@mui/material';
+import { Person, Email, Logout } from '@mui/icons-material';
+
+export default function PerfilUsuarioPage() {
+  const { user, logout } = useAuthContext();
+
+  if (!user) {
+    return (
+      <Alert severity="warning">
+        No se encontró la sesión del usuario.
+      </Alert>
+    );
+  }
+
+  return (
+    <Box sx={{ maxWidth: 600, mx: 'auto' }}>
+      <Card>
+        <CardContent sx={{ p: 4 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
+            <Avatar sx={{ width: 80, height: 80, mb: 2, bgcolor: 'primary.main' }}>
+              <Person sx={{ fontSize: 40 }} />
+            </Avatar>
+            <Typography variant="h4" component="h2" sx={{ fontWeight: 600 }}>
+              Perfil del Usuario
+            </Typography>
+          </Box>
+
+          <Divider sx={{ mb: 3 }} />
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Person color="action" />
+              <Box>
+                <Typography variant="body2" color="text.secondary">
+                  Nombre
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                  {user.nombre}
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Email color="action" />
+              <Box>
+                <Typography variant="body2" color="text.secondary">
+                  Email
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                  {user.email}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          <Divider sx={{ my: 3 }} />
+
+          <Button
+            variant="contained"
+            color="error"
+            onClick={logout}
+            startIcon={<Logout />}
+            fullWidth
+            sx={{ py: 1.5 }}
+          >
+            Cerrar sesión
+          </Button>
+        </CardContent>
+      </Card>
+    </Box>
+  );
+}
