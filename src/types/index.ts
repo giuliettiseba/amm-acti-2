@@ -1,70 +1,14 @@
 // Tipos compartidos de la aplicación
-export interface Libro {
-  id: string;
-  titulo: string;
-  autor: string;
-  descripcion?: string;
-  categoria?: string;
-  precio?: number;
-  imagen?: string;
-}
-
-export interface Usuario {
-  id: string;
-  nombre: string;
-  email: string;
-  avatar?: string;
-  token?: string;
-}
-
-export interface CoworkingSlot {
-  id: string;
-  fecha: string; // ISO date
-  hora: string;  // HH:mm
-  disponible: boolean;
-}
-
-export interface AuthResponse {
-  usuario: Usuario;
-  token: string;
-}
-
-export interface ApiError {
-  message: string;
-  status?: number;
-}
+export type { Libro } from './Libro';
+export type { Usuario } from './Usuario';
+export type { CoworkingSlot } from './CoworkingSlot';
+export type { AuthResponse } from './AuthResponse';
+export type { ApiError } from './ApiError';
 
 // Tipos para la cafetería
-export interface CategoriaProducto {
-  nombre: string;
-  imagen: string;
-  descripcion: string;
-}
-
-export interface ProductoCafe {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: 'bebidas' | 'desayunos' | 'bocadillos' | 'aperitivos';
-}
+export type { CategoriaProducto } from './CategoriaProducto';
+export type { ProductoCafe } from './ProductoCafe';
 
 // Tipos para salas de coworking
-export interface Room {
-  id: number;
-  name: string;
-  capacity: "1" | "2-4" | "5-8" | "9+";
-  planta: number;
-  precio: number;
-  image: string;
-}
-
-export interface RoomReservation {
-  id: number;
-  roomId: number;
-  startDate: string;
-  endDate: string;
-  userId: number;
-  additionalPreferences: string[];
-}
+export type { Room } from './Room';
+export type { RoomReservation } from './RoomReservation';
