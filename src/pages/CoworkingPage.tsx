@@ -1,5 +1,4 @@
 import { useRooms } from '../hooks/useRooms';
-import type { Room } from '../types';
 import { useSkeletonDelay } from '../hooks/useSkeletonDelay';
 import { EmptyState } from '../components/EmptyState';
 import { Skeleton } from '../components/Skeleton';
