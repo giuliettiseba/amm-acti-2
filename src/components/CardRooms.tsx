@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {
   Card,
   CardContent,
+  CardMedia,
   Typography,
   Box,
   Button,
@@ -58,6 +59,15 @@ export default function CardRooms({ room, index, delay = 100 }: CardRoomsProps) 
         }
       }}
     >
+      <CardMedia
+        component="img"
+        height="200"
+        image={room.image}
+        alt={room.name}
+        sx={{
+          objectFit: 'cover'
+        }}
+      />
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <Typography variant="h6" component="div" sx={{ fontWeight: 600, mb: 1 }}>
           {room.name}

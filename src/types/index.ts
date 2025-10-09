@@ -57,6 +57,7 @@ export interface Room {
   capacity: "1" | "2-4" | "5-8" | "9+";
   planta: number;
   precio: number;
+  image: string;
 }
 
 export interface RoomReservation {

@@ -84,7 +84,7 @@ export default function CoworkingPage() {
         </Box>
       )}
 
-      {!loading && !error && rooms && rooms.length > 0 && (
+      {!showSkeleton && !loading && !error && rooms && rooms.length > 0 && (
         <Box sx={{
           display: 'grid',
           gridTemplateColumns: {
@@ -107,7 +107,7 @@ export default function CoworkingPage() {
         </Box>
       )}
 
-      {!loading && !error && (!rooms || rooms.length === 0) && (
+      {!showSkeleton && !loading && !error && (!rooms || rooms.length === 0) && (
         <EmptyState
           title="Sin salas disponibles"
           description="No hay salas de co-working disponibles en este momento."
