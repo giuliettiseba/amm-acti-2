@@ -7,6 +7,7 @@ import CoworkingPage from './pages/CoworkingPage';
 import CafeteriaPage from './pages/CafeteriaPage';
 import PerfilUsuarioPage from './pages/PerfilUsuarioPage';
 import LoginPage from './pages/LoginPage';
+import ReservaPage from './pages/ReservaPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { ProtectedRoute } from './router/ProtectedRoute';
 import NavBar from './components/NavBar';
@@ -25,6 +26,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/coworking" element={<CoworkingPage />} />
+              <Route path="/reserva/:roomId" element={<ReservaPage />} />
               <Route path="/perfil" element={<PerfilUsuarioPage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />

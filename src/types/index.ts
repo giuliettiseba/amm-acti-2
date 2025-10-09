@@ -49,3 +49,21 @@ export interface ProductoCafe {
   image: string;
   category: 'bebidas' | 'desayunos' | 'bocadillos' | 'aperitivos';
 }
+
+// Tipos para salas de coworking
+export interface Room {
+  id: number;
+  name: string;
+  capacity: "1" | "2-4" | "5-8" | "9+";
+  planta: number;
+  precio: number;
+}
+
+export interface RoomReservation {
+  id: number;
+  roomId: number;
+  startDate: string;
+  endDate: string;
+  userId: number;
+  additionalPreferences: string[];
+}
