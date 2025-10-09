@@ -3,37 +3,21 @@ import type { Room } from '../types';
 import { useSkeletonDelay } from '../hooks/useSkeletonDelay';
 import { EmptyState } from '../components/EmptyState';
 import { Skeleton } from '../components/Skeleton';
+import CardRooms from '../components/CardRooms';
 import {
   Typography,
   Box,
   Button,
   Card,
   CardContent,
-  Chip,
   Alert,
   CircularProgress
 } from '@mui/material';
-import { Refresh, Work, People, LocationOn, Euro } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { Refresh, Work } from '@mui/icons-material';
 
 export default function CoworkingPage() {
   const { data: rooms, loading, error, refetch } = useRooms();
   const showSkeleton = useSkeletonDelay(loading);
-  const navigate = useNavigate();
-
-  const handleReserve = (roomId: number) => {
-    navigate(`/reserva/${roomId}`);
-  };
-
-  const getCapacityColor = (capacity: Room['capacity']) => {
-    switch (capacity) {
-      case '1': return 'default';
-      case '2-4': return 'primary';
-      case '5-8': return 'secondary';
-      case '9+': return 'success';
-      default: return 'default';
-    }
-  };
 
   return (
     <Box sx={{ maxWidth: 1200, mx: 'auto' }}>
@@ -113,56 +97,13 @@ export default function CoworkingPage() {
           gap: { xs: 2, sm: 3 },
           justifyContent: 'center'
         }}>
-          {rooms.map(room => (
-            <Card key={room.id} sx={{
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-              '&:hover': {
-                transform: 'translateY(-4px)',
-                boxShadow: 4
-              }
-            }}>
-              <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                <Typography variant="h6" component="div" sx={{ fontWeight: 600, mb: 1 }}>
-                  {room.name}
-                </Typography>
-
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                  <People fontSize="small" color="action" />
-                  <Chip
-                    label={`${room.capacity} personas`}
-                    color={getCapacityColor(room.capacity)}
-                    size="small"
-                    variant="outlined"
-                  />
-                </Box>
-
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                  <LocationOn fontSize="small" color="action" />
-                  <Typography variant="body2" color="text.secondary">
-                    Planta {room.planta}
-                  </Typography>
-                </Box>
-
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                  <Euro fontSize="small" color="action" />
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    €{room.precio}/hora
-                  </Typography>
-                </Box>
-
-                <Button
-                  variant="contained"
-                  fullWidth
-                  onClick={() => handleReserve(room.id)}
-                  sx={{ mt: 'auto' }}
-                >
-                  Reservar
-                </Button>
-              </CardContent>
-            </Card>
+          {rooms.map((room, index) => (
+            <CardRooms
+              key={room.id}
+              room={room}
+              index={index}
+              delay={150}
+            />
           ))}
         </Box>
       )}
