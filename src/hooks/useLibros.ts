@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import type { Libro } from '../types';
-import { fetchLibros, fetchLibroById } from '../services/libros.service';
+import { getLibros, getLibroById } from '../services/libros.service';
 
 interface LibrosState {
   data: Libro[] | null;
@@ -14,7 +14,7 @@ export function useLibros() {
   const load = useCallback(async (force = false) => {
     setState(prev => ({ ...prev, loading: true, error: null }));
     try {
-      const data = await fetchLibros(force);
+      const data = await getLibros(force);
       setState({ data, loading: false, error: null });
     } catch (e: any) {
       setState({ data: null, loading: false, error: e?.message || 'Error cargando libros' });
@@ -39,7 +39,7 @@ export function useLibro(id: string | undefined) {
     if (!id) return;
     setState(prev => ({ ...prev, loading: true, error: null }));
     try {
-      const data = await fetchLibroById(id, force);
+      const data = await getLibroById(id, force);
       setState({ data, loading: false, error: null });
     } catch (e: any) {
       setState({ data: null, loading: false, error: e?.message || 'Error cargando libro' });

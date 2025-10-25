@@ -27,8 +27,11 @@ export default function PerfilUsuarioPage() {
       <Card>
         <CardContent sx={{ p: 4 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-            <Avatar sx={{ width: 80, height: 80, mb: 2, bgcolor: 'primary.main' }}>
-              <Person sx={{ fontSize: 40 }} />
+            <Avatar
+              src={user.avatar || undefined}
+              sx={{ width: 80, height: 80, mb: 2, bgcolor: 'primary.main' }}
+            >
+              {!user.avatar && <Person sx={{ fontSize: 40 }} />}
             </Avatar>
             <Typography variant="h4" component="h2" sx={{ fontWeight: 600 }}>
               Perfil del Usuario
@@ -45,7 +48,7 @@ export default function PerfilUsuarioPage() {
                   Nombre
                 </Typography>
                 <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                  {user.nombre}
+                  {user.firstName + ' ' + user.lastName}
                 </Typography>
               </Box>
             </Box>
@@ -60,6 +63,42 @@ export default function PerfilUsuarioPage() {
                   {user.email}
                 </Typography>
               </Box>
+            </Box>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ minWidth: 100 }}>
+                Usuario
+              </Typography>
+              <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                {user.username}
+              </Typography>
+            </Box>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ minWidth: 100 }}>
+                Teléfono
+              </Typography>
+              <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                {user.phoneNumber}
+              </Typography>
+            </Box>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ minWidth: 100 }}>
+                Empresa
+              </Typography>
+              <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                {user.company || '-'}
+              </Typography>
+            </Box>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ minWidth: 100 }}>
+                ID
+              </Typography>
+              <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                {user.id}
+              </Typography>
             </Box>
           </Box>
 

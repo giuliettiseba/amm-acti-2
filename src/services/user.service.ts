@@ -3,7 +3,7 @@ import { API_ROUTES } from '../constants/apiRoutes';
 import type { User } from '../types';
 
 export interface LoginCredentials {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -18,13 +18,6 @@ export const userService = {
    */
   async getUsers(): Promise<User[]> {
     return apiGet<User[]>(API_ROUTES.USERS);
-  },
-
-  /**
-   * Obtiene un usuario por ID
-   */
-  async getUserById(id: number): Promise<User> {
-    return apiGet<User>(API_ROUTES.USER_BY_ID(id));
   },
 
   /**

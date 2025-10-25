@@ -1,7 +1,7 @@
 import {type ReactNode, useCallback, useEffect, useState} from 'react';
 import type {User} from '../types';
 import {AuthContext} from '../context/AuthContext';
-import { useUserByUserName } from '../hooks/useUsers';
+import { userService } from '../services/user.service';
 
 interface Props { children: ReactNode }
 
@@ -11,9 +11,6 @@ const AUTH_KEY = 'nexus_auth_user';
 export function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userNameToSearch, setUserNameToSearch] = useState<string | null>(null);
-  const { data: userByUserName, loading: userLoading } = useUserByUserName(userNameToSearch || '');
-  const [pendingLogin, setPendingLogin] = useState<{ email: string; password: string } | null>(null);
 
   useEffect(() => {
     // Cargar usuario persistido
@@ -24,33 +21,20 @@ export function AuthProvider({ children }: Props) {
     setLoading(false);
   }, []);
 
-  // Manejar login usando solo useUserByUserName
-  useEffect(() => {
-    if (!pendingLogin) return;
-    if (userLoading) return;
-    let mock: User | undefined = userByUserName || undefined;
-    if (!mock) {
-      mock = {
-        id: 1,
-        username: pendingLogin.email,
-        password: '',
-        firstName: 'Dev',
-        lastName: 'User',
-        phoneNumber: '+34 600 000 000',
-        email: pendingLogin.email,
-        company: 'Nexus Dev',
-      };
-    }
-    setUser(mock);
-    localStorage.setItem(AUTH_KEY, JSON.stringify(mock));
-    setLoading(false);
-    setPendingLogin(null);
-  }, [userByUserName, userLoading, pendingLogin]);
-
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (username: string, password: string) => {
     setLoading(true);
-    setUserNameToSearch(email);
-    setPendingLogin({ email, password });
+    try {
+      // Use API login endpoint
+      const response = await userService.login({ username, password });
+      setUser(response.user);
+      localStorage.setItem(AUTH_KEY, JSON.stringify(response.user));
+    } catch (e: any) {
+      setUser(null);
+      localStorage.removeItem(AUTH_KEY);
+      throw e;
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   const logout = useCallback(() => {
