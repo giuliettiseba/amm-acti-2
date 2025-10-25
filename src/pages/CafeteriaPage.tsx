@@ -128,7 +128,6 @@ export default function CafeteriaPage() {
                             {categorias.map((categoria, index) => (
                                 <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>
                                     <GenericCard
-                                        itemType={"Categoría"}
                                         title={categoria.nombre}
                                         description={categoria.descripcion}
                                         image={categoria.imagen}
@@ -169,7 +168,6 @@ export default function CafeteriaPage() {
                                 <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>
                                     <GenericCard
                                         key={producto.id}
-                                        itemType={"Producto"}
                                         title={producto.name}
                                         subtitle={producto.category}
                                         description={producto.description}

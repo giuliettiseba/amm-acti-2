@@ -76,7 +76,6 @@ export default function CoworkingPage() {
                         <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>
 
                             <GenericCard
-                                itemType={"Libro"}
                                 key={index}
                                 title={room.name}
                                 subtitle={"Planta: " + room.planta}

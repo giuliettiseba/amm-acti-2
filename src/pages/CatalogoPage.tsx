@@ -122,7 +122,6 @@ export default function CatalogoPage() {
                         <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>
 
                             <GenericCard
-                                itemType={"Libro"}
                                 key={index}
                                 title={libro.titulo}
                                 subtitle={libro.autor}
