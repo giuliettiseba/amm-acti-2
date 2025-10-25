@@ -12,7 +12,6 @@ export default function CoworkingPage() {
     const {data: rooms, loading, error, refetch} = useRooms();
     const showSkeleton = useSkeletonDelay(loading);
     const navigate = useNavigate();
-
     const [visibleRooms, setVisibleRooms] = useState<number[]>([]);
 
     useEffect(() => {

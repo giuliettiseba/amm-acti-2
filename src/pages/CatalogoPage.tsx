@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useState} from 'react';
-import {useLibros, useOrder, useSkeletonDelay} from '../hooks';
+import {useLibros, useSkeletonDelay} from '../hooks';
 import EmptyState from '../components/EmptyState';
 import type {Libro} from '../types';
 import {Alert, Box, Button, Grid, InputAdornment, TextField, Typography} from '@mui/material';
@@ -7,13 +7,9 @@ import {MenuBook, Refresh, Search} from '@mui/icons-material';
 import DialogDetallesLibro from '../components/DialogDetallesLibro';
 import {GenericCard} from "../components/GenericCard.tsx";
 import {CardSkeleton} from "../components/Skeleton.tsx";
+import {useOrder} from "../context/OrderContext.tsx";
 
 export default function CatalogoPage() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [visibleLibros, setVisibleLibros] = useState<number[]>([]);
-    const [selectedLibro, setSelectedLibro] = useState<Libro | null>(null);
-    const [dialogOpen, setDialogOpen] = useState(false);
-
     // Fetch libros
     const {
         data: libros,
@@ -22,6 +18,11 @@ export default function CatalogoPage() {
         refetch
     } = useLibros();
 
+    const [searchTerm, setSearchTerm] = useState('');
+    const [visibleLibros, setVisibleLibros] = useState<number[]>([]);
+    const [selectedLibro, setSelectedLibro] = useState<Libro | null>(null);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const {agregarLibro} = useOrder();
     const showSkeleton = useSkeletonDelay(loading);
 
     // Filtrar libros según término de búsqueda
@@ -43,7 +44,7 @@ export default function CatalogoPage() {
                 }, index * 100); // 100ms de delay entre cada elemento
             });
         }
-    }, [loading, showSkeleton, librosFiltrados]); // Agregado librosFiltrados como dependencia
+    }, [loading, showSkeleton, librosFiltrados]);
 
     // Resetear animaciones al cambiar filtro o cargar
     useEffect(() => {
@@ -62,9 +63,8 @@ export default function CatalogoPage() {
                 }, index * 100);
             });
         }
-    }, [searchTerm, librosFiltrados, loading, showSkeleton]); // Agregado librosFiltrados como dependencia
+    }, [searchTerm, librosFiltrados, loading, showSkeleton]);
 
-    const {agregarLibro} = useOrder();
 
     return (
         <Box sx={{maxWidth: 1200, mx: 'auto'}}>

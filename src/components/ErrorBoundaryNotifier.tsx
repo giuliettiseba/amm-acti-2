@@ -1,4 +1,4 @@
-import {useNotification} from '../hooks';
+import {useNotification} from "../context/NotificationContext.tsx";
 
 interface ErrorBoundaryNotifierProps {
   error?: Error;

@@ -1,10 +1,11 @@
 import {useEffect, useState} from 'react';
-import {useCafeteria, useOrder, useSkeletonDelay} from '../hooks';
+import {useCafeteria, useSkeletonDelay} from '../hooks';
 import EmptyState from '../components/EmptyState';
 import {Alert, Box, Button, Grid, IconButton, Typography} from '@mui/material';
 import {ArrowBack, LocalCafe, Refresh} from '@mui/icons-material';
 import {GenericCard} from "../components/GenericCard.tsx";
 import {CardSkeleton} from "../components/Skeleton.tsx";
+import {useOrder} from "../context/OrderContext.tsx";
 
 export default function CafeteriaPage() {
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<string | null>(null);
@@ -76,13 +77,13 @@ export default function CafeteriaPage() {
     const refetch = categoriaSeleccionada ?
         () => loadProductosByCategoria(categoriaSeleccionada) :
         refetchCategorias;
+
     const error = categoriaSeleccionada ? errorProductos : errorCategorias;
 
     return (
         <Box sx={{maxWidth: 1200, mx: 'auto'}}>
             <Box sx={{mb: 4, alignItems: 'center', textAlign: 'center'}}>
-
-
+                {/* Header */}
                 <Box sx={{display: 'flex', alignItems: 'center', gap: 2, justifyContent: 'center'}}>
                     {categoriaSeleccionada && (
                         <IconButton onClick={handleVolverCategorias} color="primary">
@@ -101,8 +102,6 @@ export default function CafeteriaPage() {
                     }
                 </Typography>
             </Box>
-            {/* Header */}
-
 
             {/* Error handling */}
             {error && (
@@ -120,7 +119,6 @@ export default function CafeteriaPage() {
                 <>
                     {showSkeletonCategorias && !errorCategorias && (
                         <CardSkeleton/>
-
                     )}
 
                     {!loadingCategorias && !errorCategorias && categorias && categorias.length > 0 && (

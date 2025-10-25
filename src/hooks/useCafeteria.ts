@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {CafeteriaService} from '../services/cafeteria.service';
 
 import type {CategoriaProducto, ProductoCafe} from '../types';
-import {useNotification} from "./useNotification.ts";
+import {useNotification} from "../context/NotificationContext.tsx";
 
 interface UseCafeteriaState {
   categorias: CategoriaProducto[] | null;

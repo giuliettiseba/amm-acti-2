@@ -1,6 +1,6 @@
-import {styled, alpha} from '@mui/material/styles';
+import {alpha, styled} from '@mui/material/styles';
 import Card, {type CardProps} from '@mui/material/Card';
-import {Fade, useThemeProps, Button} from "@mui/material";
+import {Button, Fade, useThemeProps} from "@mui/material";
 import React from "react";
 
 interface GenericCardProps extends CardProps {
@@ -66,7 +66,7 @@ const GenericCardRoot = styled(Card, {
         zIndex: 1,
     },
 
-    // decorative soft blobs: left secondary blob + right primary blob
+    // decorative soft blobs: left secondary blob right primary blob
     '&:after': {
         content: '""',
         position: 'absolute',

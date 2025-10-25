@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState} from 'react';
 import {createTheme, CssBaseline, ThemeProvider as MuiThemeProvider} from '@mui/material';
-import {nexusTheme, themesByMode} from './nexusTheme';
 import type {ThemeMode} from './nexusTheme';
+import {nexusTheme, themesByMode} from './nexusTheme';
 import type {ThemeProviderProps} from './ThemeProviderProps.ts';
 import ThemeContext from './ThemeContext.tsx';
 import type {ThemeContextValue} from './ThemeContextValue.tsx';

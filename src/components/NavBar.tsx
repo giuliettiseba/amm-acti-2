@@ -24,9 +24,9 @@ import {Close as CloseIcon, DarkMode, LightMode, Logout, Menu as MenuIcon, Perso
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useAuthContext} from '../context/AuthContext';
 import CartDrawer from './CartDrawer';
-import {useOrder} from '../hooks';
 import Badge from '@mui/material/Badge';
 import {useTheme} from "../theme/UseTheme.ts";
+import {useOrder} from "../context/OrderContext.tsx";
 
 export default function NavBar() {
   const { isAuthenticated, logout, user } = useAuthContext();
