@@ -151,15 +151,16 @@ export default function CafeteriaPage() {
             {/* Vista de Categorías */}
             {!categoriaSeleccionada && (
                 <>
-                    {showSkeletonCategorias && !errorCategorias && (
-                        <CardSkeleton/>
+                    {!errorCategorias && showSkeletonCategorias && (
+                        <CardSkeleton visible={true}/>
                     )}
 
-                    {!loadingCategorias && !errorCategorias && categorias && categorias.length > 0 && (
+                    {!showSkeletonCategorias && !loadingCategorias && !errorCategorias && categorias && categorias.length > 0 && (
                         <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                             {categorias.map((categoria, index) => (
                                 <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>
                                     <GenericCard
+                                        sx={{height: '100%'}}
                                         title={categoria.nombre}
                                         description={categoria.descripcion}
                                         image={categoria.imagen}
@@ -190,11 +191,11 @@ export default function CafeteriaPage() {
             {/* Vista de Productos */}
             {categoriaSeleccionada && (
                 <>
-                    {showSkeletonProductos && !errorProductos && (
-                        <CardSkeleton/>
+                    {!errorProductos && showSkeletonProductos && (
+                        <CardSkeleton visible={true}/>
                     )}
 
-                    {!loadingProductos && !errorProductos && productos && productos.length > 0 && (
+                    {!showSkeletonProductos && !loadingProductos && !errorProductos && productos && productos.length > 0 && (
                         <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                             {productos.map((producto, index) => (
                                 <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>

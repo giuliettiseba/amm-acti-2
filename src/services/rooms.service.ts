@@ -1,33 +1,83 @@
 /**
- * roomsService
+ * Servicio para gestionar salas de coworking con caché en memoria.
  *
- * Servicio para gestionar salas y reservas de coworking.
- * Proporciona métodos para obtener la lista de salas disponibles y crear nuevas reservas,
- * utilizando el cliente API genérico para la comunicación con el backend.
+ * Proporciona funciones para obtener la lista de salas y salas individuales,
+ * utilizando caché en memoria para evitar peticiones repetidas al backend.
+ * También permite crear reservas de salas.
  *
- * @module roomsService
+ * @module rooms.service
  */
 import {apiGet, apiPost} from './apiClient';
 import {API_ROUTES} from '../constants/apiRoutes';
 import type {Room, RoomReservation} from '../types';
 
+// Cache simple en memoria para evitar múltiples peticiones del mismo recurso
+const roomCache = new Map<number, Room>();
+let listaCache: { data: Room[]; timestamp: number } | null = null;
+const LISTA_TTL_MS = 60_000; // 1 minuto
+
 export const roomsService = {
     /**
-     * Obtiene todas las salas disponibles.
+     * Obtiene todas las salas disponibles desde la API o desde caché si está vigente.
      *
+     * @param {boolean} [force=false] - Si es true, fuerza la recarga desde la API ignorando la caché.
      * @returns {Promise<Room[]>} Promesa que resuelve con el array de salas disponibles.
      */
-    async getRooms(): Promise<Room[]> {
-        return apiGet<Room[]>(API_ROUTES.ROOMS);
+    async getRooms(force = false): Promise<Room[]> {
+        const now = Date.now();
+        if (!force && listaCache && now - listaCache.timestamp < LISTA_TTL_MS) {
+            return listaCache.data;
+        }
+        const data = await apiGet<Room[]>(API_ROUTES.ROOMS);
+        listaCache = {data, timestamp: now};
+        // Precargar en cache individual
+        data.forEach(room => roomCache.set(room.id, room));
+        return data;
     },
 
     /**
-     * Crea una nueva reserva de sala.
+     * Obtiene una sala por su ID desde la API o desde caché si está disponible.
+     *
+     * @param {number} id - El ID de la sala a obtener.
+     * @param {boolean} [force=false] - Si es true, fuerza la recarga desde la API ignorando la caché.
+     * @returns {Promise<Room | undefined>} Promesa que resuelve con la sala solicitada o undefined si no existe.
+     */
+    async getRoomById(id: number, force = false): Promise<Room | undefined> {
+        if (!force && roomCache.has(id)) {
+            return roomCache.get(id)!;
+        }
+        // Si no está en caché individual, buscar en la lista cacheada
+        if (listaCache) {
+            const room = listaCache.data.find(r => r.id === id);
+            if (room) {
+                roomCache.set(id, room);
+                return room;
+            }
+        }
+        // Si no está en ningún caché, cargar la lista completa
+        const rooms = await this.getRooms(force);
+        return rooms.find(r => r.id === id);
+    },
+
+    /**
+     * Crea una nueva reserva de sala e invalida la caché de salas.
      *
      * @param {Omit<RoomReservation, 'id'>} reservation - Datos de la reserva a crear (sin id).
      * @returns {Promise<RoomReservation>} Promesa que resuelve con la reserva creada.
      */
     async createReservation(reservation: Omit<RoomReservation, 'id'>): Promise<RoomReservation> {
-        return apiPost<RoomReservation>(API_ROUTES.ROOM_RESERVATION, reservation);
+        const result = await apiPost<RoomReservation>(API_ROUTES.ROOM_RESERVATION, reservation);
+        // Invalidar caché de salas después de crear una reserva (la disponibilidad podría cambiar)
+        this.clearRoomsCache();
+        return result;
+    },
+
+    /**
+     * Limpia toda la caché de salas.
+     * Útil cuando se necesita forzar la recarga de datos desde el servidor.
+     */
+    clearRoomsCache(): void {
+        roomCache.clear();
+        listaCache = null;
     }
 };

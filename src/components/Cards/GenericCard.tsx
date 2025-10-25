@@ -39,7 +39,7 @@
 
 import {alpha, styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {Button, Fade, useThemeProps} from "@mui/material";
+import {Button, Fade, Grow, useThemeProps} from "@mui/material";
 import React from "react";
 import type {GenericCardProps} from "../../types/props/GenericCardProps.tsx";
 import type {GenericCardState} from "../../types/GenericCardState.tsx";
@@ -56,6 +56,7 @@ const GenericCardRoot = styled(Card, {
     padding: theme.spacing(3, 4),
     borderRadius: 20,
     overflow: 'hidden',
+    cursor: 'pointer',
     // Glass base: slightly less opaque so background shows through
     background: theme.palette.mode === 'dark'
         ? alpha(theme.palette.background.paper, 0.06)
@@ -68,23 +69,33 @@ const GenericCardRoot = styled(Card, {
     boxShadow: `0 24px 40px ${alpha(theme.palette.primary.main, 0.12)}`,
     letterSpacing: '-0.025em',
     fontWeight: 600,
-    transition: 'transform 0.20s cubic-bezier(.2,.8,.2,1), box-shadow 0.18s ease',
+    // Quadratic ease for smooth, natural motion
+    transition: 'none', // No animation by default
     '&:hover': {
-        transform: 'translateY(-10px)',
-        boxShadow: `0 38px 90px ${alpha(theme.palette.primary.main, 0.22)}`,
+        transform: 'translateY(-1px) scale(1.02)',
+        boxShadow: `0 42px 100px ${alpha(theme.palette.primary.main, 0.28)}`,
+        borderColor: alpha(theme.palette.primary.main, 0.3),
+        transition: 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.35s ease',
     },
 
-    // inner subtle highlight (top-left) and a faint inner stroke
+    // Glass bright shine effect on hover
     '&:before': {
         content: '""',
         position: 'absolute',
-        inset: 0,
-        borderRadius: 20,
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
         pointerEvents: 'none',
-        // use theme background for the highlight so it adapts
-        background: `linear-gradient(180deg, ${alpha(theme.palette.background.paper, 0.08)} 0%, ${alpha(theme.palette.background.paper, 0.03)} 35%, ${alpha(theme.palette.background.default, 0)} 100%)`,
-        boxShadow: `inset 0 1px 0 ${alpha(theme.palette.background.paper, 0.04)}, inset 0 -6px 24px ${alpha(theme.palette.background.default, 0.03)}`,
-        zIndex: 1,
+        zIndex: 10,
+        // Much more subtle, transparent, and diagonal radial gradient
+        background: `radial-gradient(circle at var(--shine-x, 60%) var(--shine-y, 0%), ${alpha(theme.palette.common.white, 0.10)} 0%, ${alpha(theme.palette.common.white, 0.04)} 40%, transparent 80%)`,
+        opacity: 0,
+        transition: 'none',
+    },
+    '&:hover:before': {
+        opacity: 1,
+        transition: 'opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     },
 
     // decorative soft blobs: left secondary blob right primary blob
@@ -101,6 +112,12 @@ const GenericCardRoot = styled(Card, {
         filter: 'blur(22px) saturate(1.1)',
         mixBlendMode: 'screen',
         opacity: 0.95,
+        transition: 'none', // No animation by default
+    },
+    '&:hover:after': {
+        filter: 'blur(28px) saturate(1.3)',
+        opacity: 1,
+        transition: 'filter 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.35s ease',
     },
 
     // ensure children are above decorative pseudo elements
@@ -131,11 +148,17 @@ const GenericCardImage = styled('div')<{ ownerState: GenericCardState }>(({owner
     width: '100%',
     height: 160,
     borderRadius: theme.shape.borderRadius,
+    overflow: 'hidden',
     // use background palette so the fallback matches theme
     backgroundColor: theme.palette.background.default,
     backgroundImage: ownerState?.image ? `url(${ownerState.image})` : undefined,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    cursor: 'pointer',
+    transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    '&:hover': {
+        transform: 'scale(1.08)',
+    },
 }));
 
 // small helper to normalize text tokens: { primary, secondary }
@@ -156,6 +179,11 @@ const GenericCardTitle = styled('div')<{ ownerState: GenericCardState }>(({theme
         // use theme text primary color
         color: text.primary,
         textShadow: `0 1px 0 ${alpha(text.secondary || theme.palette.background.default || theme.palette.background.paper, 0.12)}`,
+        transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.3s ease',
+        '&:hover': {
+            transform: 'translateX(2px)',
+            color: theme.palette.primary.main,
+        },
     });
 });
 
@@ -182,6 +210,11 @@ const GenericCardPrice = styled('div')<{ ownerState: GenericCardState }>(({theme
     ...theme.typography.subtitle1,
     fontWeight: 800,
     color: theme.palette.primary.main,
+    transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.3s ease',
+    '&:hover': {
+        transform: 'scale(1.01)',
+        color: theme.palette.primary.dark,
+    },
 }));
 
 // Category chip-button floating top-left
@@ -203,10 +236,16 @@ const GenericCardCategory = styled('button')<{ ownerState: GenericCardState }>((
     fontSize: '0.75rem',
     fontWeight: 600,
     boxShadow: theme.shadows[1],
-    transition: 'transform 0.12s ease, box-shadow 0.12s ease',
+    // Quadratic ease for smooth motion
+    transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease',
     '&:hover': {
-        transform: 'translateY(-2px)',
-        boxShadow: theme.shadows[3],
+        transform: 'translateY(-3px) scale(1.05)',
+        boxShadow: theme.shadows[4],
+        backgroundColor: theme.palette.primary.dark,
+    },
+    '&:active': {
+        transform: 'translateY(-1px) scale(1.02)',
+        boxShadow: theme.shadows[2],
     },
     '&:focus': {
         outline: 'none',
@@ -234,6 +273,28 @@ export const GenericCard = React.forwardRef<HTMLDivElement, GenericCardProps>(
 
         const ownerState: GenericCardState = {...props, variant};
 
+        // Mouse position tracking for shine effect
+        const cardRef = React.useRef<HTMLDivElement>(null);
+
+        // Actualiza el gradiente de brillo según la posición del puntero
+        function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+            const card = cardRef.current;
+            if (!card) return;
+            const rect = card.getBoundingClientRect();
+            // Normaliza la posición del puntero respecto a la card
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--shine-x', `${x}%`);
+            card.style.setProperty('--shine-y', `${y}%`);
+        }
+        // Al salir, resetea el gradiente a un valor diagonal sutil
+        function handleMouseLeave() {
+            const card = cardRef.current;
+            if (!card) return;
+            card.style.setProperty('--shine-x', '60%');
+            card.style.setProperty('--shine-y', '0%');
+        }
+
         function addToCartHandler() {
             if (addToCart) {
                 addToCart()
@@ -242,17 +303,45 @@ export const GenericCard = React.forwardRef<HTMLDivElement, GenericCardProps>(
         }
 
         return (
-            <Fade in={isVisible} timeout={100}>
-                <GenericCardRoot ref={ref} ownerState={ownerState} {...other}>
-                    {(category? <GenericCardCategory ownerState={ownerState}>{category}</GenericCardCategory> : null)}
-                    {image ? <GenericCardImage ownerState={ownerState} onClick={showDetails}/> : null}
-                    {title ? <GenericCardTitle ownerState={ownerState}>{title}</GenericCardTitle> : null}
-                    {subtitle ? <GenericCardSubtitle ownerState={ownerState}>{subtitle}</GenericCardSubtitle> : null}
-                    {description ? <GenericCardDescription ownerState={ownerState}>{description}</GenericCardDescription> : null}
-                    {(price ? <GenericCardPrice ownerState={ownerState}>${price?.toFixed(2)}</GenericCardPrice> : null)}
-                    {(addToCart ? <Button onClick={addToCartHandler}>{addToCartText || "Agregar Al Carrito"}</Button> : null)}
-                </GenericCardRoot>
-            </Fade>
+            <Grow
+                in={isVisible}
+                timeout={{
+                    enter: 500,
+                    exit: 300
+                }}
+                style={{
+                    transformOrigin: 'center bottom',
+                    transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }}
+            >
+                <Fade
+                    in={isVisible}
+                    timeout={{
+                        enter: 600,
+                        exit: 300
+                    }}
+                >
+                    <GenericCardRoot
+                        ref={node => {
+                            cardRef.current = node;
+                            if (typeof ref === 'function') ref(node);
+                            else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+                        }}
+                        ownerState={ownerState}
+                        onMouseMove={handleMouseMove}
+                        onMouseLeave={handleMouseLeave}
+                        {...other}
+                    >
+                        {(category? <GenericCardCategory ownerState={ownerState}>{category}</GenericCardCategory> : null)}
+                        {image ? <GenericCardImage ownerState={ownerState} onClick={showDetails}/> : null}
+                        {title ? <GenericCardTitle ownerState={ownerState}>{title}</GenericCardTitle> : null}
+                        {subtitle ? <GenericCardSubtitle ownerState={ownerState}>{subtitle}</GenericCardSubtitle> : null}
+                        {description ? <GenericCardDescription ownerState={ownerState}>{description}</GenericCardDescription> : null}
+                        {(price ? <GenericCardPrice ownerState={ownerState}>${price?.toFixed(2)}</GenericCardPrice> : null)}
+                        {(addToCart ? <Button onClick={addToCartHandler}>{addToCartText || "Agregar Al Carrito"}</Button> : null)}
+                    </GenericCardRoot>
+                </Fade>
+            </Grow>
         );
     },
 );

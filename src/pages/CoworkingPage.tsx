@@ -83,8 +83,8 @@ export default function CoworkingPage() {
                 </Alert>
             )}
 
-            {showSkeleton && !error && (
-                <CardSkeleton/>
+            {!error && showSkeleton && (
+                <CardSkeleton visible={true}/>
             )}
 
             {!showSkeleton && !loading && !error && rooms && rooms.length > 0 && (

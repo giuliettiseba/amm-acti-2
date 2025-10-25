@@ -50,11 +50,13 @@ export function useCafeteria(): UseCafeteriaState & UseCafeteriaActions {
      * Loads the list of cafeteria categories from the CafeteriaService.
      * Updates loading and error state accordingly.
      * Notifies the user if an error occurs.
+     *
+     * @param {boolean} force - If true, bypasses cache and forces a fresh fetch
      */
-    const loadCategorias = useCallback(async () => {
+    const loadCategorias = useCallback(async (force = false) => {
         setState(prev => ({...prev, loadingCategorias: true, errorCategorias: null}));
         try {
-            const categorias = await CafeteriaService.getCategorias();
+            const categorias = await CafeteriaService.getCategorias(force);
             setState(prev => ({...prev, categorias, loadingCategorias: false}));
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Error al cargar categorías';
@@ -72,11 +74,12 @@ export function useCafeteria(): UseCafeteriaState & UseCafeteriaActions {
      * Notifies the user if an error occurs.
      *
      * @param {string} categoria - The category to load products for.
+     * @param {boolean} force - If true, bypasses cache and forces a fresh fetch
      */
-    const loadProductosByCategoria = useCallback(async (categoria: string) => {
+    const loadProductosByCategoria = useCallback(async (categoria: string, force = false) => {
         setState(prev => ({...prev, loadingProductos: true, errorProductos: null}));
         try {
-            const productos = await CafeteriaService.getProductosByCategoria(categoria);
+            const productos = await CafeteriaService.getProductosByCategoria(categoria, force);
             setState(prev => ({...prev, productos, loadingProductos: false}));
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Error al cargar productos';
@@ -89,11 +92,11 @@ export function useCafeteria(): UseCafeteriaState & UseCafeteriaActions {
     }, [addNotification]);
 
     /**
-     * Refetches the list of categories by calling loadCategorias.
-     * Can be used to manually refresh categories from a component.
+     * Refetches the list of categories by calling loadCategorias with force=true.
+     * Can be used to manually refresh categories from a component, bypassing cache.
      */
     const refetchCategorias = useCallback(async () => {
-        await loadCategorias();
+        await loadCategorias(true); // Force cache bypass
     }, [loadCategorias]);
 
     /**

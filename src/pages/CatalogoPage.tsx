@@ -144,13 +144,13 @@ export default function CatalogoPage() {
             )}
 
             {/* Skeletons */}
-            {showSkeleton && !error && (
-                <CardSkeleton/>
+            {!error && showSkeleton && (
+                <CardSkeleton visible={true}/>
             )}
 
 
             {/* Libros */}
-            {!loading && !error && librosFiltrados && librosFiltrados.length > 0 && (
+            {!showSkeleton && !loading && !error && librosFiltrados && librosFiltrados.length > 0 && (
                 <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                     {librosFiltrados.map((libro, index) => (
                         <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>

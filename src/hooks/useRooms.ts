@@ -26,11 +26,13 @@ export const useRooms = () => {
     /**
      * Loads the list of rooms from the API.
      * Updates loading and error state accordingly.
+     *
+     * @param {boolean} force - If true, bypasses cache and forces a fresh fetch
      */
-    const load = useCallback(async () => {
+    const load = useCallback(async (force = false) => {
         setState(prev => ({...prev, loading: true, error: null}));
         try {
-            const data = await roomsService.getRooms();
+            const data = await roomsService.getRooms(force);
             setState({data, loading: false, error: null});
         } catch (e: unknown) {
             setState({data: null, loading: false, error: e instanceof Error ? e.message : 'Error cargando salas'});
@@ -38,8 +40,11 @@ export const useRooms = () => {
     }, []);
 
     useEffect(() => {
-        load().then(r => console.debug('Salas cargadas' + r));
+        load(false).then(r => console.debug('Salas cargadas' + r));
     }, [load]);
 
-    return {...state, refetch: () => load()};
+    return {
+        ...state,
+        refetch: () => load(true) // Force cache bypass on manual refetch
+    };
 };
