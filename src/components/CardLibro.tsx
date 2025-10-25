@@ -1,15 +1,7 @@
-import {
-  Typography,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Fade
-} from '@mui/material';
-import type { Libro } from '../types';
-import { useOrder } from '../hooks/useOrder';
-import { useNotification } from '../hooks/useNotification';
+import {Box, Button, Card, CardContent, CardMedia, Fade, Typography} from '@mui/material';
+import type {Libro} from '../types';
+import {useOrder} from '../hooks/useOrder';
+import {useNotification} from '../hooks/useNotification';
 
 interface CardLibroProps {
   libro: Libro;

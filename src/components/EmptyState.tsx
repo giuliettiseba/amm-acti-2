@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import type {ReactNode} from 'react';
+import {Box, Card, CardContent, Typography} from '@mui/material';
 
 interface EmptyStateProps {
   title?: string;

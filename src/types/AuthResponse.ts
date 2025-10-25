@@ -1,4 +1,4 @@
-import type { Usuario } from './Usuario';
+import type {Usuario} from './Usuario';
 
 export interface AuthResponse {
   usuario: Usuario;

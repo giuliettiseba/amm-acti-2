@@ -1,6 +1,6 @@
-import { Typography, Box, Button, Card, CardContent } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { MenuBook, LocalCafe, Work } from '@mui/icons-material';
+import {Box, Button, Card, CardContent, Typography} from '@mui/material';
+import {Link} from 'react-router-dom';
+import {LocalCafe, MenuBook, Work} from '@mui/icons-material';
 
 export default function LandingPage() {
   const features = [

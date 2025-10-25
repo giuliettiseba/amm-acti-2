@@ -1,15 +1,6 @@
-import { useAuthContext } from '../context/AuthContext';
-import {
-  Typography,
-  Box,
-  Card,
-  CardContent,
-  Button,
-  Avatar,
-  Divider,
-  Alert
-} from '@mui/material';
-import { Person, Email, Logout } from '@mui/icons-material';
+import {useAuthContext} from '../context/AuthContext';
+import {Alert, Avatar, Box, Button, Card, CardContent, Divider, Typography} from '@mui/material';
+import {Email, Logout, Person} from '@mui/icons-material';
 
 export default function PerfilUsuarioPage() {
   const { user, logout } = useAuthContext();

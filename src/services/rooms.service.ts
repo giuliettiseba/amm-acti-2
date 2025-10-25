@@ -1,6 +1,6 @@
-import { apiGet, apiPost } from './apiClient';
-import { API_ROUTES } from '../constants/apiRoutes';
-import type { Room, RoomReservation } from '../types';
+import {apiGet, apiPost} from './apiClient';
+import {API_ROUTES} from '../constants/apiRoutes';
+import type {Room, RoomReservation} from '../types';
 
 export const roomsService = {
   /**

@@ -1,16 +1,7 @@
-import {useNavigate, useLocation} from 'react-router-dom';
-import {useState, useEffect, type FormEvent} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {type FormEvent, useEffect, useState} from 'react';
 import {useAuthContext} from '../context/AuthContext';
-import {
-    Box,
-    Card,
-    CardContent,
-    TextField,
-    Button,
-    Typography,
-    Alert,
-    CircularProgress
-} from '@mui/material';
+import {Alert, Box, Button, Card, CardContent, CircularProgress, TextField, Typography} from '@mui/material';
 import {Login as LoginIcon, PersonAdd as PersonAddIcon} from '@mui/icons-material';
 import DialogCrearUsuario from '../components/DialogCrearUsuario';
 

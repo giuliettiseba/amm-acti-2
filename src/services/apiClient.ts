@@ -1,7 +1,7 @@
 // Cliente API genérico para la aplicación
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
-import type { ApiGetEndpoint, ApiGetResponse, ApiPostEndpoint, ApiPostBody, ApiPostResponse } from '../types/api';
+import type {ApiGetEndpoint, ApiGetResponse, ApiPostBody, ApiPostEndpoint, ApiPostResponse} from '../types/api';
 
 export async function apiGet<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const res = await fetch(`${API_BASE_URL}${endpoint}`, {

@@ -1,34 +1,28 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useRooms } from '../hooks/useRooms';
-import { roomsService } from '../services/rooms.service';
-import { useAuthContext } from '../context/AuthContext';
-import type { Room, RoomReservation } from '../types';
-import type { SelectChangeEvent } from '@mui/material/Select';
+import {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useRooms} from '../hooks/useRooms';
+import {roomsService} from '../services/rooms.service';
+import {useAuthContext} from '../context/AuthContext';
+import type {Room, RoomReservation} from '../types';
+import type {SelectChangeEvent} from '@mui/material/Select';
 import {
-  Typography,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  TextField,
-  CircularProgress,
-  Chip,
-  Divider,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  OutlinedInput
+    Box,
+    Button,
+    Card,
+    CardContent,
+    Chip,
+    CircularProgress,
+    Divider,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    TextField,
+    Typography
 } from '@mui/material';
-import {
-  ArrowBack,
-  People,
-  LocationOn,
-  Euro,
-  Save
-} from '@mui/icons-material';
-import { useNotification } from '../hooks/useNotification';
+import {ArrowBack, Euro, LocationOn, People, Save} from '@mui/icons-material';
+import {useNotification} from '../hooks/useNotification';
 
 export default function ReservaPage() {
   const { roomId } = useParams<{ roomId: string }>();

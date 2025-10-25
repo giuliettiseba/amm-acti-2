@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from 'react';
-import { roomsService } from '../services/rooms.service';
-import type { Room } from '../types';
+import {useCallback, useEffect, useState} from 'react';
+import {roomsService} from '../services/rooms.service';
+import type {Room} from '../types';
 
 interface RoomsState {
   data: Room[] | null;

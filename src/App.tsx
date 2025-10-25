@@ -1,7 +1,7 @@
-import { Routes, Route } from 'react-router-dom';
-import { Box, Container } from '@mui/material';
-import { Suspense, lazy } from 'react';
-import { ProtectedRoute } from './router/ProtectedRoute';
+import {Route, Routes} from 'react-router-dom';
+import {Box, Container} from '@mui/material';
+import {lazy, Suspense} from 'react';
+import {ProtectedRoute} from './router/ProtectedRoute';
 import NavBar from './components/NavBar';
 
 const LandingPage = lazy(() => import('./pages/LandingPage'));

@@ -1,16 +1,8 @@
-import type { ProductoCafe } from '../types';
-import {
-  Typography,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Fade
-} from '@mui/material';
-import { ShoppingCart } from '@mui/icons-material';
+import type {ProductoCafe} from '../types';
+import {Box, Button, Card, CardContent, CardMedia, Fade, Typography} from '@mui/material';
+import {ShoppingCart} from '@mui/icons-material';
 import {useOrder} from "../hooks/useOrder.ts";
-import { useNotification } from '../hooks/useNotification';
+import {useNotification} from '../hooks/useNotification';
 
 interface GaleriaProductosProps {
   productos: ProductoCafe[];

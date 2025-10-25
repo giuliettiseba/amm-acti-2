@@ -1,5 +1,5 @@
-import { ThemeProvider as MuiThemeProvider, createTheme, CssBaseline } from '@mui/material';
-import { useTheme } from './ThemeProvider';
+import {createTheme, CssBaseline, ThemeProvider as MuiThemeProvider} from '@mui/material';
+import {useTheme} from './ThemeProvider';
 import React from 'react';
 
 interface MuiThemeWrapperProps {

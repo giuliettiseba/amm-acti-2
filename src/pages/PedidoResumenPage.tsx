@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
-import { useOrder } from '../hooks/useOrder';
-import { Box, Typography, List, ListItem, ListItemText, Divider, RadioGroup, FormControlLabel, Radio, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import type { CarritoItem } from '../context/OrderContext';
-import { QRCodeSVG } from 'qrcode.react';
-import { useRooms } from '../hooks/useRooms';
-import type { Room } from '../types';
+import React, {useState} from 'react';
+import {useOrder} from '../hooks/useOrder';
+import {
+    Box,
+    Button,
+    Divider,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    List,
+    ListItem,
+    ListItemText,
+    MenuItem,
+    Radio,
+    RadioGroup,
+    Select,
+    Typography
+} from '@mui/material';
+import {useNavigate} from 'react-router-dom';
+import type {CarritoItem} from '../context/OrderContext';
+import {QRCodeSVG} from 'qrcode.react';
+import {useRooms} from '../hooks/useRooms';
+import type {Room} from '../types';
 
 const generateOrderNumber = () => {
   return 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();

@@ -3,14 +3,7 @@ import {useSkeletonDelay} from '../hooks/useSkeletonDelay';
 import {EmptyState} from '../components/EmptyState';
 import {Skeleton} from '../components/Skeleton';
 import CardRooms from '../components/CardRooms';
-import {
-    Typography,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    Alert,
-} from '@mui/material';
+import {Alert, Box, Button, Card, CardContent, Typography,} from '@mui/material';
 import {Refresh, Work} from '@mui/icons-material';
 
 export default function CoworkingPage() {

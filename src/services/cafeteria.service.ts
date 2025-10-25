@@ -1,6 +1,6 @@
-import { apiGet } from './apiClient';
-import { API_ROUTES } from '../constants/apiRoutes';
-import type { CategoriaProducto, ProductoCafe } from '../types';
+import {apiGet} from './apiClient';
+import {API_ROUTES} from '../constants/apiRoutes';
+import type {CategoriaProducto, ProductoCafe} from '../types';
 
 /**
  * Servicio para gestionar categorías y productos de la cafetería

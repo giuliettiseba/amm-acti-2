@@ -1,4 +1,4 @@
-import type { Libro, CoworkingSlot, AuthResponse } from './index';
+import type {AuthResponse, CoworkingSlot, Libro} from './index';
 
 // Tipo para productos de cafetería (migrado desde CafeteriaPage)
 export interface ProductoCafe {

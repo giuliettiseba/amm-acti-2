@@ -1,4 +1,4 @@
-import { Skeleton as MuiSkeleton, Box, Card, CardContent, CardActions } from '@mui/material';
+import {Box, Card, CardActions, CardContent, Skeleton as MuiSkeleton} from '@mui/material';
 import './skeleton.css';
 
 interface SkeletonProps {

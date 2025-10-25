@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 /**
  * Evita el parpadeo (flash) de skeletons cuando las cargas son muy rápidas.

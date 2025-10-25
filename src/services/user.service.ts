@@ -1,6 +1,6 @@
-import { apiGet, apiPost } from './apiClient';
-import { API_ROUTES } from '../constants/apiRoutes';
-import type { User } from '../types';
+import {apiGet, apiPost} from './apiClient';
+import {API_ROUTES} from '../constants/apiRoutes';
+import type {User} from '../types';
 
 export interface LoginCredentials {
   username: string;

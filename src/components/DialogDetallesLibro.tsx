@@ -1,16 +1,16 @@
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
-  Button,
-  Box,
-  CardMedia,
-  CircularProgress
+    Box,
+    Button,
+    CardMedia,
+    CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Typography
 } from '@mui/material';
-import type { Libro } from '../types';
-import { useLibro } from '../hooks/useLibros';
+import type {Libro} from '../types';
+import {useLibro} from '../hooks/useLibros';
 
 interface DialogDetallesLibroProps {
   libro: Libro | null;

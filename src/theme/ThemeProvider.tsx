@@ -1,8 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { nexusTheme, type NexusTheme } from './nexusTheme';
-import { themesByMode } from './nexusTheme';
-import type { ThemeMode } from './nexusTheme';
+import {createContext, type ReactNode, useContext, useEffect, useMemo, useState} from 'react';
+import type {ThemeMode} from './nexusTheme';
+import {nexusTheme, type NexusTheme, themesByMode} from './nexusTheme';
 
 interface ThemeContextValue {
   theme: NexusTheme;

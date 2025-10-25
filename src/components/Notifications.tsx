@@ -1,9 +1,4 @@
-
-import {
-  Snackbar,
-  Alert,
-  Stack
-} from '@mui/material';
+import {Alert, Snackbar, Stack} from '@mui/material';
 import {useNotification} from "../hooks/useNotification.ts";
 import type {NotificationItem} from "../context/NotificationContext.tsx";
 

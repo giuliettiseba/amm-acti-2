@@ -1,7 +1,7 @@
-import { useEffect, useState, type ReactNode } from 'react';
-import { OrderContext, type CarritoItem } from '../context/OrderContext';
-import type { ProductoCafe } from '../types/ProductoCafe';
-import type { Libro } from '../types/Libro';
+import {type ReactNode, useEffect, useState} from 'react';
+import {type CarritoItem, OrderContext} from '../context/OrderContext';
+import type {ProductoCafe} from '../types/ProductoCafe';
+import type {Libro} from '../types/Libro';
 
 const STORAGE_KEY = 'carrito-pedidos';
 

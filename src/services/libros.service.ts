@@ -1,5 +1,5 @@
-import { apiGetTyped } from './apiClient';
-import type { Libro } from '../types';
+import {apiGetTyped} from './apiClient';
+import type {Libro} from '../types';
 
 // Cache simple en memoria para evitar múltiples peticiones del mismo recurso
 const libroCache = new Map<string, Libro>();

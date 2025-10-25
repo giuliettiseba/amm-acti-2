@@ -1,21 +1,11 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useSkeletonDelay} from '../hooks/useSkeletonDelay';
 import {useCafeteria} from '../hooks/useCafeteria';
 import GaleriaProductos from '../components/GaleriaProductos';
 import {Skeleton} from '../components/Skeleton';
 import {EmptyState} from '../components/EmptyState';
-import {
-    Typography,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    CardMedia,
-    Alert,
-    IconButton,
-    Fade
-} from '@mui/material';
-import {Refresh, LocalCafe, ArrowBack} from '@mui/icons-material';
+import {Alert, Box, Button, Card, CardContent, CardMedia, Fade, IconButton, Typography} from '@mui/material';
+import {ArrowBack, LocalCafe, Refresh} from '@mui/icons-material';
 
 export default function CafeteriaPage() {
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<string | null>(null);

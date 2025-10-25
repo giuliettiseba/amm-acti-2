@@ -1,38 +1,31 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import {NavLink, useNavigate} from 'react-router-dom';
+import {useState} from 'react';
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Box,
-  useTheme as useMuiTheme,
-  useMediaQuery,
-  Menu,
-  MenuItem,
-  Avatar,
-  ListItemIcon,
-  Divider
+    AppBar,
+    Avatar,
+    Box,
+    Button,
+    Divider,
+    Drawer,
+    IconButton,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    Toolbar,
+    Typography,
+    useMediaQuery,
+    useTheme as useMuiTheme
 } from '@mui/material';
-import {
-  Menu as MenuIcon,
-  Close as CloseIcon,
-  LightMode,
-  DarkMode,
-  Person,
-  Logout
-} from '@mui/icons-material';
+import {Close as CloseIcon, DarkMode, LightMode, Logout, Menu as MenuIcon, Person} from '@mui/icons-material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useAuthContext } from '../context/AuthContext';
-import { useTheme } from '../theme/ThemeProvider';
+import {useAuthContext} from '../context/AuthContext';
+import {useTheme} from '../theme/ThemeProvider';
 import CartDrawer from './CartDrawer';
-import { useOrder } from '../hooks/useOrder';
+import {useOrder} from '../hooks/useOrder';
 import Badge from '@mui/material/Badge';
 
 export default function NavBar() {
@@ -154,6 +147,20 @@ export default function NavBar() {
         >
           Nexus
         </Typography>
+
+        {/* Cart icon for mobile, right side of AppBar */}
+        {isMobile && (
+          <IconButton
+            color="inherit"
+            onClick={() => setCartOpen(true)}
+            aria-label="Ver carrito"
+            sx={{ ml: 'auto' }}
+          >
+            <Badge badgeContent={carrito.reduce((sum, item) => sum + item.cantidad, 0)} color="secondary" showZero>
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        )}
 
         {!isMobile && (
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, gap: 1 }}>

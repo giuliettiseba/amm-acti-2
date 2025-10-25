@@ -1,7 +1,7 @@
 import {type ReactNode, useCallback, useEffect, useState} from 'react';
 import type {User} from '../types';
 import {AuthContext} from '../context/AuthContext';
-import { userService } from '../services/user.service';
+import {userService} from '../services/user.service';
 
 interface Props { children: ReactNode }
 

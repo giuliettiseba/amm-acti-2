@@ -1,16 +1,8 @@
-import { useState, useEffect } from 'react';
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Box,
-  Button,
-  Chip
-} from '@mui/material';
-import { People, LocationOn, Euro } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import type { Room } from '../types';
+import {useEffect, useState} from 'react';
+import {Box, Button, Card, CardContent, CardMedia, Chip, Typography} from '@mui/material';
+import {Euro, LocationOn, People} from '@mui/icons-material';
+import {useNavigate} from 'react-router-dom';
+import type {Room} from '../types';
 
 interface CardRoomsProps {
   room: Room;
