@@ -1,23 +1,27 @@
-import {alpha, Box, Card, Fade, Grid, Skeleton as MuiSkeleton, Stack} from '@mui/material';
+import {alpha, Box, Card, Grid, Skeleton as MuiSkeleton, Stack} from '@mui/material';
 import type {CardSkeletonProps} from "../types/props/CardSkeletonProps.tsx";
 import {useTheme} from '@mui/material/styles';
 
-export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = true, visible = true}: CardSkeletonProps) {
+export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = true}: CardSkeletonProps) {
     const theme = useTheme();
 
     return (
         <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
             {Array.from({length: 12}).map((_, index) => (
                 <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>
-                    <Fade
-                        in={visible}
-                        timeout={{enter: 100, exit: 350}}
-                        unmountOnExit
-                    >
                         <Box sx={{
-                            transform: 'scale(0.5)',
+                            animation: 'growIn 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
                             transformOrigin: 'center center',
-                            transition: 'transform 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 350ms ease'
+                            '@keyframes growIn': {
+                                from: {
+                                    transform: 'scale(.3)',
+                                    opacity: .3
+                                },
+                                to: {
+                                    transform: 'scale(.5)',
+                                    opacity: 0.5
+                                }
+                            }
                         }}>
                             <Card sx={{
                                 width,
@@ -182,7 +186,6 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                                 </Stack>
                             </Card>
                         </Box>
-                    </Fade>
                 </Grid>
             ))}
         </Grid>
