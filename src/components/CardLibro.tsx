@@ -1,7 +1,6 @@
 import {Box, Button, Card, CardContent, CardMedia, Fade, Typography} from '@mui/material';
 import type {Libro} from '../types';
-import {useOrder} from '../hooks/useOrder';
-import {useNotification} from '../hooks/useNotification';
+import {useNotification, useOrder} from '../hooks';
 
 interface CardLibroProps {
   libro: Libro;

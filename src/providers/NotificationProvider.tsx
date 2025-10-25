@@ -1,8 +1,9 @@
 import {type ReactNode, useCallback, useState} from 'react';
-import NotificationContext, {
-    type NotificationContextValue,
-    type NotificationItem
+import {
+    NotificationContext,
 } from '../context/NotificationContext';
+import type {NotificationContextValue, NotificationItem} from "../types";
+
 
 interface Props { children: ReactNode; defaultTimeout?: number }
 

@@ -1,9 +1,9 @@
 import {useEffect, useMemo, useState} from 'react';
-import {useLibros} from '../hooks/useLibros';
-import {Skeleton} from '../components/Skeleton';
-import {EmptyState} from '../components/EmptyState';
+import {useLibros} from '../hooks';
+import Skeleton from '../components/Skeleton';
+import EmptyState from '../components/EmptyState';
 import CardLibro from '../components/CardLibro';
-import {useSkeletonDelay} from '../hooks/useSkeletonDelay';
+import {useSkeletonDelay} from '../hooks';
 import type {Libro} from '../types';
 import {Alert, Box, Button, Card, CardContent, InputAdornment, TextField, Typography} from '@mui/material';
 import {MenuBook, Refresh, Search} from '@mui/icons-material';

@@ -22,7 +22,7 @@ export function useLibros() {
     }, []);
 
     useEffect(() => {
-            load().then(r => console.log('Libros cargados' + r)
+            load().then(r => console.debug('Libros cargados' + r)
             );
         }
         , [load]);
@@ -51,7 +51,7 @@ export function useLibro(id: string | undefined) {
     }, [id]);
 
     useEffect(() => {
-        load().then(r => console.log('Libro cargado' + r));
+        load().then(r => console.debug('Libro cargado' + r));
     }, [load]);
 
     return {...state, refetch: () => load(true)};

@@ -1,9 +1,8 @@
 import {useEffect, useState} from 'react';
-import {useSkeletonDelay} from '../hooks/useSkeletonDelay';
-import {useCafeteria} from '../hooks/useCafeteria';
+import {useCafeteria, useSkeletonDelay} from '../hooks';
 import GaleriaProductos from '../components/GaleriaProductos';
-import {Skeleton} from '../components/Skeleton';
-import {EmptyState} from '../components/EmptyState';
+import Skeleton from '../components/Skeleton';
+import EmptyState from '../components/EmptyState';
 import {Alert, Box, Button, Card, CardContent, CardMedia, Fade, IconButton, Typography} from '@mui/material';
 import {ArrowBack, LocalCafe, Refresh} from '@mui/icons-material';
 

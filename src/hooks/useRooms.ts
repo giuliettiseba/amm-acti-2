@@ -25,7 +25,7 @@ export const useRooms = () => {
     }, []);
 
     useEffect(() => {
-        load().then(r => console.log('Salas cargadas' + r));
+        load().then(r => console.debug('Salas cargadas' + r));
     }, [load]);
 
     return {...state, refetch: () => load()};

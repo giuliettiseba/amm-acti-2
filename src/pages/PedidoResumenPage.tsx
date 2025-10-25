@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useOrder} from '../hooks/useOrder';
+import {useOrder} from '../hooks';
 import {
     Box,
     Button,
@@ -17,10 +17,9 @@ import {
     Typography
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
-import type {CarritoItem} from '../context/OrderContext';
 import {QRCodeSVG} from 'qrcode.react';
-import {useRooms} from '../hooks/useRooms';
-import type {Room} from '../types';
+import {useRooms} from '../hooks';
+import type {CarritoItem, Room} from '../types';
 
 const generateOrderNumber = () => {
   // Use slice instead of deprecated substr

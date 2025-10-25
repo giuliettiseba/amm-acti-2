@@ -1,3 +1,5 @@
+// noinspection NonAsciiCharacters,JSNonASCIINames
+
 import {
     Box,
     Button,

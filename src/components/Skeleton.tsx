@@ -1,5 +1,4 @@
 import {Skeleton as MuiSkeleton} from '@mui/material';
-import './skeleton.css';
 
 interface SkeletonProps {
   width?: string | number;
@@ -8,7 +7,7 @@ interface SkeletonProps {
   className?: string;
 }
 
-export function Skeleton({ width, height, variant = 'rectangular', className }: SkeletonProps) {
+export default function Skeleton({ width, height, variant = 'rectangular', className }: SkeletonProps) {
   return (
     <MuiSkeleton
       variant={variant}

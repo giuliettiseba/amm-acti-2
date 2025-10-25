@@ -1,8 +1,7 @@
-import { Card, CardContent, CardMedia, Button, Box, Fade, Typography } from '@mui/material';
-import { ShoppingCart } from '@mui/icons-material';
-import type { ProductoCafe } from '../types';
-import { useOrder } from '../hooks/useOrder';
-import { useNotification } from '../hooks/useNotification';
+import {Box, Button, Card, CardContent, CardMedia, Fade, Typography} from '@mui/material';
+import {ShoppingCart} from '@mui/icons-material';
+import type {ProductoCafe} from '../types';
+import {useNotification, useOrder} from '../hooks';
 
 interface CardProductoProps {
   producto: ProductoCafe;

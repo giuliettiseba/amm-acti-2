@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {useRooms} from '../hooks/useRooms';
+import {useRooms} from '../hooks';
 import {roomsService} from '../services/rooms.service';
 import {useAuthContext} from '../context/AuthContext';
 import type {Room, RoomReservation} from '../types';
@@ -22,7 +22,7 @@ import {
     Typography
 } from '@mui/material';
 import {ArrowBack, Euro, LocationOn, People, Save} from '@mui/icons-material';
-import {useNotification} from '../hooks/useNotification';
+import {useNotification} from '../hooks';
 
 export default function ReservaPage() {
   const { roomId } = useParams<{ roomId: string }>();

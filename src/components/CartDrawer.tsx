@@ -11,9 +11,9 @@ import {
     Typography
 } from '@mui/material';
 import {Close, Delete} from '@mui/icons-material';
-import {useOrder} from '../hooks/useOrder';
+import {useOrder} from '../hooks';
 import {useNavigate} from 'react-router-dom';
-import type {CarritoItem} from '../context/OrderContext';
+import type {CarritoItem} from "../types";
 
 interface CartDrawerProps {
   open: boolean;

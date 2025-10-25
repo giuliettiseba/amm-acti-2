@@ -25,7 +25,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useAuthContext} from '../context/AuthContext';
 import {useTheme} from '../theme/ThemeProvider';
 import CartDrawer from './CartDrawer';
-import {useOrder} from '../hooks/useOrder';
+import {useOrder} from '../hooks';
 import Badge from '@mui/material/Badge';
 
 export default function NavBar() {

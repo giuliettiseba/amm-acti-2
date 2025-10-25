@@ -1,7 +1,7 @@
-import {useRooms} from '../hooks/useRooms';
-import {useSkeletonDelay} from '../hooks/useSkeletonDelay';
-import {EmptyState} from '../components/EmptyState';
-import {Skeleton} from '../components/Skeleton';
+import {useRooms} from '../hooks';
+import {useSkeletonDelay} from '../hooks';
+import EmptyState from '../components/EmptyState';
+import Skeleton from '../components/Skeleton';
 import CardRooms from '../components/CardRooms';
 import {Alert, Box, Button, Card, CardContent, Typography,} from '@mui/material';
 import {Refresh, Work} from '@mui/icons-material';

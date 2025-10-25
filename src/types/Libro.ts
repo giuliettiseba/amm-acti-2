@@ -1,3 +1,5 @@
+// noinspection JSNonASCIINames,NonAsciiCharacters
+
 export interface Libro {
   id: string;
   titulo: string;

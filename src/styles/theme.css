@@ -7,6 +7,7 @@ body {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     background: var(--color-bg);
     color: var(--color-text);
+    transition: background var(--transition), color var(--transition);
     -webkit-font-smoothing: antialiased;
     min-height: 100dvh;
     display: flex;
@@ -95,3 +96,52 @@ footer {
 
 /* theme.css eliminado: estilos globales ahora se inyectan desde nexusTheme.globalCss en ThemeProvider */
 
+/* NavBar responsive */
+
+.nav-links a { color:var(--color-text-dim); text-decoration:none; padding:.45rem .7rem; border-radius:6px; font-size:.8rem; font-weight:500; display:inline-block; }
+
+.nav-links a:hover { background:var(--color-surface-alt); color:#fff; }
+
+/* Mobile layout */
+@media (max-width: 840px) {
+    .nav-links li { width:100%; }
+  .nav-links a { width:100%; }
+}
+
+/* Desktop layout */
+@media (min-width: 841px) {
+}
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(-4px);} to { opacity:1; transform:translateY(0);} }
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.45;
+  --color-text-dim: #94a3b8;
+  --color-bg: #0f1115;
+  --color-text: #f1f5f9;
+  --color-surface: #1f2430;
+  --color-surface-alt: #27303d;
+  --color-primary: #7e22ce;
+  --color-primary-hover: #6d28d9;
+  --color-border: #323c4a;
+  --radius-md: 8px;
+  --radius-sm: 4px;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,.25);
+  --shadow-md: 0 4px 12px -2px rgba(0,0,0,.35);
+  --space-2: .5rem;
+  --space-4: 1rem;
+  --transition: 160ms cubic-bezier(.4,0,.2,1);
+}
+
+.notification button { background: transparent; border: none; color: var(--color-text-dim); cursor: pointer; font-size: 1rem; line-height: 1; margin-left: auto; }
+.notification button:hover { color: var(--color-text); }

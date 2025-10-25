@@ -7,7 +7,6 @@ import Notifications from './components/Notifications'
 import {ErrorBoundary} from './components/ErrorBoundary'
 import {ThemeProvider} from './theme/ThemeProvider'
 import {MuiThemeWrapper} from './theme/MuiThemeWrapper';
-import './styles/design-system.css'
 import {OrderProvider} from './providers/OrderProvider'
 import {NotificationProvider} from "./providers/NotificationProvider.tsx";
 

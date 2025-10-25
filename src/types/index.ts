@@ -16,3 +16,9 @@ export type { RoomReservation } from './RoomReservation';
 
 export type { LoginResponse } from './LoginResponse';
 export type { LoginCredentials } from './LoginCredentials';
+
+export type { NotificationType, NotificationItem } from './NotificationItem';
+export type { NotificationContextValue } from './NotificationContextValue';
+export type { AuthContextValue } from './AuthContextValue';
+export type { CarritoItem } from './CarritoItem';
+export type { OrderContextType } from './OrderContextType';

@@ -9,7 +9,7 @@ interface EmptyStateProps {
   className?: string;
 }
 
-export function EmptyState({ title = 'Sin datos', description, icon, action, className = '' }: EmptyStateProps) {
+export default function EmptyState({ title = 'Sin datos', description, icon, action, className = '' }: EmptyStateProps) {
   return (
     <Card className={className} sx={{ textAlign: 'center' }}>
       <CardContent sx={{ py: 4, px: 3 }}>
