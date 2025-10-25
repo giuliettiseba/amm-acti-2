@@ -41,6 +41,13 @@ export const nexusThemeLight: nexusThemeInterface = {
     }
 };
 
+// Alias para compatibilidad hacia atrás
+/**
+ * Default export for backward compatibility (dark theme).
+ * @type {nexusThemeInterface}
+ */
+export const nexusTheme: nexusThemeInterface = nexusThemeDark; // default export kept for backward compatibility
+
 /**
  * Object mapping theme mode to the corresponding theme palette.
  * @type {{dark: nexusThemeInterface, light: nexusThemeInterface}}
@@ -49,16 +56,3 @@ export const themesByMode = {
     dark: nexusThemeDark,
     light: nexusThemeLight
 };
-
-// Alias para compatibilidad hacia atrás
-/**
- * Default export for backward compatibility (dark theme).
- * @type {nexusThemeInterface}
- */
-export const nexusTheme = nexusThemeDark; // default export kept for backward compatibility
-
-/**
- * Type for theme mode.
- * @typedef {'dark' | 'light'} ThemeMode
- */
-export type ThemeMode = 'dark' | 'light';

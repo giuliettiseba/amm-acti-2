@@ -1,15 +1,48 @@
+/**
+ * GenericCard
+ *
+ * Tarjeta visual reutilizable con efecto glassmorphism, adaptable para productos, libros, salas, etc.
+ * Permite mostrar imagen, título, subtítulo, categoría (como chip flotante), descripción, precio y acciones.
+ * Incluye animación de aparición, botón de acción principal, botón de detalles y soporte para skeleton.
+ *
+ * @component
+ * @param props - Propiedades de la tarjeta.
+ * @param props.title - Título principal de la tarjeta.
+ * @param props.subtitle - Subtítulo o autor/categoría secundaria.
+ * @param props.category - Categoría o etiqueta, mostrada como chip flotante.
+ * @param props.description - Descripción breve o sinopsis.
+ * @param props.price - Precio numérico (opcional).
+ * @param props.image - URL de la imagen de portada (opcional).
+ * @param props.addToCart - Callback para acción principal (añadir al carrito/reservar).
+ * @param props.addToCartText - Texto del botón de acción principal.
+ * @param props.showDetails - Callback para mostrar detalles (opcional).
+ * @param props.isVisible - Si la tarjeta debe mostrarse (para animación).
+ * @param props.skeleton - Si debe renderizarse como skeleton (carga).
+ * @param props.children - Elementos hijos adicionales (opcional).
+ *
+ * @returns {JSX.Element} Tarjeta visual con glass effect y acciones.
+ *
+ * @example
+ * <GenericCard
+ *   title="Libro de Ejemplo"
+ *   subtitle="Autor Ejemplo"
+ *   category="Novela"
+ *   description="Una sinopsis breve."
+ *   price={19.99}
+ *   image="/portada.jpg"
+ *   addToCart={() => {}}
+ *   addToCartText="Añadir al carrito"
+ *   showDetails={() => {}}
+ *   isVisible={true}
+ * />
+ */
+
 import {alpha, styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Button, Fade, useThemeProps} from "@mui/material";
 import React from "react";
 import type {GenericCardProps} from "../../types/props/GenericCardProps.tsx";
-
-
-interface GenericCardState extends GenericCardProps {
-    // …key value pairs for the internal state that you want to style the slot
-    // but don't want to expose to the users
-    otherValue?: string;
-}
+import type {GenericCardState} from "../../types/GenericCardState.tsx";
 
 
 const GenericCardRoot = styled(Card, {
@@ -191,6 +224,7 @@ export const GenericCard = React.forwardRef<HTMLDivElement, GenericCardProps>(
             price,
             variant,
             isVisible,
+            image,
             category,
             addToCartText,
             addToCart,
@@ -209,26 +243,14 @@ export const GenericCard = React.forwardRef<HTMLDivElement, GenericCardProps>(
 
         return (
             <Fade in={isVisible} timeout={100}>
-                <GenericCardRoot ref={ref} ownerState={ownerState} {...other}
-                >
-                    {(category &&
-                        <GenericCardCategory ownerState={ownerState}>{category}</GenericCardCategory>
-                    )}
-                    <GenericCardImage ownerState={ownerState}
-                                      onClick={showDetails}
-                    />
+                <GenericCardRoot ref={ref} ownerState={ownerState} {...other}>
+                    {(category? <GenericCardCategory ownerState={ownerState}>{category}</GenericCardCategory> : null)}
+                    {image ? <GenericCardImage ownerState={ownerState} onClick={showDetails}/> : null}
                     {title ? <GenericCardTitle ownerState={ownerState}>{title}</GenericCardTitle> : null}
                     {subtitle ? <GenericCardSubtitle ownerState={ownerState}>{subtitle}</GenericCardSubtitle> : null}
-                    {description ?
-                        <GenericCardDescription ownerState={ownerState}>{description}</GenericCardDescription> : null}
-
-                    {(price &&
-                        <GenericCardPrice ownerState={ownerState}>${price?.toFixed(2)}</GenericCardPrice>
-                    )}
-
-                    {(addToCart &&
-                        <Button onClick={addToCartHandler}>{addToCartText || "Agregar Al Carrito"}</Button>
-                    )}
+                    {description ? <GenericCardDescription ownerState={ownerState}>{description}</GenericCardDescription> : null}
+                    {(price ? <GenericCardPrice ownerState={ownerState}>${price?.toFixed(2)}</GenericCardPrice> : null)}
+                    {(addToCart ? <Button onClick={addToCartHandler}>{addToCartText || "Agregar Al Carrito"}</Button> : null)}
                 </GenericCardRoot>
             </Fade>
         );

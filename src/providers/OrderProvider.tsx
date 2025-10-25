@@ -26,21 +26,12 @@ const STORAGE_KEY = 'carrito-pedidos';
 
 /**
  * Provides cart state and actions to descendant components via context.
- *
- * @param {object} props
- * @param {ReactNode} props.children - Child components to be wrapped by the provider.
- * @returns {JSX.Element} The provider component wrapping its children.
  */
 export const OrderProvider = ({children}: { children: ReactNode }) => {
-    /**
-     * State for the cart items.
-     * @type {[CarritoItem[], Function]}
-     */
+    // State for the cart items.
     const [carrito, setCarrito] = useState<CarritoItem[]>([]);
 
-    /**
-     * Notification context for showing user feedback.
-     */
+    // Notification context for showing user feedback.
     const {addNotification} = useNotification();
 
     /**
@@ -61,11 +52,11 @@ export const OrderProvider = ({children}: { children: ReactNode }) => {
     /**
      * Adds a product to the cart or updates its quantity if it already exists.
      *
-     * @param {ProductoCafe} producto - The product to add.
-     * @param {number} [cantidad=1] - Quantity to add.
-     * @returns {'added' | 'updated'} Whether the product was added or updated.
+     * @param producto - The product to add.
+     * @param cantidad - Quantity to add (default: 1).
+     * @returns Whether the product was added or updated.
      */
-    const agregarProducto = (producto: ProductoCafe, cantidad = 1): 'added' | 'updated' => {
+    const agregarProducto = (producto: ProductoCafe, cantidad: number = 1): 'added' | 'updated' => {
         let result: 'added' | 'updated';
         setCarrito(prev => {
             const idx = prev.findIndex(
@@ -92,11 +83,11 @@ export const OrderProvider = ({children}: { children: ReactNode }) => {
     /**
      * Adds a book to the cart or updates its quantity if it already exists.
      *
-     * @param {Libro} libro - The book to add.
-     * @param {number} [cantidad=1] - Quantity to add.
-     * @returns {'added' | 'updated'} Whether the book was added or updated.
+     * @param libro - The book to add.
+     * @param cantidad - Quantity to add (default: 1).
+     * @returns Whether the book was added or updated.
      */
-    const agregarLibro = (libro: Libro, cantidad = 1): 'added' | 'updated' => {
+    const agregarLibro = (libro: Libro, cantidad: number = 1): 'added' | 'updated' => {
         let result: 'added' | 'updated';
         setCarrito(prev => {
             const idx = prev.findIndex(

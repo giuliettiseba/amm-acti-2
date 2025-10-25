@@ -1,5 +1,5 @@
-import type {ThemeMode} from "../theme/NexusTheme.ts";
 import type {nexusThemeInterface} from "./NexusThemeInterface.ts";
+import type {ThemeMode} from "./ThemeMode.ts";
 
 export interface ThemeContextType {
     theme: nexusThemeInterface;

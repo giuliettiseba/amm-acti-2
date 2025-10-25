@@ -29,14 +29,12 @@ const AUTH_KEY = 'nexus_auth_user';
 export function AuthProvider({children}: AuthProviderProps) {
     /**
      * State for the current authenticated user.
-     * @type {[User|null, Function]}
      */
     const [user, setUser] = useState<User | null>(null);
     /**
      * State for loading status (e.g., during login or session restore).
-     * @type {[boolean, Function]}
      */
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         // Cargar usuario persistido

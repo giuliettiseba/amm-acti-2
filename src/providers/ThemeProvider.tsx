@@ -22,11 +22,11 @@
  */
 import {useEffect, useMemo, useState} from 'react';
 import {createTheme, CssBaseline, ThemeProvider as MuiThemeProvider} from '@mui/material';
-import type {ThemeMode} from '../theme/NexusTheme.ts';
 import {nexusTheme, themesByMode} from '../theme/NexusTheme.ts';
 import {ThemeContext} from '../context/ThemeContext.tsx';
 import type {ThemeContextType} from '../types/ThemeContextType.ts';
 import type {ThemeProviderProps} from "../types/props/ThemeProviderProps.ts";
+import type {ThemeMode} from "../types/ThemeMode.ts";
 
 /**
  * LocalStorage key for persisting the theme mode.
@@ -36,9 +36,6 @@ const LS_KEY = 'theme-mode';
 
 /**
  * Resolves the initial theme mode based on explicit prop, localStorage, or system preference.
- *
- * @param {ThemeMode} [explicit] - Explicitly provided theme mode.
- * @returns {ThemeMode} The resolved theme mode ('dark' or 'light').
  */
 function resolveInitialMode(explicit?: ThemeMode): ThemeMode {
     if (explicit) return explicit;
@@ -52,15 +49,9 @@ function resolveInitialMode(explicit?: ThemeMode): ThemeMode {
 }
 
 export function ThemeProvider({children, initialTheme, initialMode}: ThemeProviderProps) {
-    /**
-     * State for the current theme mode ('dark' or 'light').
-     * @type {[ThemeMode, Function]}
-     */
+    // State for the current theme mode ('dark' or 'light').
     const [mode, setMode] = useState<ThemeMode>(() => resolveInitialMode(initialMode));
-    /**
-     * State for the current theme object (tokens/colors).
-     * @type {[object, Function]}
-     */
+    // State for the current theme object (tokens/colors).
     const [theme, setThemeState] = useState(() => initialTheme ?? themesByMode[mode] ?? nexusTheme);
 
     useEffect(() => {
@@ -88,7 +79,7 @@ export function ThemeProvider({children, initialTheme, initialMode}: ThemeProvid
      * Memoized context value for theme state and actions.
      * @type {ThemeContextType}
      */
-    const value = useMemo<ThemeContextType>(() => ({
+    const value: ThemeContextType = useMemo<ThemeContextType>(() => ({
         theme,
         mode,
         setMode,
