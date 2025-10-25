@@ -5,7 +5,7 @@ import {AuthProvider} from './providers/AuthProvider'
 
 import Notifications from './components/Notifications'
 import {ErrorBoundary} from './components/ErrorBoundary'
-import {ThemeProvider} from './theme/ThemeProvider'
+import {ThemeProvider} from './providers/ThemeProvider.tsx'
 import {OrderProvider} from './providers/OrderProvider'
 import {NotificationProvider} from "./providers/NotificationProvider.tsx";
 

@@ -1,4 +1,4 @@
-export interface Usuario {
+export interface LoginContext {
     id: string;
     nombre: string;
     email: string;

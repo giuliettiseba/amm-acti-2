@@ -1,19 +1,16 @@
-import React, {Component, type ReactNode} from 'react';
+import React, {Component} from 'react';
 import ErrorBoundaryNotifier from './ErrorBoundaryNotifier';
+import type {ErrorBoundaryProps} from "../types/props/ErrorBoundaryProps.tsx";
 
-interface Props {
-    children: ReactNode
-}
-
-interface State {
+interface ErrorBoundaryState {
     hasError: boolean;
     error?: Error
 }
 
-export class ErrorBoundary extends Component<Props, State> {
-    state: State = {hasError: false};
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+    state: ErrorBoundaryState = {hasError: false};
 
-    static getDerivedStateFromError(error: Error): State {
+    static getDerivedStateFromError(error: Error): ErrorBoundaryState {
         return {hasError: true, error};
     }
 

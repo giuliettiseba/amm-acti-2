@@ -14,11 +14,7 @@ import {Close, Delete} from '@mui/icons-material';
 import {useNavigate} from 'react-router-dom';
 import type {CarritoItem} from "../types";
 import {useOrder} from "../context/OrderContext.tsx";
-
-interface CartDrawerProps {
-    open: boolean;
-    onClose: () => void;
-}
+import type {CartDrawerProps} from "../types/props/CartDrawerProps.tsx";
 
 export default function CartDrawer({open, onClose}: CartDrawerProps) {
     const {carrito, quitarItem, actualizarCantidad, limpiarCarrito} = useOrder();

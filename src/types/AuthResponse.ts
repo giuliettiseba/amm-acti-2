@@ -1,6 +1,6 @@
-import type {Usuario} from './Usuario';
+import type {LoginContext} from './LoginContext.ts';
 
 export interface AuthResponse {
-    usuario: Usuario;
+    usuario: LoginContext;
     token: string;
 }

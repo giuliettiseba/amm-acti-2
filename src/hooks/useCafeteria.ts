@@ -1,32 +1,42 @@
 import {useCallback, useEffect, useState} from 'react';
 import {CafeteriaService} from '../services/cafeteria.service';
-
-import type {CategoriaProducto, ProductoCafe} from '../types';
 import {useNotification} from "../context/NotificationContext.tsx";
-
-interface UseCafeteriaState {
-    categorias: CategoriaProducto[] | null;
-    productos: ProductoCafe[] | null;
-    loadingCategorias: boolean;
-    loadingProductos: boolean;
-    errorCategorias: string | null;
-    errorProductos: string | null;
-}
-
-interface UseCafeteriaActions {
-    refetchCategorias: () => Promise<void>;
-    refetchProductos: () => Promise<void>;
-    loadProductosByCategoria: (categoria: string) => Promise<void>;
-    clearProductos: () => void;
-}
+import type {UseCafeteriaState} from "../types/states/useCafeteriaState.ts";
+import type {UseCafeteriaActions} from "../types/useCafeteriaActions.ts";
 
 /**
- * Hook personalizado para gestionar el estado de la cafetería
- * Maneja categorías y productos con sus respectivos estados de carga y errores
+ * Custom React hook to manage cafeteria state, including categories and products.
+ *
+ * Handles loading, error, and data states for both categories and products.
+ * Provides actions to refetch categories, refetch products, load products by category, and clear products.
+ * Notifies the user via the notification context on errors.
+ *
+ * @returns {UseCafeteriaState & UseCafeteriaActions} Combined state and actions for cafeteria management.
+ *
+ * @example
+ * const {
+ *   categorias,
+ *   productos,
+ *   loadingCategorias,
+ *   loadingProductos,
+ *   errorCategorias,
+ *   errorProductos,
+ *   refetchCategorias,
+ *   refetchProductos,
+ *   loadProductosByCategoria,
+ *   clearProductos
+ * } = useCafeteria();
  */
 export function useCafeteria(): UseCafeteriaState & UseCafeteriaActions {
+    /**
+     * Adds a notification to the global notification context.
+     * Used to display error messages to the user.
+     */
     const {addNotification} = useNotification();
 
+    /**
+     * State object for cafeteria categories and products, including loading and error states.
+     */
     const [state, setState] = useState<UseCafeteriaState>({
         categorias: null,
         productos: null,
@@ -36,7 +46,11 @@ export function useCafeteria(): UseCafeteriaState & UseCafeteriaActions {
         errorProductos: null,
     });
 
-    // Cargar categorías
+    /**
+     * Loads the list of cafeteria categories from the CafeteriaService.
+     * Updates loading and error state accordingly.
+     * Notifies the user if an error occurs.
+     */
     const loadCategorias = useCallback(async () => {
         setState(prev => ({...prev, loadingCategorias: true, errorCategorias: null}));
         try {
@@ -52,7 +66,13 @@ export function useCafeteria(): UseCafeteriaState & UseCafeteriaActions {
         }
     }, [addNotification]);
 
-    // Cargar productos por categoría
+    /**
+     * Loads the list of products for a given category from the CafeteriaService.
+     * Updates loading and error state accordingly.
+     * Notifies the user if an error occurs.
+     *
+     * @param {string} categoria - The category to load products for.
+     */
     const loadProductosByCategoria = useCallback(async (categoria: string) => {
         setState(prev => ({...prev, loadingProductos: true, errorProductos: null}));
         try {
@@ -68,24 +88,35 @@ export function useCafeteria(): UseCafeteriaState & UseCafeteriaActions {
         }
     }, [addNotification]);
 
-    // Refetch categorías
+    /**
+     * Refetches the list of categories by calling loadCategorias.
+     * Can be used to manually refresh categories from a component.
+     */
     const refetchCategorias = useCallback(async () => {
         await loadCategorias();
     }, [loadCategorias]);
 
-    // Refetch productos (requiere que ya haya una categoría seleccionada)
+    /**
+     * Refetches the list of products for the currently selected category.
+     * This function only sets the loading state; the actual fetch should be handled by the component.
+     */
     const refetchProductos = useCallback(async () => {
         // Esta función será llamada desde el componente que sabe qué categoría recargar
         // Por ahora solo actualiza el estado de loading
         setState(prev => ({...prev, loadingProductos: true, errorProductos: null}));
     }, []);
 
-    // Limpiar productos
+    /**
+     * Clears the products and any associated error from the state.
+     * Useful when changing categories or resetting the product list.
+     */
     const clearProductos = useCallback(() => {
         setState(prev => ({...prev, productos: null, errorProductos: null}));
     }, []);
 
-    // Cargar categorías al montar el hook
+    /**
+     * Loads categories when the hook is first mounted.
+     */
     useEffect(() => {
         loadCategorias().then(r => console.debug('Categorías cargadas' + r));
     }, [loadCategorias]);

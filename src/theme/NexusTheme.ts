@@ -1,10 +1,10 @@
-// Nexus triadic theme palette (Purple / Orange / Green)
-// Se centralizan tokens para uso programático y para inyectar como CSS variables.
+import type {nexusThemeInterface} from "../types/NexusThemeInterface.ts";
 
-
-// Se añaden tokens adicionales: spacingScale, transition, maxWidth y globalCss.
-// Los valores se convierten a variables CSS en ThemeProvider.
-export const nexusThemeDark = {
+/**
+ * Dark mode theme palette for the Nexus design system.
+ * @type {nexusThemeInterface}
+ */
+export const nexusThemeDark: nexusThemeInterface = {
     palette: {
         primary: '#0ebd40',          // purple base
         secondary: '#a534ef',        // orange base
@@ -21,35 +21,44 @@ export const nexusThemeDark = {
 
 };
 
-export const nexusThemeLight = {
+/**
+ * Light mode theme palette for the Nexus design system.
+ * @type {nexusThemeInterface}
+ */
+export const nexusThemeLight: nexusThemeInterface = {
     palette: {
         primary: '#7e22ce',
-        primaryHover: '#6d28d9',
         secondary: '#f59e0b',
-        secondaryHover: '#d97706',
-        accent: '#16a34a',
-        accentHover: '#15803d',
         danger: '#dc2626',
         warning: '#d97706',
         info: '#5850ec',
         success: '#15803d',
         bg: '#f9fafb',
-        bgAlt: '#f1f5f9',
         surface: '#ffffff',
-        surfaceAlt: '#f3f4f6',
         border: '#d5d9e2',
         text: '#1e2230',
         textDim: '#64748b',
-        overlay: 'rgba(0,0,0,.5)'
     }
 };
 
+/**
+ * Object mapping theme mode to the corresponding theme palette.
+ * @type {{dark: nexusThemeInterface, light: nexusThemeInterface}}
+ */
 export const themesByMode = {
     dark: nexusThemeDark,
     light: nexusThemeLight
 };
 
 // Alias para compatibilidad hacia atrás
+/**
+ * Default export for backward compatibility (dark theme).
+ * @type {nexusThemeInterface}
+ */
 export const nexusTheme = nexusThemeDark; // default export kept for backward compatibility
-export type NexusTheme = typeof nexusThemeDark;
+
+/**
+ * Type for theme mode.
+ * @typedef {'dark' | 'light'} ThemeMode
+ */
 export type ThemeMode = 'dark' | 'light';

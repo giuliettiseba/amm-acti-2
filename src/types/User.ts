@@ -9,4 +9,5 @@ export interface User {
     company?: string;
     nombre?: string; // Alias para compatibilidad con UI
     avatar?: string; // URL del avatar
+
 }

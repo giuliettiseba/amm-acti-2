@@ -1,8 +1,5 @@
 import {useNotification} from "../context/NotificationContext.tsx";
-
-interface ErrorBoundaryNotifierProps {
-    error?: Error;
-}
+import type {ErrorBoundaryNotifierProps} from "../types/props/ErrorBoundaryNotifierProps.tsx";
 
 export default function ErrorBoundaryNotifier({error}: ErrorBoundaryNotifierProps) {
     const {addNotification} = useNotification();

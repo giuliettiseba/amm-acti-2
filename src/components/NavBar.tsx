@@ -25,7 +25,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useAuthContext} from '../context/AuthContext';
 import CartDrawer from './CartDrawer';
 import Badge from '@mui/material/Badge';
-import {useTheme} from "../theme/UseTheme.ts";
+import {useTheme} from '../context/ThemeContext.tsx';
 import {useOrder} from "../context/OrderContext.tsx";
 
 export default function NavBar() {

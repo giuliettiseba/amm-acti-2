@@ -1,12 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
 import type {Libro} from '../types';
 import {getLibroById, getLibros} from '../services/libros.service';
-
-interface LibrosState {
-    data: Libro[] | null;
-    loading: boolean;
-    error: string | null;
-}
+import type {LibrosState} from "../types/states/librosState.ts";
 
 export function useLibros() {
     const [state, setState] = useState<LibrosState>({data: null, loading: true, error: null});

@@ -1,12 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 import {roomsService} from '../services/rooms.service';
-import type {Room} from '../types';
-
-interface RoomsState {
-    data: Room[] | null;
-    loading: boolean;
-    error: string | null;
-}
+import type {RoomsState} from "../types/states/roomsState.ts";
 
 /**
  * Hook para gestionar datos de salas de coworking

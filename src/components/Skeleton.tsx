@@ -1,10 +1,5 @@
 import {Box, Card, CardContent, Grid, Skeleton as MuiSkeleton, Stack} from '@mui/material';
-
-interface CardSkeletonProps {
-    width?: string | number;
-    imageHeight?: number | string;
-    showCategory?: boolean;
-}
+import type {CardSkeletonProps} from "../types/props/CardSkeletonProps.tsx";
 
 export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = true}: CardSkeletonProps) {
     return (

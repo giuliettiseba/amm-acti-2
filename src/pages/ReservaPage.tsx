@@ -8,21 +8,12 @@ import type {SelectChangeEvent} from '@mui/material/Select';
 import {
     Box,
     Button,
-    Card,
-    CardContent,
-    Chip,
-    CircularProgress,
-    Divider,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    TextField,
     Typography
 } from '@mui/material';
-import {ArrowBack, Euro, LocationOn, People, Save} from '@mui/icons-material';
+import {ArrowBack} from '@mui/icons-material';
 import {useNotification} from "../context/NotificationContext.tsx";
+import RoomInfoCard from '../components/RoomInfoCard';
+import ReservaFormCard from '../components/ReservaFormCard';
 
 export default function ReservaPage() {
     const {roomId} = useParams<{ roomId: string }>();
@@ -128,21 +119,6 @@ export default function ReservaPage() {
         }
     };
 
-    const getCapacityColor = (capacity: Room['capacity']) => {
-        switch (capacity) {
-            case '1':
-                return 'default';
-            case '2-4':
-                return 'primary';
-            case '5-8':
-                return 'secondary';
-            case '9+':
-                return 'success';
-            default:
-                return 'default';
-        }
-    };
-
     if (!room) {
         return (
             <Box sx={{maxWidth: 800, mx: 'auto', textAlign: 'center', py: 4}}>
@@ -177,126 +153,18 @@ export default function ReservaPage() {
             </Typography>
 
             {/* Información de la sala */}
-            <Card sx={{mb: 3}}>
-                <CardContent>
-                    <Typography variant="h6" component="div" sx={{fontWeight: 600, mb: 2}}>
-                        {room.name}
-                    </Typography>
-
-                    <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2}}>
-                        <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
-                            <People fontSize="small" color="action"/>
-                            <Chip
-                                label={`${room.capacity} personas`}
-                                color={getCapacityColor(room.capacity)}
-                                size="small"
-                                variant="outlined"
-                            />
-                        </Box>
-
-                        <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
-                            <LocationOn fontSize="small" color="action"/>
-                            <Typography variant="body2" color="text.secondary">
-                                Planta {room.planta}
-                            </Typography>
-                        </Box>
-
-                        <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
-                            <Euro fontSize="small" color="action"/>
-                            <Typography variant="body1" sx={{fontWeight: 500}}>
-                                €{room.precio}/hora
-                            </Typography>
-                        </Box>
-                    </Box>
-                </CardContent>
-            </Card>
+            <RoomInfoCard room={room} />
 
             {/* Formulario de reserva */}
-            <Card>
-                <CardContent>
-                    <Typography variant="h6" component="div" sx={{fontWeight: 600, mb: 3}}>
-                        Detalles de la Reserva
-                    </Typography>
-
-                    <form onSubmit={handleSubmit}>
-                        <Box sx={{display: 'flex', flexDirection: 'column', gap: 3}}>
-                            <Box sx={{display: 'grid', gridTemplateColumns: {xs: '1fr', sm: '1fr 1fr'}, gap: 2}}>
-                                <TextField
-                                    label="Fecha y hora de inicio"
-                                    type="datetime-local"
-                                    value={formData.startDate}
-                                    onChange={(e) => handleInputChange('startDate', e.target.value)}
-                                    required
-                                    slotProps={{
-                                        inputLabel: {shrink: true},
-                                        htmlInput: {
-                                            min: new Date().toISOString().slice(0, 16)
-                                        }
-                                    }}
-                                />
-
-                                <TextField
-                                    label="Fecha y hora de fin"
-                                    type="datetime-local"
-                                    value={formData.endDate}
-                                    onChange={(e) => handleInputChange('endDate', e.target.value)}
-                                    required
-                                    slotProps={{
-                                        inputLabel: {shrink: true},
-                                        htmlInput: {
-                                            min: formData.startDate || new Date().toISOString().slice(0, 16)
-                                        }
-                                    }}
-                                />
-                            </Box>
-
-                            <FormControl>
-                                <InputLabel>Preferencias adicionales</InputLabel>
-                                <Select
-                                    multiple
-                                    value={formData.additionalPreferences}
-                                    onChange={handlePreferencesChange}
-                                    input={<OutlinedInput label="Preferencias adicionales"/>}
-                                    variant="outlined"
-                                    renderValue={(selected) => (
-                                        <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
-                                            {selected.map((value) => (
-                                                <Chip key={value} label={value} size="small"/>
-                                            ))}
-                                        </Box>
-                                    )}
-                                >
-                                    {preferencesOptions.map((preference) => (
-                                        <MenuItem key={preference} value={preference}>
-                                            {preference}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-
-                            <Divider/>
-
-                            <Box sx={{display: 'flex', gap: 2, justifyContent: 'flex-end'}}>
-                                <Button
-                                    variant="outlined"
-                                    onClick={() => navigate('/coworking')}
-                                    disabled={loading}
-                                >
-                                    Cancelar
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    disabled={loading}
-                                    startIcon={loading ? <CircularProgress size={16}/> : <Save/>}
-                                >
-                                    {loading ? 'Reservando...' : 'Confirmar Reserva'}
-                                </Button>
-                            </Box>
-                        </Box>
-                    </form>
-                </CardContent>
-            </Card>
+            <ReservaFormCard
+                loading={loading}
+                formData={formData}
+                handleInputChange={handleInputChange}
+                handlePreferencesChange={handlePreferencesChange}
+                handleSubmit={handleSubmit}
+                preferencesOptions={preferencesOptions}
+                navigate={navigate}
+            />
         </Box>
     );
 }

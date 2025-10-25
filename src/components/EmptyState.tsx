@@ -1,13 +1,5 @@
-import type {ReactNode} from 'react';
 import {Box, Card, CardContent, Typography} from '@mui/material';
-
-interface EmptyStateProps {
-    title?: string;
-    description?: string;
-    icon?: ReactNode;
-    action?: ReactNode; // botón o enlace
-    className?: string;
-}
+import type {EmptyStateProps} from "../types/props/EmptyStateProps.tsx";
 
 export default function EmptyState({title = 'Sin datos', description, icon, action, className = ''}: EmptyStateProps) {
     return (

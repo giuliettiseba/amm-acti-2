@@ -1,6 +1,6 @@
-import {Box, Button, Card, CardContent, Typography} from '@mui/material';
-import {Link} from 'react-router-dom';
-import {LocalCafe, MenuBook, Work} from '@mui/icons-material';
+import {Box, Typography} from '@mui/material';
+import {MenuBook, Work, LocalCafe} from '@mui/icons-material';
+import LandingFeatureCard from '../components/LandingFeatureCard';
 
 export default function LandingPage() {
     const features = [
@@ -51,37 +51,13 @@ export default function LandingPage() {
                 mt: 4
             }}>
                 {features.map((feature, index) => (
-                    <Card
+                    <LandingFeatureCard
                         key={index}
-                        sx={{
-                            width: '100%',
-                            maxWidth: 360,
-                            height: 'auto',
-                            display: 'flex',
-                            flexDirection: 'column'
-                        }}
-                    >
-                        <CardContent sx={{textAlign: 'center', flexGrow: 1}}>
-                            <Box sx={{color: 'primary.main', mb: 2}}>
-                                {feature.icon}
-                            </Box>
-                            <Typography variant="h6" component="h3" gutterBottom>
-                                {feature.title}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" component="p">
-                                {feature.description}
-                            </Typography>
-                            <Button
-                                component={Link}
-                                to={feature.link}
-                                variant="contained"
-                                color="primary"
-                                sx={{mt: 2}}
-                            >
-                                Explorar
-                            </Button>
-                        </CardContent>
-                    </Card>
+                        icon={feature.icon}
+                        title={feature.title}
+                        description={feature.description}
+                        link={feature.link}
+                    />
                 ))}
             </Box>
         </Box>

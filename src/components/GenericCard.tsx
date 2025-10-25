@@ -1,20 +1,8 @@
 import {alpha, styled} from '@mui/material/styles';
-import Card, {type CardProps} from '@mui/material/Card';
+import Card from '@mui/material/Card';
 import {Button, Fade, useThemeProps} from "@mui/material";
 import React from "react";
-
-interface GenericCardProps extends CardProps {
-    title: string;
-    subtitle?: string;
-    category?: string;
-    image?: string;
-    description?: string;
-    price?: number;
-    isVisible?: boolean;
-    addToCartText?: string;
-    addToCart?: () => void;
-    showDetails?: () => void;
-}
+import type {GenericCardProps} from "../types/props/GenericCardProps.tsx";
 
 
 interface GenericCardState extends GenericCardProps {
