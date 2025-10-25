@@ -6,7 +6,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemSecondaryAction,
   Button,
   Divider,
   TextField
@@ -14,6 +13,7 @@ import {
 import { Close, Delete } from '@mui/icons-material';
 import { useOrder } from '../hooks/useOrder';
 import { useNavigate } from 'react-router-dom';
+import type {CarritoItem} from '../context/OrderContext';
 
 interface CartDrawerProps {
   open: boolean;
@@ -24,9 +24,9 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
   const { carrito, quitarItem, actualizarCantidad, limpiarCarrito } = useOrder();
   const navigate = useNavigate();
 
-  const getItemTitle = (item: any) =>
+  const getItemTitle = (item: CarritoItem) =>
     item.tipo === 'producto' ? item.producto.name : item.libro.titulo;
-  const getItemPrice = (item: any) =>
+  const getItemPrice = (item: CarritoItem) =>
     item.tipo === 'producto' ? item.producto.price : item.libro.precio;
 
   const total = carrito.reduce(
@@ -55,7 +55,16 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
             </ListItem>
           )}
           {carrito.map((item, idx) => (
-            <ListItem key={idx} alignItems="flex-start" sx={{ gap: 1 }}>
+            <ListItem
+              key={idx}
+              alignItems="flex-start"
+              sx={{ gap: 1 }}
+              secondaryAction={
+                <IconButton edge="end" onClick={() => quitarItem(item)}>
+                  <Delete />
+                </IconButton>
+              }
+            >
               <ListItemText
                 primary={getItemTitle(item)}
                 secondary={
@@ -74,18 +83,13 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                 type="number"
                 size="small"
                 value={item.cantidad}
-                inputProps={{ min: 1, style: { width: 50 } }}
+                slotProps={{ htmlInput: { min: 1, style: { width: 50 } } }}
                 onChange={e => {
                   const val = Math.max(1, Number(e.target.value));
                   actualizarCantidad(item, val);
                 }}
                 sx={{ mr: 1 }}
               />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" onClick={() => quitarItem(item)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>

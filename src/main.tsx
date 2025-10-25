@@ -1,7 +1,7 @@
 import {createRoot} from 'react-dom/client'
 import App from './App.tsx'
 import {BrowserRouter} from 'react-router-dom'
-import {AuthProvider} from './context/AuthContext'
+import {AuthProvider} from './providers/AuthProvider'
 
 import Notifications from './components/Notifications'
 import {ErrorBoundary} from './components/ErrorBoundary'

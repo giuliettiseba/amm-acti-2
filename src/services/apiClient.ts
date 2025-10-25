@@ -42,8 +42,8 @@ async function safeParseError(res: Response): Promise<string | undefined> {
   try {
     const data = await res.json();
     if (data && typeof data === 'object' && 'message' in data) return (data as any).message;
-  } catch (_) {
-    // ignorar
+  } catch (e:any) {
+      console.error('Error parsing error response:', e.message);
   }
   return undefined;
 }

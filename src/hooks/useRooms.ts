@@ -1,12 +1,30 @@
-import { useFetchApi } from './useFetchApi';
-import { API_ROUTES } from '../constants/apiRoutes';
+import { useEffect, useState, useCallback } from 'react';
+import { roomsService } from '../services/rooms.service';
 import type { Room } from '../types';
+
+interface RoomsState {
+  data: Room[] | null;
+  loading: boolean;
+  error: string | null;
+}
 
 /**
  * Hook para gestionar datos de salas de coworking
  */
 export const useRooms = () => {
-  return useFetchApi<Room[]>(API_ROUTES.ROOMS, {
-    resourceName: 'Salas'
-  });
+  const [state, setState] = useState<RoomsState>({ data: null, loading: true, error: null });
+
+  const load = useCallback(async () => {
+    setState(prev => ({ ...prev, loading: true, error: null }));
+    try {
+      const data = await roomsService.getRooms();
+      setState({ data, loading: false, error: null });
+    } catch (e: unknown) {
+      setState({ data: null, loading: false, error: e instanceof Error ? e.message : 'Error cargando salas' });
+    }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  return { ...state, refetch: () => load() };
 };

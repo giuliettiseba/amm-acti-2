@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useFetchApi } from '../hooks/useFetchApi';
-import { API_ROUTES } from '../constants/apiRoutes';
+import { useState, useEffect, useMemo } from 'react';
+import { useLibros } from '../hooks/useLibros';
 import { Skeleton } from '../components/Skeleton';
 import { EmptyState } from '../components/EmptyState';
 import CardLibro from '../components/CardLibro';
@@ -31,16 +30,18 @@ export default function CatalogoPage() {
     loading,
     error,
     refetch
-  } = useFetchApi<Libro[]>(API_ROUTES.BOOKS, { resourceName: 'Libros' });
+  } = useLibros();
 
   const showSkeleton = useSkeletonDelay(loading);
 
   // Filtrar libros según término de búsqueda
-  const librosFiltrados = libros?.filter(libro =>
-    libro.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    libro.autor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    libro.categoria?.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
+  const librosFiltrados = useMemo(() => (
+    libros?.filter(libro =>
+      libro.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      libro.autor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      libro.categoria?.toLowerCase().includes(searchTerm.toLowerCase())
+    ) || []
+  ), [libros, searchTerm]);
 
   // Efecto para mostrar libros con animación secuencial
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function CatalogoPage() {
         }, index * 100); // 100ms de delay entre cada elemento
       });
     }
-  }, [loading, showSkeleton, librosFiltrados.length]); // Cambio aquí
+  }, [loading, showSkeleton, librosFiltrados]); // Agregado librosFiltrados como dependencia
 
   // Resetear animaciones al cambiar filtro o cargar
   useEffect(() => {
@@ -71,7 +72,7 @@ export default function CatalogoPage() {
         }, index * 100);
       });
     }
-  }, [searchTerm, librosFiltrados.length, loading, showSkeleton]); // Cambio aquí
+  }, [searchTerm, librosFiltrados, loading, showSkeleton]); // Agregado librosFiltrados como dependencia
 
   return (
     <Box sx={{ maxWidth: 1200,  mx: 'auto' }}>
@@ -96,8 +97,9 @@ export default function CatalogoPage() {
                 <InputAdornment position="start">
                   <Search />
                 </InputAdornment>
-              ),
+              )
             }}
+            variant="outlined"
           />
         </Box>
       </Box>

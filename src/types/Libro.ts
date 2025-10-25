@@ -4,7 +4,7 @@ export interface Libro {
   autor: string;
   sinopsis?: string;
   categoria?: string;
-  precio?: number;
+  precio: number;
   imagen?: string;
   año?: number;
 }
