@@ -1,6 +1,5 @@
 import {createContext} from 'react';
-import type {ProductoCafe} from '../types/ProductoCafe';
-import type {Libro} from '../types/Libro';
+import type {ProductoCafe, Libro} from '../types';
 
 export type CarritoItem =
   | ({ tipo: 'producto'; producto: ProductoCafe } & { cantidad: number })
