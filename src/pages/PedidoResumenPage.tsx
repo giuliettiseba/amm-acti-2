@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useOrder} from '../hooks';
+import {useOrder, useRooms} from '../hooks';
 import {
     Box,
     Button,
@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {QRCodeSVG} from 'qrcode.react';
-import {useRooms} from '../hooks';
 import type {CarritoItem, Room} from '../types';
 
 const generateOrderNumber = () => {

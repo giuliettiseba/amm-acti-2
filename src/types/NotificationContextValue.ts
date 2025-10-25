@@ -1,4 +1,4 @@
-import type { NotificationItem } from './NotificationItem';
+import type {NotificationItem} from './NotificationItem';
 
 export interface NotificationContextValue {
   notifications: NotificationItem[];

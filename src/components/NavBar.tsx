@@ -23,10 +23,10 @@ import {
 import {Close as CloseIcon, DarkMode, LightMode, Logout, Menu as MenuIcon, Person} from '@mui/icons-material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useAuthContext} from '../context/AuthContext';
-import {useTheme} from '../theme/ThemeProvider';
 import CartDrawer from './CartDrawer';
 import {useOrder} from '../hooks';
 import Badge from '@mui/material/Badge';
+import {useTheme} from "../theme/UseTheme.ts";
 
 export default function NavBar() {
   const { isAuthenticated, logout, user } = useAuthContext();

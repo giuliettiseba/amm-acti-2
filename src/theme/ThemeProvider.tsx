@@ -1,56 +1,10 @@
-/* eslint-disable react-refresh/only-export-components */
-import {createContext, type ReactNode, useContext, useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
+import {createTheme, CssBaseline, ThemeProvider as MuiThemeProvider} from '@mui/material';
+import {nexusTheme, themesByMode} from './nexusTheme';
 import type {ThemeMode} from './nexusTheme';
-import {nexusTheme, type NexusTheme, themesByMode} from './nexusTheme';
-import {MuiThemeWrapper} from "./MuiThemeWrapper.tsx";
-
-interface ThemeContextValue {
-    theme: NexusTheme;
-    mode: ThemeMode;
-    setMode: (mode: ThemeMode) => void;
-    toggleMode: () => void;
-    setTheme: (next: Partial<NexusTheme>) => void; // permite overrides parciales
-    resetTheme: () => void;
-}
-
-const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
-
-function camelToKebab(key: string) {
-    return key.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-}
-
-function applyThemeToRoot(theme: NexusTheme, mode?: ThemeMode) {
-    const root = document.documentElement;
-    if (mode) {
-        root.dataset.theme = mode;
-        root.classList.remove('theme-dark', 'theme-light');
-        root.classList.add(`theme-${mode}`);
-    }
-    const {palette, radius, shadow, spacingScale, transition, maxWidth} = theme;
-    Object.entries(palette).forEach(([k, v]) => {
-        root.style.setProperty(`--color-${camelToKebab(k)}`, String(v));
-    });
-    // Fondo y color de texto directos para asegurar repaint inmediato
-    document.body.style.background = palette.bg;
-    document.body.style.color = palette.text;
-    Object.entries(radius).forEach(([k, v]) => {
-        root.style.setProperty(`--radius-${camelToKebab(k)}`, String(v));
-    });
-    Object.entries(shadow).forEach(([k, v]) => {
-        root.style.setProperty(`--shadow-${camelToKebab(k)}`, String(v));
-    });
-    if (spacingScale) {
-        Object.entries(spacingScale).forEach(([k, v]) => root.style.setProperty(`--space-${k}`, String(v)));
-    }
-    if (transition) root.style.setProperty('--transition', String(transition));
-    if (maxWidth) root.style.setProperty('--max-width', String(maxWidth));
-}
-
-interface Props {
-    children: ReactNode;
-    initialTheme?: NexusTheme;
-    initialMode?: ThemeMode
-}
+import type {ThemeProviderProps} from './ThemeProviderProps.ts';
+import ThemeContext from './ThemeContext.tsx';
+import type {ThemeContextValue} from './ThemeContextValue.tsx';
 
 const LS_KEY = 'theme-mode';
 
@@ -59,68 +13,64 @@ function resolveInitialMode(explicit?: ThemeMode): ThemeMode {
     try {
         const stored = localStorage.getItem(LS_KEY) as ThemeMode | null;
         if (stored === 'dark' || stored === 'light') return stored;
-        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     } catch {
         return 'dark';
     }
 }
 
-export function ThemeProvider({children, initialTheme, initialMode}: Props) {
-    const [mode, setModeState] = useState<ThemeMode>(() => resolveInitialMode(initialMode));
-    const [current, setCurrent] = useState<NexusTheme>(() => initialTheme || themesByMode[mode] || nexusTheme);
+export function ThemeProvider({children, initialTheme, initialMode}: ThemeProviderProps) {
+    const [mode, setMode] = useState<ThemeMode>(() => resolveInitialMode(initialMode));
+    const [theme, setThemeState] = useState(() => initialTheme ?? themesByMode[mode] ?? nexusTheme);
 
-    // Cuando cambia modo, actualizamos el theme base salvo que haya overrides manuales previos.
     useEffect(() => {
-        setCurrent(() => themesByMode[mode]); // usar el tema base del modo, descartando palette previa
+        setThemeState(themesByMode[mode] ?? nexusTheme);
         try {
             localStorage.setItem(LS_KEY, mode);
-        } catch { /* persist mode noop */
+        } catch {
+            console.warn('No se pudo guardar el tema en el almacenamiento local');
         }
     }, [mode]);
 
     useEffect(() => {
-        applyThemeToRoot(current, mode);
-    }, [current, mode]);
-
-    // Escuchar cambios del sistema si el usuario no ha elegido explícitamente (solo si no hay localStorage guardado)
-    useEffect(() => {
         try {
-            if (localStorage.getItem(LS_KEY)) return; // usuario ya eligió
+            if (localStorage.getItem(LS_KEY)) return;
             const mq = window.matchMedia('(prefers-color-scheme: dark)');
-            const listener = (e: MediaQueryListEvent) => setModeState(e.matches ? 'dark' : 'light');
-            mq.addEventListener('change', listener);
-            return () => mq.removeEventListener('change', listener);
-        } catch { /* noop */
+            const onChange = (e: MediaQueryListEvent) => setMode(e.matches ? 'dark' : 'light');
+            mq.addEventListener('change', onChange);
+            return () => mq.removeEventListener('change', onChange);
+        } catch {
+            console.warn('No se pudo detectar el tema del sistema');
         }
     }, []);
 
     const value = useMemo<ThemeContextValue>(() => ({
-        theme: current,
+        theme,
         mode,
-        setMode: (m) => setModeState(m),
-        toggleMode: () => setModeState(prev => prev === 'dark' ? 'light' : 'dark'),
-        setTheme: (next) => setCurrent(prev => ({
-            ...prev,
-            ...next,
-            palette: {...prev.palette, ...next.palette},
-            radius: {...prev.radius, ...next.radius},
-            shadow: {...prev.shadow, ...next.shadow}
-        })),
-        resetTheme: () => {
-            const base = themesByMode[mode] || nexusTheme;
-            setCurrent(base);
-        }
-    }), [current, mode]);
+        setMode,
+        toggleMode: () => setMode(prev => (prev === 'dark' ? 'light' : 'dark')),
+    }), [theme, mode]);
 
-    return <ThemeContext.Provider value={value}>
-        <MuiThemeWrapper>
-            {children}
-        </MuiThemeWrapper>
-    </ThemeContext.Provider>;
-}
+    const muiTheme = createTheme({
+        palette: {
+            mode,
+            primary: {main: theme.palette.primary},
+            secondary: {main: theme.palette.secondary},
+            background: {default: theme.palette.bg, paper: theme.palette.surface},
+            text: {primary: theme.palette.text, secondary: theme.palette.textDim},
+            error: {main: theme.palette.danger},
+            warning: {main: theme.palette.warning},
+            info: {main: theme.palette.info},
+            success: {main: theme.palette.success}
+        },
+    });
 
-export function useTheme() {
-    const ctx = useContext(ThemeContext);
-    if (!ctx) throw new Error('useTheme debe usarse dentro de ThemeProvider');
-    return ctx;
+    return (
+        <ThemeContext value={value}>
+            <MuiThemeProvider theme={muiTheme}>
+                <CssBaseline/>
+                {children}
+            </MuiThemeProvider>
+        </ThemeContext>
+    );
 }

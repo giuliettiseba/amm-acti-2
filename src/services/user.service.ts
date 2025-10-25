@@ -1,6 +1,6 @@
 import {apiPost} from './apiClient';
 import {API_ROUTES} from '../constants/apiRoutes';
-import type {User, LoginCredentials, LoginResponse} from '../types';
+import type {LoginCredentials, LoginResponse, User} from '../types';
 
 export const userService = {
     /**

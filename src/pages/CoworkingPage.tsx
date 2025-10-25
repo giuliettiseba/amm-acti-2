@@ -1,14 +1,47 @@
-import {useRooms} from '../hooks';
-import {useSkeletonDelay} from '../hooks';
+import {useRooms, useSkeletonDelay} from '../hooks';
 import EmptyState from '../components/EmptyState';
-import Skeleton from '../components/Skeleton';
-import CardRooms from '../components/CardRooms';
-import {Alert, Box, Button, Card, CardContent, Typography,} from '@mui/material';
+import {Alert, Box, Button, Grid, Typography,} from '@mui/material';
 import {Refresh, Work} from '@mui/icons-material';
+import {GenericCard} from "../components/GenericCard.tsx";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {CardSkeleton} from "../components/Skeleton.tsx";
+
 
 export default function CoworkingPage() {
     const {data: rooms, loading, error, refetch} = useRooms();
     const showSkeleton = useSkeletonDelay(loading);
+    const navigate = useNavigate();
+
+    const [visibleRooms, setVisibleRooms] = useState<number[]>([]);
+
+    useEffect(() => {
+        if (!loading && rooms && rooms.length > 0 && !showSkeleton) {
+            setVisibleRooms([]);
+            rooms.forEach((_, index) => {
+                setTimeout(() => {
+                    setVisibleRooms(prev => [...prev, index]);
+                }, index * 150);
+            });
+        }
+    }, [loading, showSkeleton, rooms]);
+
+    useEffect(() => {
+        if (loading) {
+            setVisibleRooms([]);
+        }
+    }, [loading]);
+
+    useEffect(() => {
+        if (rooms && rooms.length > 0 && !loading && !showSkeleton) {
+            setVisibleRooms([]);
+            rooms.forEach((_, index) => {
+                setTimeout(() => {
+                    setVisibleRooms(prev => [...prev, index]);
+                }, index * 150);
+            });
+        }
+    }, [rooms, loading, showSkeleton]);
 
     return (
         <Box sx={{maxWidth: 1200, mx: 'auto'}}>
@@ -33,60 +66,31 @@ export default function CoworkingPage() {
             )}
 
             {showSkeleton && !error && (
-                <Box sx={{
-                    display: 'grid',
-                    gridTemplateColumns: {
-                        xs: '1fr',
-                        sm: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        md: 'repeat(auto-fit, minmax(320px, 1fr))',
-                        lg: 'repeat(auto-fit, minmax(350px, 1fr))'
-                    },
-                    gap: {xs: 2, sm: 3},
-                    justifyContent: 'center'
-                }}>
-                    {Array.from({length: 6}).map((_, i) => (
-                        <Card key={i} sx={{minHeight: 200}}>
-                            <CardContent>
-                                <Skeleton width="70%" height={20}/>
-                                <Box sx={{mt: 1}}>
-                                    <Skeleton width="40%" height={16}/>
-                                </Box>
-                                <Box sx={{mt: 1}}>
-                                    <Skeleton width="30%" height={14}/>
-                                </Box>
-                                <Box sx={{mt: 1}}>
-                                    <Skeleton width="50%" height={14}/>
-                                </Box>
-                                <Box sx={{mt: 2}}>
-                                    <Skeleton width="100%" height={36}/>
-                                </Box>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </Box>
+                <CardSkeleton/>
             )}
 
             {!showSkeleton && !loading && !error && rooms && rooms.length > 0 && (
-                <Box sx={{
-                    display: 'grid',
-                    gridTemplateColumns: {
-                        xs: '1fr',
-                        sm: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        md: 'repeat(auto-fit, minmax(320px, 1fr))',
-                        lg: 'repeat(auto-fit, minmax(350px, 1fr))'
-                    },
-                    gap: {xs: 2, sm: 3},
-                    justifyContent: 'center'
-                }}>
+
+                <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                     {rooms.map((room, index) => (
-                        <CardRooms
-                            key={room.id}
-                            room={room}
-                            index={index}
-                            delay={150}
-                        />
+                        <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>
+
+                            <GenericCard
+                                itemType={"Libro"}
+                                key={index}
+                                title={room.name}
+                                subtitle={"Planta: " + room.planta}
+                                category={"Capacidad: " + room.capacity}
+                                price={room.precio}
+                                image={room.image}
+                                isVisible={visibleRooms.includes(index)}
+                                addToCartText={"Reservar"}
+                                addToCart={() => navigate(`/reserva/${room.id}`)}
+                            />
+
+                        </Grid>
                     ))}
-                </Box>
+                </Grid>
             )}
 
             {!showSkeleton && !loading && !error && (!rooms || rooms.length === 0) && (

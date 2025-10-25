@@ -1,6 +1,6 @@
-import type { CarritoItem } from './CarritoItem';
-import type { ProductoCafe } from './ProductoCafe';
-import type { Libro } from './Libro';
+import type {CarritoItem} from './CarritoItem';
+import type {ProductoCafe} from './ProductoCafe';
+import type {Libro} from './Libro';
 
 export interface OrderContextType {
   carrito: CarritoItem[];

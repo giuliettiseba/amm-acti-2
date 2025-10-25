@@ -1,15 +1,16 @@
 import {useEffect, useState} from 'react';
-import {useCafeteria, useSkeletonDelay} from '../hooks';
-import GaleriaProductos from '../components/GaleriaProductos';
-import Skeleton from '../components/Skeleton';
+import {useCafeteria, useOrder, useSkeletonDelay} from '../hooks';
 import EmptyState from '../components/EmptyState';
-import {Alert, Box, Button, Card, CardContent, CardMedia, Fade, IconButton, Typography} from '@mui/material';
+import {Alert, Box, Button, Grid, IconButton, Typography} from '@mui/material';
 import {ArrowBack, LocalCafe, Refresh} from '@mui/icons-material';
+import {GenericCard} from "../components/GenericCard.tsx";
+import {CardSkeleton} from "../components/Skeleton.tsx";
 
 export default function CafeteriaPage() {
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<string | null>(null);
     const [visibleCategorias, setVisibleCategorias] = useState<number[]>([]);
     const [visibleProductos, setVisibleProductos] = useState<number[]>([]);
+    const {agregarProducto} = useOrder();
 
     // Usar el hook específico de cafetería
     const {
@@ -82,16 +83,16 @@ export default function CafeteriaPage() {
             <Box sx={{mb: 4, alignItems: 'center', textAlign: 'center'}}>
 
 
-                    <Box sx={{display: 'flex', alignItems: 'center', gap: 2, justifyContent: 'center'}}>
-                        {categoriaSeleccionada && (
-                            <IconButton onClick={handleVolverCategorias} color="primary">
-                                <ArrowBack/>
-                            </IconButton>
-                        )}
-                        <Typography variant="h4" component="h2" sx={{fontWeight: 600, mb: 1}}>
-                            {categoriaSeleccionada ? categoriaSeleccionada : 'Cafetería'}
-                        </Typography>
-                    </Box>
+                <Box sx={{display: 'flex', alignItems: 'center', gap: 2, justifyContent: 'center'}}>
+                    {categoriaSeleccionada && (
+                        <IconButton onClick={handleVolverCategorias} color="primary">
+                            <ArrowBack/>
+                        </IconButton>
+                    )}
+                    <Typography variant="h4" component="h2" sx={{fontWeight: 600, mb: 1}}>
+                        {categoriaSeleccionada ? categoriaSeleccionada : 'Cafetería'}
+                    </Typography>
+                </Box>
 
                 <Typography variant="body2" color="text.secondary" sx={{mb: 3}}>
                     {categoriaSeleccionada
@@ -118,85 +119,26 @@ export default function CafeteriaPage() {
             {!categoriaSeleccionada && (
                 <>
                     {showSkeletonCategorias && !errorCategorias && (
-                        <Box sx={{
-                            display: 'grid',
-                            gridTemplateColumns: {
-                                xs: '1fr',
-                                sm: 'repeat(auto-fit, minmax(250px, 1fr))',
-                                md: 'repeat(auto-fit, minmax(280px, 1fr))',
-                                lg: 'repeat(auto-fit, minmax(300px, 1fr))'
-                            },
-                            gap: {xs: 2, sm: 3},
-                            justifyItems: 'center'
-                        }}>
-                            {Array.from({length: 6}).map((_, i) => (
-                                <Card key={i} sx={{
-                                    width: '100%',
-                                    maxWidth: 320,
-                                    height: 280
-                                }}>
-                                    <Skeleton width="100%" height={160}/>
-                                    <CardContent>
-                                        <Skeleton width="70%" height={20}/>
-                                        <Box sx={{mt: 1}}>
-                                            <Skeleton width="100%" height={14}/>
-                                        </Box>
-                                        <Box sx={{mt: 0.5}}>
-                                            <Skeleton width="85%" height={14}/>
-                                        </Box>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </Box>
+                        <CardSkeleton/>
+
                     )}
 
                     {!loadingCategorias && !errorCategorias && categorias && categorias.length > 0 && (
-                        <Box sx={{
-                            display: 'grid',
-                            gridTemplateColumns: {
-                                xs: '1fr',
-                                sm: 'repeat(auto-fit, minmax(250px, 1fr))',
-                                md: 'repeat(auto-fit, minmax(280px, 1fr))',
-                                lg: 'repeat(auto-fit, minmax(300px, 1fr))'
-                            },
-                            gap: {xs: 2, sm: 3},
-                            justifyItems: 'center'
-                        }}>
+                        <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                             {categorias.map((categoria, index) => (
-                                <Fade in={visibleCategorias.includes(index)} key={index} timeout={500}>
-                                    <Card
-                                        sx={{
-                                            width: '100%',
-                                            maxWidth: 320,
-                                            height: 280,
-                                            cursor: 'pointer',
-                                            transition: 'all 0.2s ease-in-out',
-                                            '&:hover': {
-                                                transform: 'translateY(-4px)',
-                                                boxShadow: 3
-                                            }
-                                        }}
-                                        onClick={() => handleCategoriaClick(categoria.nombre)}
-                                    >
-                                        <CardMedia
-                                            component="img"
-                                            height="160"
-                                            image={categoria.imagen}
-                                            alt={categoria.nombre}
-                                            sx={{objectFit: 'cover'}}
-                                        />
-                                        <CardContent>
-                                            <Typography variant="h6" component="div" sx={{fontWeight: 600, mb: 1}}>
-                                                {categoria.nombre}
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary">
-                                                {categoria.descripcion}
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Fade>
+                                <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>
+                                    <GenericCard
+                                        itemType={"Categoría"}
+                                        title={categoria.nombre}
+                                        description={categoria.descripcion}
+                                        image={categoria.imagen}
+                                        isVisible={visibleCategorias.includes(index)}
+                                        showDetails={() => handleCategoriaClick(categoria.nombre)}
+                                    />
+
+                                </Grid>
                             ))}
-                        </Box>
+                        </Grid>
                     )}
 
                     {!loadingCategorias && !errorCategorias && (!categorias || categorias.length === 0) && (
@@ -218,40 +160,32 @@ export default function CafeteriaPage() {
             {categoriaSeleccionada && (
                 <>
                     {showSkeletonProductos && !errorProductos && (
-                        <Box sx={{
-                            display: 'grid',
-                            gridTemplateColumns: {
-                                xs: '1fr',
-                                sm: 'repeat(auto-fit, minmax(200px, 1fr))',
-                                md: 'repeat(auto-fit, minmax(240px, 1fr))',
-                                lg: 'repeat(auto-fit, minmax(280px, 1fr))'
-                            },
-                            gap: {xs: 2, sm: 3},
-                            justifyItems: 'center'
-                        }}>
-                            {Array.from({length: 8}).map((_, i) => (
-                                <Card key={i} sx={{
-                                    width: '100%',
-                                    maxWidth: 280,
-                                    height: 300
-                                }}>
-                                    <Skeleton width="100%" height={180}/>
-                                    <CardContent>
-                                        <Skeleton width="80%" height={18}/>
-                                        <Box sx={{mt: 1}}>
-                                            <Skeleton width="60%" height={14}/>
-                                        </Box>
-                                        <Box sx={{mt: 1}}>
-                                            <Skeleton width="40%" height={16}/>
-                                        </Box>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </Box>
+                        <CardSkeleton/>
                     )}
 
                     {!loadingProductos && !errorProductos && productos && productos.length > 0 && (
-                        <GaleriaProductos productos={productos} visibleItems={visibleProductos}/>
+                        <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
+                            {productos.map((producto, index) => (
+                                <Grid key={index} size={{xs: 2, sm: 4, md: 4}}>
+                                    <GenericCard
+                                        key={producto.id}
+                                        itemType={"Producto"}
+                                        title={producto.name}
+                                        subtitle={producto.category}
+                                        description={producto.description}
+                                        price={producto.price}
+                                        image={producto.image}
+                                        showDetails={() => {
+
+                                        }}
+                                        addToCart={() => agregarProducto(producto)}
+                                        isVisible={visibleProductos.includes(index)}
+                                    />
+
+                                </Grid>
+                            ))}
+                        </Grid>
+
                     )}
 
                     {!loadingProductos && !errorProductos && (!productos || productos.length === 0) && (
