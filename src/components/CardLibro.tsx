@@ -81,7 +81,7 @@ export default function CardLibro({ libro, isVisible, onClick }: CardLibroProps)
 
             <Button
               size="small"
-              variant="outlined"
+              variant="contained"
               sx={{ fontSize: '0.75rem', ml: 1 }}
               onClick={e => {
                 e.stopPropagation();

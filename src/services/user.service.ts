@@ -1,43 +1,19 @@
-import {apiGet, apiPost} from './apiClient';
+import {apiPost} from './apiClient';
 import {API_ROUTES} from '../constants/apiRoutes';
-import type {User} from '../types';
-
-export interface LoginCredentials {
-  username: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  user: User;
-  token: string;
-}
+import type {User, LoginCredentials, LoginResponse} from '../types';
 
 export const userService = {
-  /**
-   * Obtiene todos los usuarios
-   */
-  async getUsers(): Promise<User[]> {
-    return apiGet<User[]>(API_ROUTES.USERS);
-  },
+    /**
+     * Autenticación de usuario
+     */
+    async login(credentials: LoginCredentials): Promise<LoginResponse> {
+        return apiPost<LoginResponse>(API_ROUTES.USER_LOGIN, credentials);
+    },
 
-  /**
-   * Autenticación de usuario
-   */
-  async login(credentials: LoginCredentials): Promise<LoginResponse> {
-    return apiPost<LoginResponse>(API_ROUTES.USER_LOGIN, credentials);
-  },
-
-  /**
-   * Crea un nuevo usuario
-   */
-  async createUser(user: Omit<User, 'id'>): Promise<User> {
-    return apiPost<User>(API_ROUTES.USERS, user);
-  },
-
-  /**
-   * Actualiza un usuario existente
-   */
-  async updateUser(id: number, user: Partial<Omit<User, 'id'>>): Promise<User> {
-    return apiPost<User>(API_ROUTES.USER_BY_ID(id), user);
-  }
+    /**
+     * Crea un nuevo usuario
+     */
+    async createUser(user: Omit<User, 'id'>): Promise<User> {
+        return apiPost<User>(API_ROUTES.USERS, user);
+    },
 };

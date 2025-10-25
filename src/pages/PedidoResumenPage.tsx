@@ -23,7 +23,8 @@ import {useRooms} from '../hooks/useRooms';
 import type {Room} from '../types';
 
 const generateOrderNumber = () => {
-  return 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+  // Use slice instead of deprecated substr
+  return 'ORD-' + Math.random().toString(36).slice(2, 11).toUpperCase();
 };
 
 export default function PedidoResumenPage() {

@@ -30,10 +30,10 @@ export default function LandingPage() {
         <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 600 }}>
           Librería Universitaria Nexus
         </Typography>
-        <Typography variant="h5" color="text.secondary" paragraph>
+        <Typography variant="h5" color="text.secondary" component="p" gutterBottom sx={{ fontWeight: 400 }}>
           Bienvenido/a a la plataforma integral que combina librería, zona de co-working y cafetería.
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography variant="body1" color="text.secondary" component="p">
           Explora el catálogo, reserva un espacio o disfruta de nuestra cafetería.
         </Typography>
       </Box>
@@ -68,7 +68,7 @@ export default function LandingPage() {
               <Typography variant="h6" component="h3" gutterBottom>
                 {feature.title}
               </Typography>
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body2" color="text.secondary" component="p">
                 {feature.description}
               </Typography>
               <Button

@@ -39,7 +39,7 @@ export const nexusThemeDark = {
   spacingScale: { 1: '.25rem', 2: '.5rem', 3: '.75rem', 4: '1rem', 5: '1.5rem', 6: '2rem' },
   transition: '160ms cubic-bezier(.4,0,.2,1)',
   maxWidth: '1120px',
-  spacing: (factor: number) => `${0.25 * factor}rem`,
+
 };
 
 export const nexusThemeLight = {
@@ -68,7 +68,7 @@ export const nexusThemeLight = {
   spacingScale: { 1: '.25rem', 2: '.5rem', 3: '.75rem', 4: '1rem', 5: '1.5rem', 6: '2rem' },
   transition: '160ms cubic-bezier(.4,0,.2,1)',
   maxWidth: '1120px',
-  spacing: (factor: number) => `${0.25 * factor}rem`,
+
 };
 
 export const themesByMode = {

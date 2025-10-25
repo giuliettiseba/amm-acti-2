@@ -87,7 +87,7 @@ export function useCafeteria(): UseCafeteriaState & UseCafeteriaActions {
 
   // Cargar categorías al montar el hook
   useEffect(() => {
-    loadCategorias();
+    loadCategorias().then(r => console.log('Categorías cargadas' + r));
   }, [loadCategorias]);
 
   return {

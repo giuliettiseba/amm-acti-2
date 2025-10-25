@@ -13,3 +13,6 @@ export type { ProductoCafe } from './ProductoCafe';
 // Tipos para salas de coworking
 export type { Room } from './Room';
 export type { RoomReservation } from './RoomReservation';
+
+export type { LoginResponse } from './LoginResponse';
+export type { LoginCredentials } from './LoginCredentials';

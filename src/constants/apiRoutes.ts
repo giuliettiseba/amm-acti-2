@@ -3,7 +3,6 @@
 
 export const API_ROUTES = {
   BOOKS: '/books',
-  BOOK_BY_ID: (id: string) => `/books/${id}`,
   LOGIN: '/login',
   COWORKING: '/coworking',
   MENU: '/products',
@@ -11,8 +10,6 @@ export const API_ROUTES = {
   ROOMS: '/rooms',
   ROOM_RESERVATION: '/roomreservation',
   USERS: '/users',
-  USER_BY_ID: (id: number) => `/users/${id}`,
   USER_LOGIN: '/users/login'
 } as const;
 
-export type ApiRouteKey = keyof typeof API_ROUTES;

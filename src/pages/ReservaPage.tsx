@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useRooms} from '../hooks/useRooms';
 import {roomsService} from '../services/rooms.service';

@@ -83,12 +83,14 @@ export default function CatalogoPage() {
             placeholder="Buscar por título, autor o categoría..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              )
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                )
+              }
             }}
             variant="outlined"
           />
