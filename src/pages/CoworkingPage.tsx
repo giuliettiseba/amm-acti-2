@@ -1,12 +1,28 @@
+/**
+ * CoworkingPage
+ *
+ * Página que muestra la lista de salas de co-working disponibles.
+ *
+ * - Muestra un header con título y descripción.
+ * - Muestra un estado de carga con esqueletos (CardSkeleton) mientras se obtienen los datos.
+ * - Si hay error, muestra un mensaje de error y un botón para reintentar.
+ * - Si hay salas, las muestra en un grid de tarjetas (GenericCard) con animación de aparición secuencial.
+ * - Si no hay salas, muestra un estado vacío (EmptyState).
+ *
+ * @component
+ * @returns {JSX.Element} Página de salas de co-working con tarjetas y manejo de estados.
+ *
+ * @example
+ * <CoworkingPage />
+ */
 import {useRooms, useSkeletonDelay} from '../hooks';
 import EmptyState from '../components/EmptyState';
 import {Alert, Box, Button, Grid, Typography,} from '@mui/material';
 import {Refresh, Work} from '@mui/icons-material';
-import {GenericCard} from "../components/GenericCard.tsx";
+import {GenericCard} from "../components/Cards/GenericCard.tsx";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {CardSkeleton} from "../components/Skeleton.tsx";
-
 
 export default function CoworkingPage() {
     const {data: rooms, loading, error, refetch} = useRooms();
@@ -14,6 +30,7 @@ export default function CoworkingPage() {
     const navigate = useNavigate();
     const [visibleRooms, setVisibleRooms] = useState<number[]>([]);
 
+    // Animación secuencial de aparición de tarjetas
     useEffect(() => {
         if (!loading && rooms && rooms.length > 0 && !showSkeleton) {
             setVisibleRooms([]);
@@ -25,12 +42,14 @@ export default function CoworkingPage() {
         }
     }, [loading, showSkeleton, rooms]);
 
+    // Limpia las tarjetas visibles al empezar a cargar
     useEffect(() => {
         if (loading) {
             setVisibleRooms([]);
         }
     }, [loading]);
 
+    // Reaparece animación si cambian rooms, loading o showSkeleton
     useEffect(() => {
         if (rooms && rooms.length > 0 && !loading && !showSkeleton) {
             setVisibleRooms([]);

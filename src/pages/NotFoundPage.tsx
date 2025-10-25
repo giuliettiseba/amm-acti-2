@@ -1,3 +1,16 @@
+/**
+ * NotFoundPage
+ *
+ * Página de error 404 para rutas no encontradas.
+ * Muestra un mensaje de error, un icono y un botón para volver al inicio.
+ * Utiliza Material UI para el diseño y estilos.
+ *
+ * @component
+ * @returns {JSX.Element} Página de error 404 con mensaje y botón de navegación.
+ *
+ * @example
+ * <NotFoundPage />
+ */
 import {Box, Button, Card, CardContent, Typography} from '@mui/material';
 import {Link} from 'react-router-dom';
 import {Error, Home} from '@mui/icons-material';

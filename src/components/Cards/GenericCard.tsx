@@ -2,7 +2,7 @@ import {alpha, styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {Button, Fade, useThemeProps} from "@mui/material";
 import React from "react";
-import type {GenericCardProps} from "../types/props/GenericCardProps.tsx";
+import type {GenericCardProps} from "../../types/props/GenericCardProps.tsx";
 
 
 interface GenericCardState extends GenericCardProps {

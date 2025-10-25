@@ -1,3 +1,19 @@
+/**
+ * PedidoResumenPage
+ *
+ * Página de resumen de pedido para la cafetería/librería.
+ *
+ * Muestra los productos/libros seleccionados en el carrito, permite elegir el método de entrega
+ * (sala de coworking o mostrador), seleccionar sala si corresponde, y confirmar el pedido.
+ * Si el método es mostrador, genera un número de pedido y muestra un QR para recogerlo.
+ * Si el método es coworking, limpia el carrito y muestra un mensaje de éxito.
+ *
+ * @component
+ * @returns {JSX.Element} Página de resumen de pedido con formulario de entrega y QR opcional.
+ *
+ * @example
+ * <PedidoResumenPage />
+ */
 import React, {useState} from 'react';
 import {useRooms} from '../hooks';
 import {
@@ -21,6 +37,10 @@ import {QRCodeSVG} from 'qrcode.react';
 import type {CarritoItem, Room} from '../types';
 import {useOrder} from "../context/OrderContext.tsx";
 
+/**
+ * Genera un número de pedido aleatorio en formato ORD-XXXXXXXXX.
+ * @returns {string} Número de pedido.
+ */
 const generateOrderNumber = () => {
     // Use slice instead of deprecated substr
     return 'ORD-' + Math.random().toString(36).slice(2, 11).toUpperCase();
@@ -35,20 +55,39 @@ export default function PedidoResumenPage() {
     const [showQR, setShowQR] = useState(false);
     const navigate = useNavigate();
 
+    /**
+     * Obtiene el título del ítem del carrito.
+     * @param {CarritoItem} item - Ítem del carrito.
+     * @returns {string} Título del producto o libro.
+     */
     const getItemTitle = (item: CarritoItem) =>
         item.tipo === 'producto'
             ? item.producto.name
             : item.libro.titulo ?? '';
+    /**
+     * Obtiene el precio del ítem del carrito.
+     * @param {CarritoItem} item - Ítem del carrito.
+     * @returns {number} Precio del producto o libro.
+     */
     const getItemPrice = (item: CarritoItem) =>
         item.tipo === 'producto'
             ? item.producto.price
             : item.libro.precio ?? 0;
 
+    /**
+     * Calcula el total del pedido sumando los precios por cantidad.
+     * @type {number}
+     */
     const total = carrito.reduce(
         (sum, item) => sum + getItemPrice(item) * item.cantidad,
         0
     );
 
+    /**
+     * Maneja el envío del formulario de pedido.
+     * Si es mostrador, genera QR; si es coworking, limpia carrito y navega.
+     * @param {React.FormEvent} e - Evento de formulario.
+     */
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (deliveryMethod === 'desk') {

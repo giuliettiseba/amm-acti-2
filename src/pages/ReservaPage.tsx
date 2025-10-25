@@ -1,3 +1,18 @@
+/**
+ * ReservaPage
+ *
+ * Página para reservar una sala de coworking.
+ *
+ * Permite seleccionar una sala, introducir fechas de inicio y fin, preferencias adicionales,
+ * y enviar la reserva. Muestra información de la sala seleccionada y un formulario de reserva.
+ * Utiliza RoomInfoCard y ReservaFormCard para la presentación.
+ *
+ * @component
+ * @returns {JSX.Element} Página de reserva de sala con formulario y detalles de la sala.
+ *
+ * @example
+ * <ReservaPage />
+ */
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useRooms} from '../hooks';
@@ -12,8 +27,8 @@ import {
 } from '@mui/material';
 import {ArrowBack} from '@mui/icons-material';
 import {useNotification} from "../context/NotificationContext.tsx";
-import RoomInfoCard from '../components/RoomInfoCard';
-import ReservaFormCard from '../components/ReservaFormCard';
+import RoomInfoCard from '../components/Cards/RoomInfoCard.tsx';
+import ReservaFormCard from '../components/Cards/ReservaFormCard.tsx';
 
 export default function ReservaPage() {
     const {roomId} = useParams<{ roomId: string }>();
@@ -31,6 +46,10 @@ export default function ReservaPage() {
         additionalPreferences: [] as string[]
     });
 
+    /**
+     * Opciones de preferencias adicionales para la reserva.
+     * @type {string[]}
+     */
     const preferencesOptions = [
         'Proyector',
         'Pizarra',
@@ -42,6 +61,9 @@ export default function ReservaPage() {
         'Mobiliario adicional'
     ];
 
+    /**
+     * Busca y establece la sala seleccionada según el parámetro de la URL.
+     */
     useEffect(() => {
         if (rooms && roomId) {
             const foundRoom = rooms.find(r => r.id === parseInt(roomId));
@@ -49,7 +71,9 @@ export default function ReservaPage() {
         }
     }, [rooms, roomId]);
 
-    // Actualizar userId cuando cambie el usuario autenticado
+    /**
+     * Actualiza el userId en el formulario cuando cambia el usuario autenticado.
+     */
     useEffect(() => {
         if (user) {
             setFormData(prev => ({
@@ -59,6 +83,11 @@ export default function ReservaPage() {
         }
     }, [user]);
 
+    /**
+     * Maneja cambios en los campos del formulario.
+     * @param {string} field - Nombre del campo.
+     * @param {string|number} value - Valor del campo.
+     */
     const handleInputChange = (field: string, value: string | number) => {
         setFormData(prev => ({
             ...prev,
@@ -66,6 +95,10 @@ export default function ReservaPage() {
         }));
     };
 
+    /**
+     * Maneja cambios en las preferencias adicionales.
+     * @param {SelectChangeEvent<string[]>} event - Evento de cambio de selección.
+     */
     const handlePreferencesChange = (event: SelectChangeEvent<string[]>) => {
         const value = event.target.value;
         setFormData(prev => ({
@@ -74,6 +107,11 @@ export default function ReservaPage() {
         }));
     };
 
+    /**
+     * Maneja el envío del formulario de reserva.
+     * Valida los campos y realiza la petición de reserva.
+     * @param {React.FormEvent} e - Evento de formulario.
+     */
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 

@@ -1,8 +1,26 @@
+/**
+ * LandingPage
+ *
+ * Página principal de la aplicación Nexus.
+ *
+ * Muestra una introducción y una selección de funcionalidades principales (catálogo de libros, coworking, cafetería)
+ * mediante tarjetas de acceso rápido. Utiliza el componente LandingFeatureCard para cada funcionalidad destacada.
+ *
+ * @component
+ * @returns {JSX.Element} Página de bienvenida con tarjetas de funcionalidades.
+ *
+ * @example
+ * <LandingPage />
+ */
 import {Box, Typography} from '@mui/material';
 import {MenuBook, Work, LocalCafe} from '@mui/icons-material';
-import LandingFeatureCard from '../components/LandingFeatureCard';
+import LandingFeatureCard from '../components/Cards/LandingFeatureCard.tsx';
 
 export default function LandingPage() {
+    /**
+     * Lista de funcionalidades principales a mostrar en la landing.
+     * @type {Array<{icon: React.ReactNode, title: string, description: string, link: string}>}
+     */
     const features = [
         {
             icon: <MenuBook sx={{fontSize: 40}}/>,

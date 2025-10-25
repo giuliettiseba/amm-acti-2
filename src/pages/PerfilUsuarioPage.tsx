@@ -1,6 +1,20 @@
+/**
+ * PerfilUsuarioPage
+ *
+ * Página de perfil de usuario.
+ *
+ * Muestra la información del usuario autenticado utilizando el componente PerfilUsuarioCard.
+ * Si no hay usuario autenticado, muestra una alerta de advertencia.
+ *
+ * @component
+ * @returns {JSX.Element} Página de perfil de usuario o alerta si no hay sesión.
+ *
+ * @example
+ * <PerfilUsuarioPage />
+ */
 import {useAuthContext} from '../context/AuthContext';
 import {Alert} from '@mui/material';
-import PerfilUsuarioComponent from '../components/PerfilUsuarioComponent';
+import PerfilUsuarioCard from '../components/Cards/PerfilUsuarioCard.tsx';
 
 export default function PerfilUsuarioPage() {
     const {user} = useAuthContext();
@@ -14,6 +28,6 @@ export default function PerfilUsuarioPage() {
     }
 
     return (
-        <PerfilUsuarioComponent />
+        <PerfilUsuarioCard />
     );
 }

@@ -1,3 +1,23 @@
+/**
+ * useSkeletonDelay
+ *
+ * Custom React hook to control the display timing of skeleton loaders during asynchronous loading states.
+ *
+ * This hook prevents flickering by introducing a delay before showing the skeleton and ensures
+ * a minimum visible duration once the skeleton is displayed. It is useful for improving perceived
+ * loading performance and user experience in UI components.
+ *
+ * @param {boolean} loading - Whether the content is currently loading.
+ * @param {UseSkeletonDelayOptions} [options] - Optional configuration for delay and minimum visible time.
+ * @param {number} [options.delayMs=150] - Delay in milliseconds before showing the skeleton.
+ * @param {number} [options.minVisibleMs=300] - Minimum time in milliseconds the skeleton should remain visible.
+ * @returns {boolean} Whether the skeleton should be shown.
+ *
+ * @example
+ * const showSkeleton = useSkeletonDelay(loading, { delayMs: 200, minVisibleMs: 400 });
+ * if (showSkeleton) return <Skeleton />;
+ * return <ActualContent />;
+ */
 import {useEffect, useRef, useState} from 'react';
 import type {UseSkeletonDelayOptions} from "../types/useSkeletonDelayOptions.ts";
 
@@ -62,4 +82,3 @@ export function useSkeletonDelay(loading: boolean, options: UseSkeletonDelayOpti
 
     return showSkeleton;
 }
-

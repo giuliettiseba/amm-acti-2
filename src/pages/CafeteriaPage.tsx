@@ -1,19 +1,39 @@
+/**
+ * CafeteriaPage
+ *
+ * Página de la cafetería que permite explorar categorías de productos y ver productos de cada categoría.
+ *
+ * - Muestra categorías de productos con animación secuencial y permite seleccionar una para ver sus productos.
+ * - Muestra productos de la categoría seleccionada con animación secuencial.
+ * - Permite agregar productos al carrito.
+ * - Maneja estados de carga, error y vacíos para categorías y productos.
+ * - Utiliza GenericCard para mostrar categorías y productos, y CardSkeleton para estados de carga.
+ *
+ * @component
+ * @returns {JSX.Element} Página de la cafetería con categorías, productos y manejo de estados.
+ *
+ * @example
+ * <CafeteriaPage />
+ */
 import {useEffect, useState} from 'react';
 import {useCafeteria, useSkeletonDelay} from '../hooks';
 import EmptyState from '../components/EmptyState';
 import {Alert, Box, Button, Grid, IconButton, Typography} from '@mui/material';
 import {ArrowBack, LocalCafe, Refresh} from '@mui/icons-material';
-import {GenericCard} from "../components/GenericCard.tsx";
+import {GenericCard} from "../components/Cards/GenericCard.tsx";
 import {CardSkeleton} from "../components/Skeleton.tsx";
 import {useOrder} from "../context/OrderContext.tsx";
 
 export default function CafeteriaPage() {
+    // Estado para la categoría seleccionada
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<string | null>(null);
+    // Estado para índices de categorías visibles (animación secuencial)
     const [visibleCategorias, setVisibleCategorias] = useState<number[]>([]);
+    // Estado para índices de productos visibles (animación secuencial)
     const [visibleProductos, setVisibleProductos] = useState<number[]>([]);
     const {agregarProducto} = useOrder();
 
-    // Usar el hook específico de cafetería
+    // Hook de cafetería para obtener categorías y productos
     const {
         categorias,
         productos,
@@ -27,6 +47,7 @@ export default function CafeteriaPage() {
         clearProductos
     } = useCafeteria();
 
+    // Controla el retardo de los esqueletos de carga
     const showSkeletonCategorias = useSkeletonDelay(loadingCategorias);
     const showSkeletonProductos = useSkeletonDelay(loadingProductos);
 
@@ -64,20 +85,33 @@ export default function CafeteriaPage() {
         }
     }, [loadingCategorias, loadingProductos]);
 
+    /**
+     * Maneja el click en una categoría para mostrar sus productos.
+     * @param {string} nombreCategoria - Nombre de la categoría seleccionada.
+     */
     const handleCategoriaClick = async (nombreCategoria: string) => {
         setCategoriaSeleccionada(nombreCategoria);
         await loadProductosByCategoria(nombreCategoria);
     };
 
+    /**
+     * Maneja el click para volver a la vista de categorías.
+     */
     const handleVolverCategorias = () => {
         setCategoriaSeleccionada(null);
         clearProductos();
     };
 
+    /**
+     * Refetch dinámico según la vista actual (categorías o productos).
+     */
     const refetch = categoriaSeleccionada ?
         () => loadProductosByCategoria(categoriaSeleccionada) :
         refetchCategorias;
 
+    /**
+     * Error dinámico según la vista actual (categorías o productos).
+     */
     const error = categoriaSeleccionada ? errorProductos : errorCategorias;
 
     return (

@@ -3,11 +3,30 @@ import {roomsService} from '../services/rooms.service';
 import type {RoomsState} from "../types/states/roomsState.ts";
 
 /**
+ * useRooms
+ *
+ * Custom React hook to fetch and manage coworking room data from the API.
+ * Handles loading, error, and data states, and provides a refetch method.
+ *
+ * @returns {RoomsState & {refetch: () => void}} State object with data, loading, error, and refetch.
+ *
+ * @example
+ * const { data, loading, error, refetch } = useRooms();
+ */
+
+/**
  * Hook para gestionar datos de salas de coworking
  */
 export const useRooms = () => {
+    /**
+     * State for the list of rooms, loading, and error.
+     */
     const [state, setState] = useState<RoomsState>({data: null, loading: true, error: null});
 
+    /**
+     * Loads the list of rooms from the API.
+     * Updates loading and error state accordingly.
+     */
     const load = useCallback(async () => {
         setState(prev => ({...prev, loading: true, error: null}));
         try {

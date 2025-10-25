@@ -1,6 +1,6 @@
 import {Card, CardContent, Typography, Box, Chip} from '@mui/material';
 import {People, LocationOn, Euro} from '@mui/icons-material';
-import type {Room} from '../types';
+import type {Room} from '../../types';
 
 /**
  * RoomInfoCard

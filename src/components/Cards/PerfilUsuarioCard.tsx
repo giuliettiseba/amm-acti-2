@@ -1,5 +1,5 @@
 /**
- * PerfilUsuarioComponent
+ * PerfilUsuarioCard
  *
  * Muestra la información del usuario autenticado en una tarjeta (Card) con opción de cerrar sesión.
  * Utiliza Material UI para el diseño y estilos.
@@ -12,13 +12,13 @@
  * @returns {JSX.Element} Card con los datos del usuario y botón de logout.
  *
  * @example
- * <PerfilUsuarioComponent />
+ * <PerfilUsuarioCard />
  */
 import {Alert, Avatar, Box, Button, Card, CardContent, Divider, Typography} from '@mui/material';
 import {Email, Logout, Person} from '@mui/icons-material';
-import {useAuthContext} from '../context/AuthContext';
+import {useAuthContext} from '../../context/AuthContext.tsx';
 
-export default function PerfilUsuarioComponent() {
+export default function PerfilUsuarioCard() {
     // Obtiene el usuario autenticado y la función de logout del contexto de autenticación
     const {user, logout} = useAuthContext();
 

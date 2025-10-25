@@ -372,6 +372,16 @@ const { mode, toggleMode } = useTheme();
   showDetails={() => handleShowDetails()}
 />
 ```
+
+## 24. Cambios recientes (2025-10-25)
+- Refactorización: todos los componentes de tipo Card (GenericCard, RoomInfoCard, ReservaFormCard, PerfilUsuarioCard, LoginCard, LandingFeatureCard) se movieron a la carpeta `src/components/Cards/` para una mejor organización y escalabilidad.
+- Documentación: se añadieron comentarios JSDoc detallados a todos los hooks personalizados y páginas principales para facilitar el mantenimiento y la comprensión del código.
+- Glassmorphism: el efecto glass se aplica en todas las tarjetas principales usando el sistema de temas y variables CSS.
+- Notificaciones: ahora se muestran en la esquina inferior derecha y son accesibles.
+- Skeletons: se mejoró la gestión de carga progresiva con el hook `useSkeletonDelay` y componentes de skeleton dedicados.
+- Accesibilidad: mejoras en roles ARIA, foco visible y jerarquía semántica.
+- Estructura: se consolidó la arquitectura de carpetas para separar lógica, presentación y estado global.
+
 ---
 **Contacto / Autor:** (Completar)  
 **Demo:** (URL despliegue cuando esté disponible)

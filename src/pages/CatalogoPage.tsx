@@ -1,3 +1,18 @@
+/**
+ * CatalogoPage
+ *
+ * Página de catálogo de libros.
+ *
+ * Permite buscar, filtrar y visualizar libros disponibles en la plataforma.
+ * Incluye barra de búsqueda, animación de aparición secuencial de tarjetas, manejo de estados de carga,
+ * error y vacíos, y muestra detalles de libros en un diálogo modal.
+ *
+ * @component
+ * @returns {JSX.Element} Página de catálogo de libros con búsqueda, tarjetas y detalles.
+ *
+ * @example
+ * <CatalogoPage />
+ */
 import {useEffect, useMemo, useState} from 'react';
 import {useLibros, useSkeletonDelay} from '../hooks';
 import EmptyState from '../components/EmptyState';
@@ -5,7 +20,7 @@ import type {Libro} from '../types';
 import {Alert, Box, Button, Grid, InputAdornment, TextField, Typography} from '@mui/material';
 import {MenuBook, Refresh, Search} from '@mui/icons-material';
 import DialogDetallesLibro from '../components/DialogDetallesLibro';
-import {GenericCard} from "../components/GenericCard.tsx";
+import {GenericCard} from "../components/Cards/GenericCard.tsx";
 import {CardSkeleton} from "../components/Skeleton.tsx";
 import {useOrder} from "../context/OrderContext.tsx";
 
@@ -18,14 +33,33 @@ export default function CatalogoPage() {
         refetch
     } = useLibros();
 
+    /**
+     * Estado para el término de búsqueda.
+     * @type {string}
+     */
     const [searchTerm, setSearchTerm] = useState('');
+    /**
+     * Estado para los índices de libros visibles (animación secuencial).
+     * @type {number[]}
+     */
     const [visibleLibros, setVisibleLibros] = useState<number[]>([]);
+    /**
+     * Estado para el libro seleccionado (para mostrar detalles).
+     * @type {Libro | null}
+     */
     const [selectedLibro, setSelectedLibro] = useState<Libro | null>(null);
+    /**
+     * Estado para controlar la apertura del diálogo de detalles.
+     * @type {boolean}
+     */
     const [dialogOpen, setDialogOpen] = useState(false);
     const {agregarLibro} = useOrder();
     const showSkeleton = useSkeletonDelay(loading);
 
-    // Filtrar libros según término de búsqueda
+    /**
+     * Filtra los libros según el término de búsqueda.
+     * @type {Libro[]}
+     */
     const librosFiltrados = useMemo(() => (
         libros?.filter(libro =>
             libro.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
