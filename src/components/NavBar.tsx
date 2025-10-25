@@ -28,6 +28,9 @@ import Badge from '@mui/material/Badge';
 import {useTheme} from '../context/ThemeContext.tsx';
 import {useOrder} from "../context/OrderContext.tsx";
 
+// new: import css for nav animations
+import './NavBar.css';
+
 export default function NavBar() {
     const {isAuthenticated, logout, user} = useAuthContext();
     const navigate = useNavigate();
@@ -78,13 +81,14 @@ export default function NavBar() {
                     <CloseIcon/>
                 </IconButton>
             </Box>
-            <List>
+            <List className="list-drawer">
                 {navItems.map((item) => (
                     <ListItem key={item.path} disablePadding>
                         <ListItemButton
                             component={NavLink}
                             to={item.path}
                             onClick={handleNavClick}
+                            className="nav-item"
                             sx={{
                                 '&.active': {
                                     backgroundColor: 'primary.main',
@@ -103,17 +107,17 @@ export default function NavBar() {
                     <ListItemButton onClick={() => {
                         toggleMode();
                         handleNavClick();
-                    }}>
+                    }} className="nav-item">
                         <ListItemText primary={mode === 'dark' ? '🌙 Oscuro' : '☀️ Claro'}/>
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
                     {isAuthenticated ? (
-                        <ListItemButton onClick={handleLogout}>
+                        <ListItemButton onClick={handleLogout} className="nav-item">
                             <ListItemText primary="Salir"/>
                         </ListItemButton>
                     ) : (
-                        <ListItemButton component={NavLink} to="/login" onClick={handleNavClick}>
+                        <ListItemButton component={NavLink} to="/login" onClick={handleNavClick} className="nav-item">
                             <ListItemText primary="Login"/>
                         </ListItemButton>
                     )}
@@ -174,6 +178,7 @@ export default function NavBar() {
                                 component={NavLink}
                                 to={item.path}
                                 color="inherit"
+                                className="nav-item"
                                 sx={{
                                     '&.active': {
                                         backgroundColor: 'primary.main',
@@ -227,7 +232,7 @@ export default function NavBar() {
                                 </Avatar>
                             </IconButton>
                         ) : (
-                            <Button color="primary" variant="contained" component={NavLink} to="/login">
+                            <Button color="primary" variant="contained" component={NavLink} to="/login" className="nav-item">
                                 Login
                             </Button>
                         )}
