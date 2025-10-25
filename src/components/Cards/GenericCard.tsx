@@ -144,22 +144,31 @@ const GenericCardRoot = styled(Card, {
 }));
 
 // Image slot: uses ownerState.image as background
-const GenericCardImage = styled('div')<{ ownerState: GenericCardState }>(({ownerState, theme}) => ({
-    width: '100%',
-    height: 160,
-    borderRadius: theme.shape.borderRadius,
-    overflow: 'hidden',
-    // use background palette so the fallback matches theme
-    backgroundColor: theme.palette.background.default,
-    backgroundImage: ownerState?.image ? `url(${ownerState.image})` : undefined,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    cursor: 'pointer',
-    transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-    '&:hover': {
-        transform: 'scale(1.08)',
-    },
-}));
+const GenericCardImage = styled('div')<{ ownerState: GenericCardState }>(({ownerState, theme}) => {
+    const isSvg = ownerState?.image?.toLowerCase().endsWith('.svg');
+    return {
+        width: '100%',
+        height: 160,
+        borderRadius: theme.shape.borderRadius,
+        overflow: 'hidden',
+        // use background palette so the fallback matches theme
+        backgroundColor: theme.palette.background.default,
+        backgroundImage: ownerState?.image ? `url(${ownerState.image})` : undefined,
+        backgroundSize: isSvg ? 'contain' : 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        cursor: 'pointer',
+        transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        // If SVG, apply primary color filter
+        ...(isSvg && {
+            filter: `brightness(0) saturate(100%) invert(${theme.palette.mode === 'dark' ? '70%' : '40%'}) sepia(100%) hue-rotate(${theme.palette.primary.main === '#1976d2' ? '200deg' : '180deg'}) saturate(300%)`,
+            backgroundColor: 'transparent',
+        }),
+        '&:hover': {
+            transform: 'scale(1.08)',
+        },
+    };
+});
 
 // small helper to normalize text tokens: { primary, secondary }
 function getTextTokens(theme: any) {

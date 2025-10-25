@@ -14,7 +14,7 @@
  * @example
  * <PerfilUsuarioCard />
  */
-import {Alert, Avatar, Box, Button, Card, CardContent, Divider, Typography} from '@mui/material';
+import {Alert, alpha, Avatar, Box, Button, Card, CardContent, Divider, Typography} from '@mui/material';
 import {Email, Logout, Person} from '@mui/icons-material';
 import {useAuthContext} from '../../context/AuthContext.tsx';
 
@@ -33,8 +33,34 @@ export default function PerfilUsuarioCard() {
 
     // Renderiza la tarjeta con los datos del usuario
     return (
-        <Box sx={{maxWidth: 600, mx: 'auto'}}>
-            <Card>
+        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 200px)', px: 2}}>
+            <Card sx={(theme) => ({
+                maxWidth: 600,
+                width: '100%',
+                borderRadius: '20px',
+                background: theme.palette.mode === 'dark'
+                    ? alpha(theme.palette.background.paper, 0.85)
+                    : alpha(theme.palette.background.paper, 0.95),
+                WebkitBackdropFilter: 'blur(24px)',
+                backdropFilter: 'blur(24px)',
+                border: `2px solid ${alpha(theme.palette.secondary.main, 0.4)}`,
+                boxShadow: `
+                    0 0 30px ${alpha(theme.palette.secondary.main, 0.2)},
+                    0 0 60px ${alpha(theme.palette.secondary.main, 0.15)},
+                    0 0 90px ${alpha(theme.palette.secondary.main, 0.1)},
+                    inset 0 0 30px ${alpha(theme.palette.secondary.main, 0.08)}
+                `,
+                transition: 'all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                '&:hover': {
+                    borderColor: alpha(theme.palette.secondary.main, 0.5),
+                    boxShadow: `
+                        0 0 40px ${alpha(theme.palette.secondary.main, 0.25)},
+                        0 0 80px ${alpha(theme.palette.secondary.main, 0.2)},
+                        0 0 120px ${alpha(theme.palette.secondary.main, 0.15)},
+                        inset 0 0 40px ${alpha(theme.palette.secondary.main, 0.1)}
+                    `,
+                }
+            })}>
                 <CardContent sx={{p: 4}}>
                     <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3}}>
                         <Avatar
@@ -101,15 +127,6 @@ export default function PerfilUsuarioCard() {
                             </Typography>
                             <Typography variant="body1" sx={{fontWeight: 500}}>
                                 {user.company || '-'}
-                            </Typography>
-                        </Box>
-                        {/* ID */}
-                        <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
-                            <Typography variant="body2" color="text.secondary" sx={{minWidth: 100}}>
-                                ID
-                            </Typography>
-                            <Typography variant="body1" sx={{fontWeight: 500}}>
-                                {user.id}
                             </Typography>
                         </Box>
                     </Box>

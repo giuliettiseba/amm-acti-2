@@ -17,7 +17,7 @@ import {useEffect, useMemo, useState} from 'react';
 import {useLibros, useSkeletonDelay} from '../hooks';
 import EmptyState from '../components/EmptyState';
 import type {Libro} from '../types';
-import {Alert, Box, Button, Grid, InputAdornment, TextField, Typography} from '@mui/material';
+import {Alert, alpha, Box, Button, Grid, InputAdornment, TextField, Typography} from '@mui/material';
 import {MenuBook, Refresh, Search} from '@mui/icons-material';
 import DialogDetallesLibro from '../components/DialogDetallesLibro';
 import {GenericCard} from "../components/Cards/GenericCard.tsx";
@@ -115,7 +115,7 @@ export default function CatalogoPage() {
                 <Box sx={{display: 'flex', gap: 2, alignItems: 'center', mb: 3}}>
                     <TextField
                         fullWidth
-                        placeholder="Buscar por título, autor o categoría..."
+                        placeholder="Buscar..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         slotProps={{
@@ -128,6 +128,44 @@ export default function CatalogoPage() {
                             }
                         }}
                         variant="outlined"
+                        sx={(theme) => ({
+                            // Glass effect base
+                            '& .MuiOutlinedInput-root': {
+                                background: theme.palette.mode === 'dark'
+                                    ? alpha(theme.palette.background.paper, 0.06)
+                                    : alpha(theme.palette.background.paper, 0.48),
+                                WebkitBackdropFilter: 'blur(16px)',
+                                backdropFilter: 'blur(16px)',
+                                // Diffuse neon border with secondary color
+                                borderRadius: 2,
+                                border: `1px solid ${alpha(theme.palette.secondary.main, 0.3)}`,
+                                boxShadow: `
+                                    0 8px 24px ${alpha(theme.palette.secondary.main, 0.12)},
+                                    0 0 20px ${alpha(theme.palette.secondary.main, 0.1)},
+                                    inset 0 0 20px ${alpha(theme.palette.secondary.main, 0.05)}
+                                `,
+                                transition: 'all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                '& fieldset': {
+                                    border: 'none'
+                                },
+                                '&:hover': {
+                                    borderColor: alpha(theme.palette.secondary.main, 0.5),
+                                    boxShadow: `
+                                        0 12px 32px ${alpha(theme.palette.secondary.main, 0.18)},
+                                        0 0 30px ${alpha(theme.palette.secondary.main, 0.15)},
+                                        inset 0 0 25px ${alpha(theme.palette.secondary.main, 0.08)}
+                                    `,
+                                },
+                                '&.Mui-focused': {
+                                    borderColor: alpha(theme.palette.secondary.main, 0.6),
+                                    boxShadow: `
+                                        0 16px 40px ${alpha(theme.palette.secondary.main, 0.24)},
+                                        0 0 40px ${alpha(theme.palette.secondary.main, 0.2)},
+                                        inset 0 0 30px ${alpha(theme.palette.secondary.main, 0.1)}
+                                    `,
+                                }
+                            }
+                        })}
                     />
                 </Box>
             </Box>

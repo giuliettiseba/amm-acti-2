@@ -1,4 +1,4 @@
-import {Alert, Box, Button, Card, CardContent, CircularProgress, TextField, Typography} from '@mui/material';
+import {Alert, alpha, Box, Button, Card, CardContent, CircularProgress, TextField, Typography} from '@mui/material';
 import {Login as LoginIcon, PersonAdd as PersonAddIcon} from '@mui/icons-material';
 import React from 'react';
 
@@ -45,7 +45,33 @@ export default function LoginCard({
 }) {
     return (
         <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh'}}>
-            <Card sx={{maxWidth: 400, width: '100%'}}>
+            <Card sx={(theme) => ({
+                maxWidth: 400,
+                width: '100%',
+                borderRadius: '20px',
+                background: theme.palette.mode === 'dark'
+                    ? alpha(theme.palette.background.paper, 0.85)
+                    : alpha(theme.palette.background.paper, 0.95),
+                WebkitBackdropFilter: 'blur(24px)',
+                backdropFilter: 'blur(24px)',
+                border: `2px solid ${alpha(theme.palette.secondary.main, 0.4)}`,
+                boxShadow: `
+                    0 0 30px ${alpha(theme.palette.secondary.main, 0.2)},
+                    0 0 60px ${alpha(theme.palette.secondary.main, 0.15)},
+                    0 0 90px ${alpha(theme.palette.secondary.main, 0.1)},
+                    inset 0 0 30px ${alpha(theme.palette.secondary.main, 0.08)}
+                `,
+                transition: 'all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                '&:hover': {
+                    borderColor: alpha(theme.palette.secondary.main, 0.5),
+                    boxShadow: `
+                        0 0 40px ${alpha(theme.palette.secondary.main, 0.25)},
+                        0 0 80px ${alpha(theme.palette.secondary.main, 0.2)},
+                        0 0 120px ${alpha(theme.palette.secondary.main, 0.15)},
+                        inset 0 0 40px ${alpha(theme.palette.secondary.main, 0.1)}
+                    `,
+                }
+            })}>
                 <CardContent sx={{p: 4}}>
                     <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3}}>
                         <LoginIcon sx={{fontSize: 40, color: 'primary.main', mb: 1}}/>

@@ -28,7 +28,7 @@ export const nexusThemeDark: nexusThemeInterface = {
 export const nexusThemeLight: nexusThemeInterface = {
     palette: {
         primary: '#7e22ce',
-        secondary: '#f59e0b',
+        secondary: '#72ce22',
         danger: '#dc2626',
         warning: '#d97706',
         info: '#5850ec',

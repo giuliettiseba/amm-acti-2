@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+    alpha,
     Alert,
     Button,
     CircularProgress,
@@ -87,6 +88,74 @@ export default function DialogCrearUsuario({open, onClose, onSuccess}: DialogCre
             }}
             maxWidth="sm"
             fullWidth
+            slotProps={{
+                backdrop: {
+                    sx: {
+                        backdropFilter: 'blur(8px)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)'
+                    }
+                }
+            }}
+            PaperProps={{
+                sx: (theme) => ({
+                    borderRadius: '20px',
+                    overflow: 'visible',
+                    position: 'relative',
+                    // Glass effect base
+                    background: theme.palette.mode === 'dark'
+                        ? alpha(theme.palette.background.paper, 0.85)
+                        : alpha(theme.palette.background.paper, 0.95),
+                    WebkitBackdropFilter: 'blur(24px)',
+                    backdropFilter: 'blur(24px)',
+                    // Diffuse neon border with secondary color
+                    border: `2px solid ${alpha(theme.palette.secondary.main, 0.4)}`,
+                    boxShadow: `
+                        0 0 30px ${alpha(theme.palette.secondary.main, 0.2)},
+                        0 0 60px ${alpha(theme.palette.secondary.main, 0.15)},
+                        0 0 90px ${alpha(theme.palette.secondary.main, 0.1)},
+                        inset 0 0 30px ${alpha(theme.palette.secondary.main, 0.08)}
+                    `,
+                    // Subtle inner glow gradient
+                    '&::before': {
+                        content: '""',
+                        position: 'absolute',
+                        inset: 0,
+                        borderRadius: '20px',
+                        padding: '2px',
+                        background: `linear-gradient(135deg,
+                            ${alpha(theme.palette.secondary.main, 0.3)} 0%,
+                            ${alpha(theme.palette.secondary.light, 0.2)} 50%,
+                            ${alpha(theme.palette.secondary.main, 0.25)} 100%)`,
+                        WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                        WebkitMaskComposite: 'xor',
+                        maskComposite: 'exclude',
+                        pointerEvents: 'none',
+                        zIndex: 1
+                    },
+                    // Decorative glow blobs
+                    '&::after': {
+                        content: '""',
+                        position: 'absolute',
+                        left: '-15%',
+                        top: '-15%',
+                        width: '70%',
+                        height: '70%',
+                        pointerEvents: 'none',
+                        backgroundImage: `radial-gradient(500px 400px at 30% 30%,
+                            ${alpha(theme.palette.secondary.main, 0.18)} 0%,
+                            transparent 50%)`,
+                        zIndex: 0,
+                        filter: 'blur(40px)',
+                        mixBlendMode: 'screen',
+                        opacity: 0.9
+                    },
+                    // Ensure children are above decorative elements
+                    '& > *': {
+                        position: 'relative',
+                        zIndex: 2
+                    }
+                })
+            }}
         >
             <DialogTitle>Crear usuario</DialogTitle>
             <DialogContent>
