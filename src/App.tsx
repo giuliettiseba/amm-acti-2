@@ -2,7 +2,6 @@ import { Routes, Route } from 'react-router-dom';
 import { Box, Container } from '@mui/material';
 import LandingPage from './pages/LandingPage';
 import CatalogoPage from './pages/CatalogoPage';
-import DetalleLibroPage from './pages/DetalleLibroPage';
 import CoworkingPage from './pages/CoworkingPage';
 import CafeteriaPage from './pages/CafeteriaPage';
 import PerfilUsuarioPage from './pages/PerfilUsuarioPage';
@@ -11,6 +10,7 @@ import ReservaPage from './pages/ReservaPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { ProtectedRoute } from './router/ProtectedRoute';
 import NavBar from './components/NavBar';
+import PedidoResumenPage from './pages/PedidoResumenPage';
 
 function App() {
   return (
@@ -21,9 +21,9 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/catalogo" element={<CatalogoPage />} />
-            <Route path="/libro/:id" element={<DetalleLibroPage />} />
             <Route path="/cafeteria" element={<CafeteriaPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/pedido-resumen" element={<PedidoResumenPage />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/coworking" element={<CoworkingPage />} />
               <Route path="/reserva/:roomId" element={<ReservaPage />} />

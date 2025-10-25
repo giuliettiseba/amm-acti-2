@@ -1,5 +1,4 @@
-import { useNotification } from '../context/NotificationContext';
-
+import { useNotification } from '../hooks/useNotification';
 interface ErrorBoundaryNotifierProps {
   error?: Error;
 }

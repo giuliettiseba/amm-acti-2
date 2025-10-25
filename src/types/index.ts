@@ -1,6 +1,7 @@
 // Tipos compartidos de la aplicación
 export type { Libro } from './Libro';
 export type { Usuario } from './Usuario';
+export type { User } from './User';
 export type { CoworkingSlot } from './CoworkingSlot';
 export type { AuthResponse } from './AuthResponse';
 export type { ApiError } from './ApiError';

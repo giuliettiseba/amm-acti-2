@@ -28,17 +28,23 @@ import {
   Person,
   Logout
 } from '@mui/icons-material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAuthContext } from '../context/AuthContext';
 import { useTheme } from '../theme/ThemeProvider';
+import CartDrawer from './CartDrawer';
+import { useOrder } from '../hooks/useOrder';
+import Badge from '@mui/material/Badge';
 
 export default function NavBar() {
   const { isAuthenticated, logout, user } = useAuthContext();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [cartOpen, setCartOpen] = useState(false);
   const { mode, toggleMode } = useTheme();
   const muiTheme = useMuiTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
+  const { carrito } = useOrder();
 
   const handleUserMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -177,6 +183,17 @@ export default function NavBar() {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <IconButton
               color="inherit"
+              onClick={() => setCartOpen(true)}
+              aria-label="Ver carrito"
+              sx={{ position: 'relative' }}
+            >
+              <Badge badgeContent={carrito.reduce((sum, item) => sum + item.cantidad, 0)} color="secondary" showZero>
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+
+            <IconButton
+              color="inherit"
               onClick={toggleMode}
               aria-label={mode === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
             >
@@ -234,6 +251,8 @@ export default function NavBar() {
           Salir
         </MenuItem>
       </Menu>
+
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </AppBar>
   );
 }

@@ -1,10 +1,11 @@
-import { useNotification } from '../context/NotificationContext';
+
 import {
   Snackbar,
   Alert,
   AlertTitle,
   Stack
 } from '@mui/material';
+import {useNotification} from "../hooks/useNotification.ts";
 
 export default function Notifications() {
   const { notifications, removeNotification } = useNotification();

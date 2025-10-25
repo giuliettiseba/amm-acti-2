@@ -9,6 +9,8 @@ import {
   Fade
 } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
+import {useOrder} from "../hooks/useOrder.ts";
+import { useNotification } from '../hooks/useNotification';
 
 interface GaleriaProductosProps {
   productos: ProductoCafe[];
@@ -16,6 +18,9 @@ interface GaleriaProductosProps {
 }
 
 export default function GaleriaProductos({ productos, visibleItems = [] }: GaleriaProductosProps) {
+  const { agregarProducto } = useOrder();
+  const { addNotification } = useNotification();
+
   return (
     <Box sx={{
       display: 'grid',
@@ -78,6 +83,13 @@ export default function GaleriaProductos({ productos, visibleItems = [] }: Galer
                   variant="contained"
                   startIcon={<ShoppingCart />}
                   sx={{ fontSize: '0.75rem' }}
+                  onClick={() => {
+                    agregarProducto(producto);
+                    addNotification({
+                      type: 'success',
+                      message: `Producto "${producto.name}" añadido al carrito`,
+                    });
+                  }}
                 >
                   Añadir
                 </Button>

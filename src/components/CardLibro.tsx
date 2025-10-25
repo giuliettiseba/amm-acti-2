@@ -8,6 +8,8 @@ import {
   Fade
 } from '@mui/material';
 import type { Libro } from '../types';
+import { useOrder } from '../hooks/useOrder';
+import { useNotification } from '../hooks/useNotification';
 
 interface CardLibroProps {
   libro: Libro;
@@ -16,6 +18,9 @@ interface CardLibroProps {
 }
 
 export default function CardLibro({ libro, isVisible, onClick }: CardLibroProps) {
+  const { agregarLibro } = useOrder();
+  const { addNotification } = useNotification();
+
   return (
     <Fade in={isVisible} timeout={500}>
       <Card
@@ -33,7 +38,9 @@ export default function CardLibro({ libro, isVisible, onClick }: CardLibroProps)
             md: '320px',
             lg: '340px'
           },
-          height: 400,
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'auto', // Permite que la altura se ajuste al contenido
           cursor: 'pointer',
           transition: 'all 0.2s ease-in-out',
           '&:hover': {
@@ -50,7 +57,7 @@ export default function CardLibro({ libro, isVisible, onClick }: CardLibroProps)
           alt={libro.titulo}
           sx={{ objectFit: 'cover' }}
         />
-        <CardContent sx={{ height: 200, display: 'flex', flexDirection: 'column' }}>
+        <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h6" component="div" sx={{ fontWeight: 600, mb: 1, fontSize: '1.1rem' }}>
             {libro.titulo}
           </Typography>
@@ -71,7 +78,7 @@ export default function CardLibro({ libro, isVisible, onClick }: CardLibroProps)
             </Typography>
           )}
           <Typography variant="body2" color="text.secondary" sx={{ mb: 'auto', fontSize: '0.875rem' }}>
-            {libro.descripcion || 'Sin descripción disponible'}
+            {libro.sinopsis || 'Sin sinopsis disponible'}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
             {libro.precio && (
@@ -79,12 +86,21 @@ export default function CardLibro({ libro, isVisible, onClick }: CardLibroProps)
                 {libro.precio.toFixed(2)} €
               </Typography>
             )}
+
             <Button
               size="small"
-              variant="contained"
-              sx={{ fontSize: '0.75rem', ml: 'auto' }}
+              variant="outlined"
+              sx={{ fontSize: '0.75rem', ml: 1 }}
+              onClick={e => {
+                e.stopPropagation();
+                agregarLibro(libro);
+                addNotification({
+                  type: 'success',
+                  message: `Libro "${libro.titulo}" añadido al carrito`,
+                });
+              }}
             >
-              Ver Detalles
+              Añadir al carrito
             </Button>
           </Box>
         </CardContent>

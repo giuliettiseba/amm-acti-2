@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { apiGet } from '../services/apiClient';
-import { useNotification } from '../context/NotificationContext';
+import { useNotification } from '../hooks/useNotification';
 import type { ApiGetEndpoint, ApiGetResponse } from '../types/api';
 
 interface State<T> {

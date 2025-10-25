@@ -11,10 +11,15 @@ import {
   Box
 } from '@mui/material';
 import { MenuBook } from '@mui/icons-material';
+import { useOrder } from '../hooks/useOrder';
+import { useNotification } from '../hooks/useNotification';
 
 interface Props { libro: Libro }
 
 export function BookCard({ libro }: Props) {
+  const { agregarLibro } = useOrder();
+  const { addNotification } = useNotification();
+
   return (
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       {libro.imagen ? (
@@ -59,10 +64,10 @@ export function BookCard({ libro }: Props) {
           {libro.autor}
         </Typography>
 
-        {libro.descripcion && (
+        {libro.sinopsis && (
           <Typography variant="body2" sx={{ mb: 2, lineHeight: 1.4 }}>
-            {libro.descripcion.slice(0, 90)}
-            {libro.descripcion.length > 90 ? '…' : ''}
+            {libro.sinopsis.slice(0, 90)}
+            {libro.sinopsis.length > 90 ? '…' : ''}
           </Typography>
         )}
       </CardContent>
@@ -80,6 +85,20 @@ export function BookCard({ libro }: Props) {
           size="small"
         >
           Ver
+        </Button>
+        <Button
+          variant="contained"
+          size="small"
+          onClick={() => {
+            // El resultado de agregarLibro es void, así que siempre muestra notificación de éxito
+            agregarLibro(libro);
+            addNotification({
+              type: 'success',
+              message: `Libro "${libro.titulo}" añadido al carrito`,
+            });
+          }}
+        >
+          Agregar al carrito
         </Button>
       </CardActions>
     </Card>

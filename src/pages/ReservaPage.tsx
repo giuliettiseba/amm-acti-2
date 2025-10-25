@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRooms } from '../hooks/useRooms';
 import { roomsService } from '../services/rooms.service';
+import { useAuthContext } from '../context/AuthContext';
 import type { Room, RoomReservation } from '../types';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import {
@@ -27,20 +28,21 @@ import {
   Euro,
   Save
 } from '@mui/icons-material';
-import { useNotification } from '../context/NotificationContext';
+import { useNotification } from '../hooks/useNotification';
 
 export default function ReservaPage() {
   const { roomId } = useParams<{ roomId: string }>();
   const navigate = useNavigate();
   const { addNotification } = useNotification();
   const { data: rooms } = useRooms();
+  const { user } = useAuthContext();
 
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     startDate: '',
     endDate: '',
-    userId: 1, // Por ahora hardcodeado, debería venir del contexto de autenticación
+    userId: user?.id || 1, // Usar el ID del usuario autenticado
     additionalPreferences: [] as string[]
   });
 
@@ -61,6 +63,16 @@ export default function ReservaPage() {
       setRoom(foundRoom || null);
     }
   }, [rooms, roomId]);
+
+  // Actualizar userId cuando cambie el usuario autenticado
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        userId: user.id
+      }));
+    }
+  }, [user]);
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({

@@ -13,15 +13,17 @@ import {
   Card,
   CardContent,
   Alert,
-  CircularProgress,
   TextField,
   InputAdornment
 } from '@mui/material';
 import { Refresh, MenuBook, Search } from '@mui/icons-material';
+import DialogDetallesLibro from '../components/DialogDetallesLibro';
 
 export default function CatalogoPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [visibleLibros, setVisibleLibros] = useState<number[]>([]);
+  const [selectedLibro, setSelectedLibro] = useState<Libro | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Fetch libros
   const {
@@ -72,9 +74,9 @@ export default function CatalogoPage() {
   }, [searchTerm, librosFiltrados.length, loading, showSkeleton]); // Cambio aquí
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 1200,  mx: 'auto' }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ mb: 4 , alignItems: 'center', textAlign: 'center' }}>
         <Typography variant="h4" component="h2" sx={{ fontWeight: 600, mb: 1 }}>
           Catálogo de Libros
         </Typography>
@@ -96,16 +98,7 @@ export default function CatalogoPage() {
                 </InputAdornment>
               ),
             }}
-            sx={{ maxWidth: 400 }}
           />
-          <Button
-            variant="outlined"
-            disabled={loading}
-            onClick={refetch}
-            startIcon={loading ? <CircularProgress size={16} /> : <Refresh />}
-          >
-            {loading ? 'Actualizando…' : 'Refrescar'}
-          </Button>
         </Box>
       </Box>
 
@@ -178,10 +171,19 @@ export default function CatalogoPage() {
               key={libro.id}
               libro={libro}
               isVisible={visibleLibros.includes(index)}
+              onClick={() => {
+                setSelectedLibro(libro);
+                setDialogOpen(true);
+              }}
             />
           ))}
         </Box>
       )}
+      <DialogDetallesLibro
+        libro={selectedLibro}
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+      />
 
       {/* Empty states */}
       {!loading && !error && searchTerm && librosFiltrados.length === 0 && (

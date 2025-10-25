@@ -9,7 +9,10 @@ export const API_ROUTES = {
   MENU: '/products',
   CATEGORIES: '/products/categories',
   ROOMS: '/rooms',
-  ROOM_RESERVATION: '/roomreservation'
+  ROOM_RESERVATION: '/roomreservation',
+  USERS: '/users',
+  USER_BY_ID: (id: number) => `/users/${id}`,
+  USER_LOGIN: '/users/login'
 } as const;
 
 export type ApiRouteKey = keyof typeof API_ROUTES;

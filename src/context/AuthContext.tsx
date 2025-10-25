@@ -1,10 +1,9 @@
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react';
-import { apiPostTyped } from '../services/apiClient';
-import { API_ROUTES } from '../constants/apiRoutes';
-import type { Usuario } from '../types';
+import { userService, type LoginCredentials } from '../services/user.service';
+import type { User } from '../types';
 
 interface AuthContextValue {
-  user: Usuario | null;
+  user: User | null;
   isAuthenticated: boolean;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
@@ -19,7 +18,7 @@ interface Props { children: ReactNode }
 const AUTH_KEY = 'nexus_auth_user';
 
 export function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<Usuario | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,14 +33,27 @@ export function AuthProvider({ children }: Props) {
   const login = useCallback(async (email: string, password: string) => {
     setLoading(true);
     try {
-      const res = await apiPostTyped(API_ROUTES.LOGIN, { email, password });
-      const usuario: Usuario = { ...res.usuario, token: res.token };
-      setUser(usuario);
-      localStorage.setItem(AUTH_KEY, JSON.stringify(usuario));
+      const credentials: LoginCredentials = { email, password };
+      const response = await userService.login(credentials);
+      const userData: User = { ...response.user };
+      // Compatibilidad para UI: nombre y avatar
+      userData.nombre = userData.firstName || userData.username;
+      userData.avatar = userData.avatar || undefined;
+      setUser(userData);
+      localStorage.setItem(AUTH_KEY, JSON.stringify(userData));
     } catch (e) {
       // Fallback para desarrollo offline: usuario mock
       console.warn('Fallo login contra API simulada, usando mock:', e);
-      const mock: Usuario = { id: 'mock', nombre: 'Dev User', email };
+      const mock: User = {
+        id: 1,
+        username: 'devuser',
+        password: '', // No almacenar password en el estado
+        firstName: 'Dev',
+        lastName: 'User',
+        phoneNumber: '+34 600 000 000',
+        email,
+        company: 'Nexus Dev'
+      };
       setUser(mock);
       localStorage.setItem(AUTH_KEY, JSON.stringify(mock));
     } finally {
