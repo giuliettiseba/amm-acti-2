@@ -1,6 +1,6 @@
 export interface CategoriaProducto {
-  nombre: string;
-  imagen: string;
-  descripcion: string;
+    nombre: string;
+    imagen: string;
+    descripcion: string;
 }
 

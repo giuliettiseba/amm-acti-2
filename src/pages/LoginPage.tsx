@@ -95,7 +95,7 @@ export default function LoginPage() {
                             variant="contained"
                             sx={{mt: 2, mb: 0.5, py: 1.2}}
                             onClick={() => setOpenCrearUsuario(true)}
-                            startIcon={<PersonAddIcon />}
+                            startIcon={<PersonAddIcon/>}
                         >
                             Crear usuario
                         </Button>

@@ -235,7 +235,7 @@ export const GenericCard = React.forwardRef<HTMLDivElement, GenericCardProps>(
                         <GenericCardDescription ownerState={ownerState}>{description}</GenericCardDescription> : null}
 
                     {(price &&
-                    <GenericCardPrice ownerState={ownerState}>${price?.toFixed(2)}</GenericCardPrice>
+                        <GenericCardPrice ownerState={ownerState}>${price?.toFixed(2)}</GenericCardPrice>
                     )}
 
                     {(addToCart &&

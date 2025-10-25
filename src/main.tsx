@@ -12,16 +12,16 @@ import {NotificationProvider} from "./providers/NotificationProvider.tsx";
 createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
         <BrowserRouter>
-          <NotificationProvider>
-            <AuthProvider>
-              <OrderProvider>
-                <ErrorBoundary>
-                  <App />
-                </ErrorBoundary>
-                <Notifications />
-              </OrderProvider>
-            </AuthProvider>
-          </NotificationProvider>
+            <NotificationProvider>
+                <AuthProvider>
+                    <OrderProvider>
+                        <ErrorBoundary>
+                            <App/>
+                        </ErrorBoundary>
+                        <Notifications/>
+                    </OrderProvider>
+                </AuthProvider>
+            </NotificationProvider>
         </BrowserRouter>
     </ThemeProvider>
 )

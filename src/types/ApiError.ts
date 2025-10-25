@@ -1,5 +1,5 @@
 export interface ApiError {
-  message: string;
-  status?: number;
+    message: string;
+    status?: number;
 }
 
