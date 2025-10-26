@@ -1,3 +1,19 @@
+/**
+ * NavBar Component
+ *
+ * This component renders the navigation bar for the application. It includes navigation links,
+ * a theme toggle button, and a user authentication/logout button. The NavBar is responsive
+ * and adapts to different screen sizes.
+ *
+ * @component
+ * @param {Object} props - The props for the NavBar component.
+ * @param {boolean} props.isAuthenticated - Indicates if the user is authenticated.
+ * @param {function} props.onLogout - Callback to log the user out.
+ * @param {function} props.toggleTheme - Callback to toggle the theme mode.
+ * @param {"light" | "dark"} props.themeMode - The current theme mode (light or dark).
+ */
+
+// Import necessary modules and components
 import {NavLink, useNavigate} from 'react-router-dom';
 import React, {useState} from 'react';
 import {
@@ -6,13 +22,8 @@ import {
     Box,
     Button,
     Divider,
-    Drawer,
     IconButton,
-    List,
-    ListItem,
-    ListItemButton,
     ListItemIcon,
-    ListItemText,
     Menu,
     MenuItem,
     Toolbar,
@@ -20,16 +31,14 @@ import {
     useMediaQuery,
     useTheme as useMuiTheme
 } from '@mui/material';
-import {Close as CloseIcon, DarkMode, LightMode, Logout, Menu as MenuIcon, Person} from '@mui/icons-material';
+import {DarkMode, LightMode, Logout, Menu as MenuIcon, Person} from '@mui/icons-material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useAuthContext} from '../context/AuthContext';
-import CartDrawer from './CartDrawer';
+import CartDrawer from './drawers/CartDrawer.tsx';
+import MobileDrawer from './drawers/MobileDrawer';
 import Badge from '@mui/material/Badge';
 import {useTheme} from '../context/ThemeContext.tsx';
 import {useOrder} from "../context/OrderContext.tsx";
-
-// new: import css for nav animations
-import './NavBar.css';
 
 export default function NavBar() {
     const {isAuthenticated, logout, user} = useAuthContext();
@@ -50,6 +59,10 @@ export default function NavBar() {
         setAnchorEl(null);
     };
 
+    /**
+     * Handles the logout action.
+     * Logs the user out and navigates to the home page.
+     */
     function handleLogout() {
         logout();
         navigate('/', {replace: true});
@@ -57,13 +70,12 @@ export default function NavBar() {
         handleUserMenuClose();
     }
 
+    /**
+     * Navigates to the user profile page.
+     */
     function handleProfileClick() {
         navigate('/perfil');
         handleUserMenuClose();
-    }
-
-    function handleNavClick() {
-        setMobileOpen(false);
     }
 
     const navItems = [
@@ -72,59 +84,6 @@ export default function NavBar() {
         {label: 'Cafetería', path: '/cafeteria'},
         {label: 'Co-working', path: '/coworking'},
     ];
-
-    const drawer = (
-        <Box sx={{width: 250}}>
-            <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
-                <Typography variant="h6">Nexus</Typography>
-                <IconButton onClick={() => setMobileOpen(false)}>
-                    <CloseIcon/>
-                </IconButton>
-            </Box>
-            <List className="list-drawer">
-                {navItems.map((item) => (
-                    <ListItem key={item.path} disablePadding>
-                        <ListItemButton
-                            component={NavLink}
-                            to={item.path}
-                            onClick={handleNavClick}
-                            className="nav-item"
-                            sx={{
-                                '&.active': {
-                                    backgroundColor: 'primary.main',
-                                    color: 'primary.contrastText',
-                                    '&:hover': {
-                                        backgroundColor: 'primary.dark',
-                                    }
-                                }
-                            }}
-                        >
-                            <ListItemText primary={item.label}/>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-                <ListItem disablePadding>
-                    <ListItemButton onClick={() => {
-                        toggleMode();
-                        handleNavClick();
-                    }} className="nav-item">
-                        <ListItemText primary={mode === 'dark' ? '🌙 Oscuro' : '☀️ Claro'}/>
-                    </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                    {isAuthenticated ? (
-                        <ListItemButton onClick={handleLogout} className="nav-item">
-                            <ListItemText primary="Salir"/>
-                        </ListItemButton>
-                    ) : (
-                        <ListItemButton component={NavLink} to="/login" onClick={handleNavClick} className="nav-item">
-                            <ListItemText primary="Login"/>
-                        </ListItemButton>
-                    )}
-                </ListItem>
-            </List>
-        </Box>
-    );
 
     return (
         <AppBar position="sticky" color="default" elevation={1}>
@@ -232,7 +191,8 @@ export default function NavBar() {
                                 </Avatar>
                             </IconButton>
                         ) : (
-                            <Button color="primary" variant="contained" component={NavLink} to="/login" className="nav-item">
+                            <Button color="primary" variant="contained" component={NavLink} to="/login"
+                                    className="nav-item">
                                 Login
                             </Button>
                         )}
@@ -240,14 +200,15 @@ export default function NavBar() {
                 )}
             </Toolbar>
 
-            <Drawer
-                variant="temporary"
+            <MobileDrawer
                 open={mobileOpen}
                 onClose={() => setMobileOpen(false)}
-                ModalProps={{keepMounted: true}}
-            >
-                {drawer}
-            </Drawer>
+                navItems={navItems}
+                mode={mode}
+                toggleMode={toggleMode}
+                isAuthenticated={isAuthenticated}
+                onLogout={handleLogout}
+            />
 
             <Menu
                 anchorEl={anchorEl}

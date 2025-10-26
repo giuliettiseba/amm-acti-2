@@ -14,7 +14,7 @@
  */
 import {Box, Typography} from '@mui/material';
 import {MenuBook, Work, LocalCafe} from '@mui/icons-material';
-import LandingFeatureCard from '../components/Cards/LandingFeatureCard.tsx';
+import LandingFeatureCard from '../components/cards/LandingFeatureCard.tsx';
 
 export default function LandingPage() {
     /**

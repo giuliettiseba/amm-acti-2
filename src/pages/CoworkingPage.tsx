@@ -7,7 +7,7 @@
  * - Muestra un estado de carga con esqueletos (CardSkeleton) mientras se obtienen los datos.
  * - Si hay error, muestra un mensaje de error y un botón para reintentar.
  * - Si hay salas, las muestra en un grid de tarjetas (GenericCard) con animación de aparición secuencial.
- * - Si no hay salas, muestra un estado vacío (EmptyState).
+ * - Si no hay salas, muestra un estado vacío (CardEmptyState).
  *
  * @component
  * @returns {JSX.Element} Página de salas de co-working con tarjetas y manejo de estados.
@@ -16,13 +16,12 @@
  * <CoworkingPage />
  */
 import {useRooms, useSkeletonDelay} from '../hooks';
-import EmptyState from '../components/EmptyState';
+import CardEmptyState from '../components/cards/CardEmptyState.tsx';
 import {Alert, Box, Button, Grid, Typography,} from '@mui/material';
 import {Refresh, Work} from '@mui/icons-material';
-import {GenericCard} from "../components/Cards/GenericCard.tsx";
+import {GenericCard, CardSkeleton} from "../components/cards/GenericCard.tsx";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {CardSkeleton} from "../components/Skeleton.tsx";
 
 export default function CoworkingPage() {
     const {data: rooms, loading, error, refetch} = useRooms();
@@ -111,7 +110,7 @@ export default function CoworkingPage() {
             )}
 
             {!showSkeleton && !loading && !error && (!rooms || rooms.length === 0) && (
-                <EmptyState
+                <CardEmptyState
                     title="Sin salas disponibles"
                     description="No hay salas de co-working disponibles en este momento."
                     icon={<Work/>}

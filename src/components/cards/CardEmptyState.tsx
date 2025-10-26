@@ -1,7 +1,7 @@
 import {Box, Card, CardContent, Typography} from '@mui/material';
-import type {EmptyStateProps} from "../types/props/EmptyStateProps.tsx";
+import type {EmptyStateProps} from "../../types/props/EmptyStateProps.tsx";
 
-export default function EmptyState({title = 'Sin datos', description, icon, action, className = ''}: EmptyStateProps) {
+export default function CardEmptyState({title = 'Sin datos', description, icon, action, className = ''}: EmptyStateProps) {
     return (
         <Card className={className} sx={{textAlign: 'center'}}>
             <CardContent sx={{py: 4, px: 3}}>

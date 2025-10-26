@@ -124,7 +124,7 @@ src/
 | CartDrawer | `components/CartDrawer.tsx` | Drawer de carrito de compras | Drawer, List, TextField, Button, Divider |
 | DialogCrearUsuario | `components/DialogCrearUsuario.tsx` | Diálogo para registro de usuarios | Dialog, TextField, Alert, CircularProgress |
 | DialogDetallesLibro | `components/DialogDetallesLibro.tsx` | Diálogo modal de detalles de libro | Dialog, Typography, Button |
-| EmptyState | `components/EmptyState.tsx` | Mostrar vacío/error contextual | Card, Typography, Box |
+| CardEmptyState | `components/CardEmptyState.tsx` | Mostrar vacío/error contextual | Card, Typography, Box |
 | Notifications | `components/Notifications.tsx` | Render de cola global | Snackbar, Alert |
 | Skeleton / SkeletonText / BookSkeletonGrid | `components/Skeleton.tsx` | Carga estructural | Skeleton, Card, Grid (o Box) |
 | ErrorBoundary / ErrorBoundaryNotifier | `components/ErrorBoundary.tsx` | Atrapar errores de render | Fallback + notificación |
@@ -201,9 +201,9 @@ src/
 | Hook de control | `useSkeletonDelay` (delay 150ms, min visible 300ms) |
 | Skeleton catálogo | `BookSkeletonGrid` |
 | Detalle libro | Skeleton estructural (título + líneas) |
-| Estados vacíos | `EmptyState` en lugar de skeleton |
+| Estados vacíos | `CardEmptyState` en lugar de skeleton |
 
-**Estrategia:** mostrar skeleton solo si la carga supera un umbral → mantener visible mínimo → reemplazar por datos reales o EmptyState/Alert.
+**Estrategia:** mostrar skeleton solo si la carga supera un umbral → mantener visible mínimo → reemplazar por datos reales o CardEmptyState/Alert.
 
 **Beneficios:** menos distracción, consistencia visual, código declarativo.
 
@@ -298,7 +298,7 @@ Opcional: crear `.env` para `VITE_API_BASE_URL` si se requiere cambiar origen de
 | Providers | AuthProvider, NotificationProvider, OrderProvider, ThemeProvider | ✅ |
 | Componentes avanzados | GenericCard con glass morphism, CartDrawer, Dialogs modales | ✅ |
 | TypeScript | 30+ tipos e interfaces en /types | ✅ |
-| Manejo estados carga | Skeleton + EmptyState + Alerts + CircularProgress | ✅ |
+| Manejo estados carga | Skeleton + CardEmptyState + Alerts + CircularProgress | ✅ |
 | Tema y estilo | MUI + ThemeProvider + CSS variables + styled-components | ✅ |
 | Persistencia | localStorage para carrito | ✅ |
 | QR Code | Generación en PedidoResumenPage | ✅ |

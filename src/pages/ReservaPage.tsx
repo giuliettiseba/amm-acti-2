@@ -27,8 +27,8 @@ import {
 } from '@mui/material';
 import {ArrowBack} from '@mui/icons-material';
 import {useNotification} from "../context/NotificationContext.tsx";
-import RoomInfoCard from '../components/Cards/RoomInfoCard.tsx';
-import ReservaFormCard from '../components/Cards/ReservaFormCard.tsx';
+import RoomInfoCard from '../components/cards/RoomInfoCard.tsx';
+import ReservaFormCard from '../components/cards/ReservaFormCard.tsx';
 
 export default function ReservaPage() {
     const {roomId} = useParams<{ roomId: string }>();

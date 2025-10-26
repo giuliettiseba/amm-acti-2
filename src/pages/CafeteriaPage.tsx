@@ -17,11 +17,10 @@
  */
 import {useEffect, useState} from 'react';
 import {useCafeteria, useSkeletonDelay} from '../hooks';
-import EmptyState from '../components/EmptyState';
+import CardEmptyState from '../components/cards/CardEmptyState.tsx';
 import {Alert, Box, Button, Grid, IconButton, Typography} from '@mui/material';
 import {ArrowBack, LocalCafe, Refresh} from '@mui/icons-material';
-import {GenericCard} from "../components/Cards/GenericCard.tsx";
-import {CardSkeleton} from "../components/Skeleton.tsx";
+import {GenericCard, CardSkeleton} from "../components/cards/GenericCard.tsx";
 import {useOrder} from "../context/OrderContext.tsx";
 
 export default function CafeteriaPage() {
@@ -174,7 +173,7 @@ export default function CafeteriaPage() {
                     )}
 
                     {!loadingCategorias && !errorCategorias && (!categorias || categorias.length === 0) && (
-                        <EmptyState
+                        <CardEmptyState
                             title="Sin categorías"
                             description="Aún no hay categorías disponibles en la cafetería."
                             icon={<LocalCafe/>}
@@ -220,7 +219,7 @@ export default function CafeteriaPage() {
                     )}
 
                     {!loadingProductos && !errorProductos && (!productos || productos.length === 0) && (
-                        <EmptyState
+                        <CardEmptyState
                             title="Sin productos"
                             description={`No hay productos disponibles en la categoría "${categoriaSeleccionada}".`}
                             icon={<LocalCafe/>}

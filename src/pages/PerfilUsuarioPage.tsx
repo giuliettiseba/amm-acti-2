@@ -14,7 +14,7 @@
  */
 import {useAuthContext} from '../context/AuthContext';
 import {Alert} from '@mui/material';
-import PerfilUsuarioCard from '../components/Cards/PerfilUsuarioCard.tsx';
+import PerfilUsuarioCard from '../components/cards/PerfilUsuarioCard.tsx';
 
 export default function PerfilUsuarioPage() {
     const {user} = useAuthContext();

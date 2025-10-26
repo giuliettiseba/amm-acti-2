@@ -16,8 +16,8 @@
 import {useLocation, useNavigate} from 'react-router-dom';
 import {type FormEvent, useEffect, useState} from 'react';
 import {useAuthContext} from '../context/AuthContext';
-import LoginCard from '../components/Cards/LoginCard.tsx';
-import DialogCrearUsuario from '../components/DialogCrearUsuario';
+import LoginCard from '../components/cards/LoginCard.tsx';
+import DialogCrearUsuario from '../components/dialogs/DialogCrearUsuario.tsx';
 
 export default function LoginPage() {
     // Obtiene funciones y estado de autenticación del contexto

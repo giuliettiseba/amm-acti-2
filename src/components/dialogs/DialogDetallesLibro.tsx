@@ -12,8 +12,8 @@ import {
     DialogTitle,
     Typography
 } from '@mui/material';
-import {useLibro} from '../hooks/useLibros';
-import type {DialogDetallesLibroProps} from "../types/props/DialogDetallesLibroProps.tsx";
+import {useLibro} from '../../hooks/useLibros.ts';
+import type {DialogDetallesLibroProps} from "../../types/props/DialogDetallesLibroProps.tsx";
 
 export default function DialogDetallesLibro({libro, open, onClose}: DialogDetallesLibroProps) {
     const {data: libroDetallado, loading} = useLibro(libro?.id?.toString());

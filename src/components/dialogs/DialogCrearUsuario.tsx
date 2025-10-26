@@ -10,8 +10,8 @@ import {
     DialogTitle,
     TextField
 } from '@mui/material';
-import {userService} from '../services/user.service';
-import type {DialogCrearUsuarioProps} from "../types/props/DialogCrearUsuarioProps.tsx";
+import {userService} from '../../services/user.service.ts';
+import type {DialogCrearUsuarioProps} from "../../types/props/DialogCrearUsuarioProps.tsx";
 
 export default function DialogCrearUsuario({open, onClose, onSuccess}: DialogCrearUsuarioProps) {
     const [form, setForm] = useState({

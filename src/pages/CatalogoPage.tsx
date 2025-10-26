@@ -15,13 +15,12 @@
  */
 import {useEffect, useMemo, useState} from 'react';
 import {useLibros, useSkeletonDelay} from '../hooks';
-import EmptyState from '../components/EmptyState';
+import CardEmptyState from '../components/cards/CardEmptyState.tsx';
 import type {Libro} from '../types';
 import {Alert, alpha, Box, Button, Grid, InputAdornment, TextField, Typography} from '@mui/material';
 import {MenuBook, Refresh, Search} from '@mui/icons-material';
-import DialogDetallesLibro from '../components/DialogDetallesLibro';
-import {GenericCard} from "../components/Cards/GenericCard.tsx";
-import {CardSkeleton} from "../components/Skeleton.tsx";
+import DialogDetallesLibro from '../components/dialogs/DialogDetallesLibro.tsx';
+import {GenericCard, CardSkeleton} from "../components/cards/GenericCard.tsx";
 import {useOrder} from "../context/OrderContext.tsx";
 
 export default function CatalogoPage() {
@@ -221,7 +220,7 @@ export default function CatalogoPage() {
 
             {/* Empty states */}
             {!loading && !error && searchTerm && librosFiltrados.length === 0 && (
-                <EmptyState
+                <CardEmptyState
                     title="Sin resultados"
                     description={`No se encontraron libros que coincidan con "${searchTerm}".`}
                     icon={<Search/>}
@@ -234,7 +233,7 @@ export default function CatalogoPage() {
             )}
 
             {!loading && !error && (!libros || libros.length === 0) && (
-                <EmptyState
+                <CardEmptyState
                     title="Sin libros"
                     description="Aún no hay libros disponibles en el catálogo."
                     icon={<MenuBook/>}
