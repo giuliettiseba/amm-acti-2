@@ -5,10 +5,10 @@ import type {RoomsState} from "../types/states/roomsState.ts";
 /**
  * useRooms
  *
- * Custom React hook to fetch and manage coworking room data from the API.
- * Handles loading, error, and data states, and provides a refetch method.
+ * Hook personalizado de React para obtener y gestionar datos de salas de coworking desde la API.
+ * Maneja estados de carga, error y datos, y proporciona un metodo refetch.
  *
- * @returns {RoomsState & {refetch: () => void}} State object with data, loading, error, and refetch.
+ * @returns {RoomsState & {refetch: () => void}} Objeto de estado con data, loading, error y refetch.
  *
  * @example
  * const { data, loading, error, refetch } = useRooms();
@@ -19,15 +19,15 @@ import type {RoomsState} from "../types/states/roomsState.ts";
  */
 export const useRooms = () => {
     /**
-     * State for the list of rooms, loading, and error.
+     * Estado para la lista de salas, carga y error.
      */
     const [state, setState] = useState<RoomsState>({data: null, loading: true, error: null});
 
     /**
-     * Loads the list of rooms from the API.
-     * Updates loading and error state accordingly.
+     * Carga la lista de salas desde la API.
+     * Actualiza el estado de carga y error en consecuencia.
      *
-     * @param {boolean} force - If true, bypasses cache and forces a fresh fetch
+     * @param {boolean} force - Si es true, evita cache y fuerza una recarga fresca
      */
     const load = useCallback(async (force = false) => {
         setState(prev => ({...prev, loading: true, error: null}));
@@ -45,6 +45,6 @@ export const useRooms = () => {
 
     return {
         ...state,
-        refetch: () => load(true) // Force cache bypass on manual refetch
+        refetch: () => load(true) // Forzar evitar cache en refetch manual
     };
 };

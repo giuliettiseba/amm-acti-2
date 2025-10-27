@@ -8,7 +8,7 @@ export type ApiGetEndpoint =
     | '/coworking'
     | '/menu';
 
-// Respuesta según endpoint GET
+// Respuesta segun endpoint GET
 export type ApiGetResponse<E extends ApiGetEndpoint> =
     E extends '/books' ? Libro[] :
         E extends `/books/${string}` ? Libro :

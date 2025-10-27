@@ -1,6 +1,6 @@
 import {alpha, Box, Button, Card, CardContent, Typography} from '@mui/material';
 import {Link} from 'react-router-dom';
-import React from 'react';
+import React, {type JSX} from 'react';
 
 /**
  * LandingFeatureCard
@@ -19,7 +19,7 @@ export default function LandingFeatureCard({icon, title, description, link}: {
     title: string,
     description: string,
     link: string
-}) {
+}): JSX.Element {
     return (
         <Card
             sx={(theme) => ({

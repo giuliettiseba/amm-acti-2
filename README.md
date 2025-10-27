@@ -31,7 +31,7 @@
 ---
 ## 1. Datos Generales
 - **Fecha de creación:** 2024-10-08
-- **Última actualización:** 2025-10-25
+- **Última actualización:** 2025-10-26
 - **Actividad:** Nº 2 – SPA con API simulada
 - **Autores:** (añadir en `Autores.txt` si es grupal)  
 
@@ -275,17 +275,21 @@ Opcional: crear `.env` para `VITE_API_BASE_URL` si se requiere cambiar origen de
 |------|--------|--------------|
 | Búsqueda catálogo | ❌ | Añadir filtro client/server |
 | Favoritos usuario | ❌ | Context + persistencia local |
-| Reserva coworking | ✅ | ~~POST simulado + feedback~~ Implementado |
-| Carrito de compras | ✅ | ~~Context + drawer~~ Implementado |
-| Generación QR pedidos | ✅ | ~~qrcode.react~~ Implementado |
-| Registro de usuarios | ✅ | ~~Formulario + validación~~ Implementado |
 | PWA / Offline | ❌ | Service Worker + manifest |
 | Tests unitarios | ❌ | Vitest / React Testing Library |
 | Logging remoto | ❌ | Sentry / endpoint propio |
 | Internacionalización | ❌ | i18n (ES/EN) |
 | Pago electrónico | ❌ | Integración pasarela de pago |
 
-## 21. Rúbrica / Cobertura
+## 21. Features Implementados
+| Feature | Descripción |
+|---------|-------------|
+| Reserva coworking | Sistema de reservas completo con formularios avanzados (datetime-local, multi-select). |
+| Carrito de compras | Contexto unificado para libros y productos de cafetería con persistencia en localStorage. |
+| Generación QR pedidos | Generación dinámica de códigos QR para pedidos en la página de resumen. |
+| Registro de usuarios | Formulario de registro con validación y autenticación. |
+
+## 22. Rúbrica / Cobertura
 | Criterio | Evidencia | Cumplido |
 |----------|-----------|----------|
 | Landing | LandingPage con grid | ✅ |

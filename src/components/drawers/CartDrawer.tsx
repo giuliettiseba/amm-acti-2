@@ -1,3 +1,31 @@
+/**
+ * CartDrawer component for displaying the shopping cart in a drawer.
+ *
+ * This component provides a user interface for viewing and managing items in the shopping cart.
+ * It includes functionality for displaying cart items, updating quantities, and removing items.
+ *
+ * @module CartDrawer
+ * @component
+ *
+ * @param {CartDrawerProps} props - The props for the CartDrawer component.
+ * @param {boolean} props.open - Indicates whether the drawer is open.
+ * @param {function} props.onClose - Callback function to close the drawer.
+ * @param {CarritoItem[]} props.items - Array of items in the shopping cart.
+ * @param {function} props.onUpdateQuantity - Callback function to update the quantity of an item.
+ * @param {function} props.onRemoveItem - Callback function to remove an item from the cart.
+ *
+ * @returns {JSX.Element} The CartDrawer component.
+ *
+ * @example
+ * <CartDrawer
+ *   open={isDrawerOpen}
+ *   onClose={handleClose}
+ *   items={cartItems}
+ *   onUpdateQuantity={handleUpdateQuantity}
+ *   onRemoveItem={handleRemoveItem}
+ * />
+ */
+
 import {
     alpha,
     Box,
@@ -42,47 +70,47 @@ export default function CartDrawer({open, onClose}: CartDrawerProps) {
                         backdropFilter: 'blur(8px)',
                         backgroundColor: 'rgba(0, 0, 0, 0.5)'
                     }
-                }
-            }}
-            PaperProps={{
-                sx: (theme) => ({
-                    width: '30vw',
-                    minWidth: 320,
-                    maxWidth: 480,
-                    right: 0,
-                    left: 'auto !important',
-                    // Glass effect base
-                    background: theme.palette.mode === 'dark'
-                        ? alpha(theme.palette.background.paper, 0.85)
-                        : alpha(theme.palette.background.paper, 0.95),
-                    WebkitBackdropFilter: 'blur(24px)',
-                    backdropFilter: 'blur(24px)',
-                    // Diffuse neon border with secondary color
-                    borderLeft: `2px solid ${alpha(theme.palette.secondary.main, 0.4)}`,
-                    boxShadow: `
+                },
+                paper: {
+                    sx: (theme) => ({
+                        width: '30vw',
+                        minWidth: 320,
+                        maxWidth: 480,
+                        right: 0,
+                        left: 'auto !important',
+                        // Glass effect base
+                        background: theme.palette.mode === 'dark'
+                            ? alpha(theme.palette.background.paper, 0.85)
+                            : alpha(theme.palette.background.paper, 0.95),
+                        WebkitBackdropFilter: 'blur(24px)',
+                        backdropFilter: 'blur(24px)',
+                        // Diffuse neon border with secondary color
+                        borderLeft: `2px solid ${alpha(theme.palette.secondary.main, 0.4)}`,
+                        boxShadow: `
                         -30px 0 60px ${alpha(theme.palette.secondary.main, 0.2)},
                         inset 0 0 30px ${alpha(theme.palette.secondary.main, 0.08)}
                     `,
-                    position: 'fixed',
-                    overflow: 'visible',
-                    // Decorative glow blob
-                    '&::before': {
-                        content: '""',
-                        position: 'absolute',
-                        right: '-15%',
-                        top: '20%',
-                        width: '60%',
-                        height: '60%',
-                        pointerEvents: 'none',
-                        backgroundImage: `radial-gradient(400px 500px at 80% 50%,
+                        position: 'fixed',
+                        overflow: 'visible',
+                        // Decorative glow blob
+                        '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            right: '-15%',
+                            top: '20%',
+                            width: '60%',
+                            height: '60%',
+                            pointerEvents: 'none',
+                            backgroundImage: `radial-gradient(400px 500px at 80% 50%,
                             ${alpha(theme.palette.secondary.main, 0.2)} 0%,
                             transparent 50%)`,
-                        zIndex: 0,
-                        filter: 'blur(40px)',
-                        mixBlendMode: 'screen',
-                        opacity: 0.9
-                    }
-                })
+                            zIndex: 0,
+                            filter: 'blur(40px)',
+                            mixBlendMode: 'screen',
+                            opacity: 0.9
+                        }
+                    })
+                }
             }}
         >
             <Box sx={{

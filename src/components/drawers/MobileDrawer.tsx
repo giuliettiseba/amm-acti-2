@@ -1,20 +1,20 @@
 /**
- * MobileDrawer Component
+ * Componente MobileDrawer
  *
- * This component renders a mobile-friendly navigation drawer with a glass-like appearance.
- * It supports navigation items, theme toggling, and user authentication actions.
+ * Este componente renderiza un drawer de navegacion amigable para moviles con apariencia de vidrio.
+ * Soporta items de navegacion, alternancia de tema, y acciones de autenticacion de usuario.
  *
- * @param {MobileDrawerProps} props - The props for the MobileDrawer component.
- * @param {boolean} props.open - Determines if the drawer is open.
- * @param {function} props.onClose - Callback to close the drawer.
- * @param {Array<{path: string, label: string}>} props.navItems - List of navigation items with paths and labels.
- * @param {"light" | "dark"} props.mode - Current theme mode (light or dark).
- * @param {function} props.toggleMode - Callback to toggle the theme mode.
- * @param {boolean} props.isAuthenticated - Indicates if the user is authenticated.
- * @param {function} props.onLogout - Callback to log the user out.
+ * @param {MobileDrawerProps} props - Las propiedades para el componente MobileDrawer.
+ * @param {boolean} props.open - Determina si el drawer esta abierto.
+ * @param {function} props.onClose - Callback para cerrar el drawer.
+ * @param {Array<{path: string, label: string}>} props.navItems - Lista de items de navegacion con rutas y etiquetas.
+ * @param {"light" | "dark"} props.mode - Modo de tema actual (claro u oscuro).
+ * @param {function} props.toggleMode - Callback para alternar el modo de tema.
+ * @param {boolean} props.isAuthenticated - Indica si el usuario esta autenticado.
+ * @param {function} props.onLogout - Callback para cerrar sesion del usuario.
  */
 
-// Import necessary modules and components
+// Importar modulos y componentes necesarios
 import {NavLink} from 'react-router-dom';
 import {
     alpha,
@@ -42,19 +42,19 @@ export default function MobileDrawer({
                                          isAuthenticated,
                                          onLogout
                                      }: MobileDrawerProps) {
-    const {user} = useAuthContext(); // Access user data from AuthContext
+    const {user} = useAuthContext(); // Acceder a datos de usuario desde AuthContext
 
     /**
-     * Handles navigation item click.
-     * Closes the drawer after a navigation item is selected.
+     * Maneja el clic en item de navegacion.
+     * Cierra el drawer despues de que un item de navegacion es seleccionado.
      */
     const handleNavClick = () => {
         onClose();
     };
 
     /**
-     * Handles logout action.
-     * Logs the user out and closes the drawer.
+     * Maneja la accion de cierre de sesion.
+     * Cierra la sesion del usuario y cierra el drawer.
      */
     const handleLogout = () => {
         onLogout();
@@ -79,13 +79,13 @@ export default function MobileDrawer({
                         width: 250,
                         left: 0,
                         right: 'auto !important',
-                        // Glass effect base
+                        // Efecto de vidrio base
                         background: theme.palette.mode === 'dark'
                             ? alpha(theme.palette.background.paper, 0.85)
                             : alpha(theme.palette.background.paper, 0.95),
                         WebkitBackdropFilter: 'blur(24px)',
                         backdropFilter: 'blur(24px)',
-                        // Diffuse neon border with secondary color
+                        // Borde neon difuso con color secundario
                         borderRight: `2px solid ${alpha(theme.palette.secondary.main, 0.4)}`,
                         boxShadow: `
                             30px 0 60px ${alpha(theme.palette.secondary.main, 0.2)},
@@ -93,7 +93,7 @@ export default function MobileDrawer({
                         `,
                         position: 'fixed',
                         overflow: 'visible',
-                        // Decorative glow blob
+                        // Mancha de brillo decorativa
                         '&::before': {
                             content: '""',
                             position: 'absolute',

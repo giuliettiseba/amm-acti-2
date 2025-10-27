@@ -2,22 +2,22 @@ import {createContext, useContext} from 'react';
 import type {AuthContextValue} from '../types';
 
 /**
- * React Context for authentication state and actions.
+ * Contexto de React para estado y acciones de autenticacion.
  *
- * Provides the authentication context value throughout the component tree.
- * The context value type is defined by `AuthContextValue`.
+ * Proporciona el valor del contexto de autenticacion a traves del arbol de componentes.
+ * El tipo de valor del contexto esta definido por `AuthContextValue`.
  *
  * @see AuthContextValue
  */
 export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 /**
- * Custom hook to access the authentication context.
+ * Hook personalizado para acceder al contexto de autenticacion.
  *
- * Throws an error if used outside of an `AuthProvider`.
+ * Lanza un error si se usa fuera de un `AuthProvider`.
  *
- * @returns {AuthContextValue} The current authentication context value.
- * @throws {Error} If the hook is used outside of an `AuthProvider`.
+ * @returns {AuthContextValue} El valor actual del contexto de autenticacion.
+ * @throws {Error} Si el hook se usa fuera de un `AuthProvider`.
  */
 export function useAuthContext() {
     const ctx = useContext(AuthContext);

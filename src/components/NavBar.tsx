@@ -1,19 +1,19 @@
 /**
- * NavBar Component
+ * Componente NavBar
  *
- * This component renders the navigation bar for the application. It includes navigation links,
- * a theme toggle button, and a user authentication/logout button. The NavBar is responsive
- * and adapts to different screen sizes.
+ * Este componente renderiza la barra de navegacion para la aplicacion. Incluye enlaces de navegacion,
+ * un boton de alternancia de tema, y un boton de autenticacion/cierre de sesion de usuario. El NavBar es responsivo
+ * y se adapta a diferentes tamanos de pantalla.
  *
  * @component
- * @param {Object} props - The props for the NavBar component.
- * @param {boolean} props.isAuthenticated - Indicates if the user is authenticated.
- * @param {function} props.onLogout - Callback to log the user out.
- * @param {function} props.toggleTheme - Callback to toggle the theme mode.
- * @param {"light" | "dark"} props.themeMode - The current theme mode (light or dark).
+ * @param {Object} props - Las propiedades para el componente NavBar.
+ * @param {boolean} props.isAuthenticated - Indica si el usuario esta autenticado.
+ * @param {function} props.onLogout - Callback para cerrar sesion del usuario.
+ * @param {function} props.toggleTheme - Callback para alternar el modo de tema.
+ * @param {"light" | "dark"} props.themeMode - El modo de tema actual (claro u oscuro).
  */
 
-// Import necessary modules and components
+// Importar modulos y componentes necesarios
 import {NavLink, useNavigate} from 'react-router-dom';
 import React, {useState} from 'react';
 import {
@@ -39,6 +39,7 @@ import MobileDrawer from './drawers/MobileDrawer';
 import Badge from '@mui/material/Badge';
 import {useTheme} from '../context/ThemeContext.tsx';
 import {useOrder} from "../context/OrderContext.tsx";
+import {navItems} from "../constants/navItems.ts";
 
 export default function NavBar() {
     const {isAuthenticated, logout, user} = useAuthContext();
@@ -60,8 +61,8 @@ export default function NavBar() {
     };
 
     /**
-     * Handles the logout action.
-     * Logs the user out and navigates to the home page.
+     * Maneja la accion de cierre de sesion.
+     * Cierra la sesion del usuario y navega a la pagina principal.
      */
     function handleLogout() {
         logout();
@@ -71,19 +72,14 @@ export default function NavBar() {
     }
 
     /**
-     * Navigates to the user profile page.
+     * Navega a la pagina de perfil del usuario.
      */
     function handleProfileClick() {
         navigate('/perfil');
         handleUserMenuClose();
     }
 
-    const navItems = [
-        {label: 'Inicio', path: '/'},
-        {label: 'Catálogo', path: '/catalogo'},
-        {label: 'Cafetería', path: '/cafeteria'},
-        {label: 'Co-working', path: '/coworking'},
-    ];
+
 
     return (
         <AppBar position="sticky" color="default" elevation={1}>
@@ -114,7 +110,7 @@ export default function NavBar() {
                     Nexus
                 </Typography>
 
-                {/* Cart icon for mobile, right side of AppBar */}
+                {/* Icono de carrito para movil, lado derecho del AppBar */}
                 {isMobile && (
                     <IconButton
                         color="inherit"

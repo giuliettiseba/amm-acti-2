@@ -34,31 +34,6 @@ export const roomsService = {
         data.forEach(room => roomCache.set(room.id, room));
         return data;
     },
-
-    /**
-     * Obtiene una sala por su ID desde la API o desde caché si está disponible.
-     *
-     * @param {number} id - El ID de la sala a obtener.
-     * @param {boolean} [force=false] - Si es true, fuerza la recarga desde la API ignorando la caché.
-     * @returns {Promise<Room | undefined>} Promesa que resuelve con la sala solicitada o undefined si no existe.
-     */
-    async getRoomById(id: number, force = false): Promise<Room | undefined> {
-        if (!force && roomCache.has(id)) {
-            return roomCache.get(id)!;
-        }
-        // Si no está en caché individual, buscar en la lista cacheada
-        if (listaCache) {
-            const room = listaCache.data.find(r => r.id === id);
-            if (room) {
-                roomCache.set(id, room);
-                return room;
-            }
-        }
-        // Si no está en ningún caché, cargar la lista completa
-        const rooms = await this.getRooms(force);
-        return rooms.find(r => r.id === id);
-    },
-
     /**
      * Crea una nueva reserva de sala e invalida la caché de salas.
      *

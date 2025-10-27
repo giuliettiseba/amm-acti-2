@@ -15,6 +15,29 @@ import {
 import {useLibro} from '../../hooks/useLibros.ts';
 import type {DialogDetallesLibroProps} from "../../types/props/DialogDetallesLibroProps.tsx";
 
+/**
+ * DialogDetallesLibro
+ *
+ * Un componente de diálogo que muestra los detalles de un libro, incluyendo su título, autor,
+ * año, categoría, sinopsis, imagen y precio. Este componente utiliza un diseño responsivo
+ * y efectos visuales avanzados para mejorar la experiencia del usuario.
+ *
+ * @component
+ * @param {DialogDetallesLibroProps} props - Las propiedades del componente.
+ * @param {object} props.libro - El libro cuyos detalles se mostrarán.
+ * @param {boolean} props.open - Indica si el diálogo está abierto.
+ * @param {function} props.onClose - Función para cerrar el diálogo.
+ *
+ * @returns {JSX.Element | null} Un diálogo con los detalles del libro o null si no hay datos.
+ *
+ * @example
+ * <DialogDetallesLibro
+ *   libro={libro}
+ *   open={isOpen}
+ *   onClose={handleClose}
+ * />
+ */
+
 export default function DialogDetallesLibro({libro, open, onClose}: DialogDetallesLibroProps) {
     const {data: libroDetallado, loading} = useLibro(libro?.id?.toString());
 
@@ -33,67 +56,67 @@ export default function DialogDetallesLibro({libro, open, onClose}: DialogDetall
                         backdropFilter: 'blur(8px)',
                         backgroundColor: 'rgba(0, 0, 0, 0.6)'
                     }
-                }
-            }}
-            PaperProps={{
-                sx: (theme) => ({
-                    borderRadius: '20px',
-                    overflow: 'visible',
-                    position: 'relative',
-                    // Glass effect base
-                    background: theme.palette.mode === 'dark'
-                        ? alpha(theme.palette.background.paper, 0.85)
-                        : alpha(theme.palette.background.paper, 0.95),
-                    WebkitBackdropFilter: 'blur(24px)',
-                    backdropFilter: 'blur(24px)',
-                    // Diffuse neon border with secondary color
-                    border: `2px solid ${alpha(theme.palette.secondary.main, 0.4)}`,
-                    boxShadow: `
+                },
+                paper: {
+                    sx: (theme) => ({
+                        borderRadius: '20px',
+                        overflow: 'visible',
+                        position: 'relative',
+                        // Glass effect base
+                        background: theme.palette.mode === 'dark'
+                            ? alpha(theme.palette.background.paper, 0.85)
+                            : alpha(theme.palette.background.paper, 0.95),
+                        WebkitBackdropFilter: 'blur(24px)',
+                        backdropFilter: 'blur(24px)',
+                        // Diffuse neon border with secondary color
+                        border: `2px solid ${alpha(theme.palette.secondary.main, 0.4)}`,
+                        boxShadow: `
                         0 0 30px ${alpha(theme.palette.secondary.main, 0.2)},
                         0 0 60px ${alpha(theme.palette.secondary.main, 0.15)},
                         0 0 90px ${alpha(theme.palette.secondary.main, 0.1)},
                         inset 0 0 30px ${alpha(theme.palette.secondary.main, 0.08)}
                     `,
-                    // Subtle inner glow gradient
-                    '&::before': {
-                        content: '""',
-                        position: 'absolute',
-                        inset: 0,
-                        borderRadius: '20px',
-                        padding: '2px',
-                        background: `linear-gradient(135deg,
+                        // Subtle inner glow gradient
+                        '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            inset: 0,
+                            borderRadius: '20px',
+                            padding: '2px',
+                            background: `linear-gradient(135deg,
                             ${alpha(theme.palette.secondary.main, 0.3)} 0%,
                             ${alpha(theme.palette.secondary.light, 0.2)} 50%,
                             ${alpha(theme.palette.secondary.main, 0.25)} 100%)`,
-                        WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                        WebkitMaskComposite: 'xor',
-                        maskComposite: 'exclude',
-                        pointerEvents: 'none',
-                        zIndex: 1
-                    },
-                    // Decorative glow blobs
-                    '&::after': {
-                        content: '""',
-                        position: 'absolute',
-                        right: '-15%',
-                        bottom: '-15%',
-                        width: '70%',
-                        height: '70%',
-                        pointerEvents: 'none',
-                        backgroundImage: `radial-gradient(500px 400px at 70% 70%,
+                            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                            WebkitMaskComposite: 'xor',
+                            maskComposite: 'exclude',
+                            pointerEvents: 'none',
+                            zIndex: 1
+                        },
+                        // Decorative glow blobs
+                        '&::after': {
+                            content: '""',
+                            position: 'absolute',
+                            right: '-15%',
+                            bottom: '-15%',
+                            width: '70%',
+                            height: '70%',
+                            pointerEvents: 'none',
+                            backgroundImage: `radial-gradient(500px 400px at 70% 70%,
                             ${alpha(theme.palette.secondary.main, 0.18)} 0%,
                             transparent 50%)`,
-                        zIndex: 0,
-                        filter: 'blur(40px)',
-                        mixBlendMode: 'screen',
-                        opacity: 0.9
-                    },
-                    // Ensure children are above decorative elements
-                    '& > *': {
-                        position: 'relative',
-                        zIndex: 2
-                    }
-                })
+                            zIndex: 0,
+                            filter: 'blur(40px)',
+                            mixBlendMode: 'screen',
+                            opacity: 0.9
+                        },
+                        // Ensure children are above decorative elements
+                        '& > *': {
+                            position: 'relative',
+                            zIndex: 2
+                        }
+                    })
+                }
             }}
         >
             <DialogTitle
@@ -251,4 +274,3 @@ export default function DialogDetallesLibro({libro, open, onClose}: DialogDetall
         </Dialog>
     );
 }
-

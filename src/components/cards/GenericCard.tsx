@@ -2,21 +2,21 @@
  * GenericCard
  *
  * Tarjeta visual reutilizable con efecto glassmorphism, adaptable para productos, libros, salas, etc.
- * Permite mostrar imagen, título, subtítulo, categoría (como chip flotante), descripción, precio y acciones.
- * Incluye animación de aparición, botón de acción principal, botón de detalles y soporte para skeleton.
+ * Permite mostrar imagen, titulo, subtitulo, categoria (como chip flotante), descripcion, precio y acciones.
+ * Incluye animacion de aparicion, boton de accion principal, boton de detalles y soporte para skeleton.
  *
  * @component
  * @param props - Propiedades de la tarjeta.
- * @param props.title - Título principal de la tarjeta.
- * @param props.subtitle - Subtítulo o autor/categoría secundaria.
- * @param props.category - Categoría o etiqueta, mostrada como chip flotante.
- * @param props.description - Descripción breve o sinopsis.
- * @param props.price - Precio numérico (opcional).
+ * @param props.title - Titulo principal de la tarjeta.
+ * @param props.subtitle - Subtitulo o autor/categoria secundaria.
+ * @param props.category - Categoria o etiqueta, mostrada como chip flotante.
+ * @param props.description - Descripcion breve o sinopsis.
+ * @param props.price - Precio numerico (opcional).
  * @param props.image - URL de la imagen de portada (opcional).
- * @param props.addToCart - Callback para acción principal (añadir al carrito/reservar).
- * @param props.addToCartText - Texto del botón de acción principal.
+ * @param props.addToCart - Callback para accion principal (anadir al carrito/reservar).
+ * @param props.addToCartText - Texto del boton de accion principal.
  * @param props.showDetails - Callback para mostrar detalles (opcional).
- * @param props.isVisible - Si la tarjeta debe mostrarse (para animación).
+ * @param props.isVisible - Si la tarjeta debe mostrarse (para animacion).
  * @param props.skeleton - Si debe renderizarse como skeleton (carga).
  * @param props.children - Elementos hijos adicionales (opcional).
  *
@@ -31,7 +31,7 @@
  *   price={19.99}
  *   image="/portada.jpg"
  *   addToCart={() => {}}
- *   addToCartText="Añadir al carrito"
+ *   addToCartText="Anadir al carrito"
  *   showDetails={() => {}}
  *   isVisible={true}
  * />
@@ -58,20 +58,20 @@ const GenericCardRoot = styled(Card, {
     borderRadius: 20,
     overflow: 'hidden',
     cursor: 'pointer',
-    // Glass base: slightly less opaque so background shows through
+    // Base de cristal: ligeramente menos opaco para que se vea el fondo
     background: theme.palette.mode === 'dark'
         ? alpha(theme.palette.background.paper, 0.06)
         : alpha(theme.palette.background.paper, 0.48),
     WebkitBackdropFilter: 'blur(16px)',
     backdropFilter: 'blur(16px)',
-    // subtle border and inset shadow for depth
+    // Borde sutil y sombra interior para profundidad
     border: `1px solid ${alpha(theme.palette.background.paper, 0.12)}`,
-    // use a soft shadow tinted by primary color for theme-consistent depth
+    // Usar una sombra suave tenida con el color primario para profundidad consistente con el tema
     boxShadow: `0 24px 40px ${alpha(theme.palette.primary.main, 0.12)}`,
     letterSpacing: '-0.025em',
     fontWeight: 600,
-    // Quadratic ease for smooth, natural motion
-    transition: 'none', // No animation by default
+    // Transicion cuadratica para movimiento suave y natural
+    transition: 'none', // Sin animacion por defecto
     '&:hover': {
         transform: 'translateY(-1px) scale(1.02)',
         boxShadow: `0 42px 100px ${alpha(theme.palette.primary.main, 0.28)}`,
@@ -79,7 +79,7 @@ const GenericCardRoot = styled(Card, {
         transition: 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.35s ease',
     },
 
-    // Glass bright shine effect on hover
+    // Efecto de brillo cristalino al pasar el cursor
     '&:before': {
         content: '""',
         position: 'absolute',
@@ -89,7 +89,7 @@ const GenericCardRoot = styled(Card, {
         height: '100%',
         pointerEvents: 'none',
         zIndex: 10,
-        // Much more subtle, transparent, and diagonal radial gradient
+        // Gradiente radial mucho mas sutil, transparente y diagonal
         background: `radial-gradient(circle at var(--shine-x, 60%) var(--shine-y, 0%), ${alpha(theme.palette.common.white, 0.10)} 0%, ${alpha(theme.palette.common.white, 0.04)} 40%, transparent 80%)`,
         opacity: 0,
         transition: 'none',
@@ -99,7 +99,7 @@ const GenericCardRoot = styled(Card, {
         transition: 'opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     },
 
-    // decorative soft blobs: left secondary blob right primary blob
+    // Manchas decorativas suaves: mancha secundaria izquierda mancha primaria derecha
     '&:after': {
         content: '""',
         position: 'absolute',
@@ -113,7 +113,7 @@ const GenericCardRoot = styled(Card, {
         filter: 'blur(22px) saturate(1.1)',
         mixBlendMode: 'screen',
         opacity: 0.95,
-        transition: 'none', // No animation by default
+        transition: 'none', // Sin animacion por defecto
     },
     '&:hover:after': {
         filter: 'blur(28px) saturate(1.3)',
@@ -121,7 +121,7 @@ const GenericCardRoot = styled(Card, {
         transition: 'filter 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.35s ease',
     },
 
-    // ensure children are above decorative pseudo elements
+    // Asegurar que los hijos esten sobre los pseudo elementos decorativos
     '& > *': {
         position: 'relative',
         zIndex: 3,
@@ -139,12 +139,12 @@ const GenericCardRoot = styled(Card, {
         },
     ],
     ...theme.applyStyles('dark', {
-        // keep slight translucency in dark mode
+        // Mantener ligera translucidez en modo oscuro
         background: alpha(theme.palette.background.paper, 0.06),
     }),
 }));
 
-// Image slot: uses ownerState.image as background
+// Ranura de imagen: usa ownerState.image como fondo
 const GenericCardImage = styled('div')<{ ownerState: GenericCardState }>(({ownerState, theme}) => {
     const isSvg = ownerState?.image?.toLowerCase().endsWith('.svg');
     return {
@@ -152,7 +152,7 @@ const GenericCardImage = styled('div')<{ ownerState: GenericCardState }>(({owner
         height: 160,
         borderRadius: theme.shape.borderRadius,
         overflow: 'hidden',
-        // use background palette so the fallback matches theme
+        // Usar paleta de fondo para que el respaldo coincida con el tema
         backgroundColor: theme.palette.background.default,
         backgroundImage: ownerState?.image ? `url(${ownerState.image})` : undefined,
         backgroundSize: isSvg ? 'contain' : 'cover',
@@ -160,7 +160,7 @@ const GenericCardImage = styled('div')<{ ownerState: GenericCardState }>(({owner
         backgroundPosition: 'center',
         cursor: 'pointer',
         transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        // If SVG, apply primary color filter
+        // Si es SVG, aplicar filtro de color primario
         ...(isSvg && {
             filter: `brightness(0) saturate(100%) invert(${theme.palette.mode === 'dark' ? '70%' : '40%'}) sepia(100%) hue-rotate(${theme.palette.primary.main === '#1976d2' ? '200deg' : '180deg'}) saturate(300%)`,
             backgroundColor: 'transparent',
@@ -171,22 +171,22 @@ const GenericCardImage = styled('div')<{ ownerState: GenericCardState }>(({owner
     };
 });
 
-// small helper to normalize text tokens: { primary, secondary }
+// Pequeno ayudante para normalizar tokens de texto: { primary, secondary }
 function getTextTokens(theme: any) {
-    // Use the explicit tokens requested: theme.palette.text and theme.palette.textDim
+    // Usar los tokens explicitos solicitados: theme.palette.text y theme.palette.textDim
     const p = theme.palette as any;
     const primary = p.text ?? (p.text?.primary ?? theme.palette.text?.primary ?? theme.palette.text ?? '#000');
     const secondary = p.textDim ?? (p.text?.dim ?? theme.palette.text?.secondary ?? theme.palette.textDim ?? '#666');
     return {primary, secondary};
 }
 
-// Title slot
+// Ranura de titulo
 const GenericCardTitle = styled('div')<{ ownerState: GenericCardState }>(({theme}) => {
     const text = getTextTokens(theme);
     return ({
         ...theme.typography.h6,
         fontWeight: 800,
-        // use theme text primary color
+        // Usar color de texto primario del tema
         color: text.primary,
         textShadow: `0 1px 0 ${alpha(text.secondary || theme.palette.background.default || theme.palette.background.paper, 0.12)}`,
         transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.3s ease',
@@ -197,7 +197,7 @@ const GenericCardTitle = styled('div')<{ ownerState: GenericCardState }>(({theme
     });
 });
 
-// Subtitle slot
+// Ranura de subtitulo
 const GenericCardSubtitle = styled('div')<{ ownerState: GenericCardState }>(({theme}) => {
     const text = getTextTokens(theme);
     return ({
@@ -206,7 +206,7 @@ const GenericCardSubtitle = styled('div')<{ ownerState: GenericCardState }>(({th
     });
 });
 
-// Description slot
+// Ranura de descripcion
 const GenericCardDescription = styled('div')<{ ownerState: GenericCardState }>(({theme}) => {
     const text = getTextTokens(theme);
     return ({
@@ -215,7 +215,7 @@ const GenericCardDescription = styled('div')<{ ownerState: GenericCardState }>((
     });
 });
 
-// Price slot
+// Ranura de precio
 const GenericCardPrice = styled('div')<{ ownerState: GenericCardState }>(({theme}) => ({
     ...theme.typography.subtitle1,
     fontWeight: 800,
@@ -227,7 +227,7 @@ const GenericCardPrice = styled('div')<{ ownerState: GenericCardState }>(({theme
     },
 }));
 
-// Category chip-button floating top-left
+// Boton-chip de categoria flotante arriba a la izquierda
 const GenericCardCategory = styled('button')<{ ownerState: GenericCardState }>(({theme}) => ({
     position: 'absolute',
     top: theme.spacing(1.5),
@@ -246,7 +246,7 @@ const GenericCardCategory = styled('button')<{ ownerState: GenericCardState }>((
     fontSize: '0.75rem',
     fontWeight: 600,
     boxShadow: theme.shadows[1],
-    // Quadratic ease for smooth motion
+    // Transicion cuadratica para movimiento suave
     transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease',
     '&:hover': {
         transform: 'translateY(-3px) scale(1.05)',
@@ -283,7 +283,7 @@ export const GenericCard = React.forwardRef<HTMLDivElement, GenericCardProps>(
 
         const ownerState: GenericCardState = {...props, variant};
 
-        // Mouse position tracking for shine effect
+        // Seguimiento de posicion del raton para efecto de brillo
         const cardRef = React.useRef<HTMLDivElement>(null);
 
         // Actualiza el gradiente de brillo según la posición del puntero
@@ -291,7 +291,7 @@ export const GenericCard = React.forwardRef<HTMLDivElement, GenericCardProps>(
             const card = cardRef.current;
             if (!card) return;
             const rect = card.getBoundingClientRect();
-            // Normaliza la posición del puntero respecto a la card
+            // Normaliza la posicion del puntero respecto a la card
             const x = ((e.clientX - rect.left) / rect.width) * 100;
             const y = ((e.clientY - rect.top) / rect.height) * 100;
             card.style.setProperty('--shine-x', `${x}%`);
@@ -335,7 +335,7 @@ export const GenericCard = React.forwardRef<HTMLDivElement, GenericCardProps>(
                         ref={node => {
                             cardRef.current = node;
                             if (typeof ref === 'function') ref(node);
-                            else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+                            else if (ref) (ref as React.RefObject<HTMLDivElement | null>).current = node;
                         }}
                         ownerState={ownerState}
                         onMouseMove={handleMouseMove}
@@ -387,22 +387,22 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                             display: 'flex',
                             flexDirection: 'column',
                             position: 'relative',
-                            // Glass effect base
+                            // Efecto de vidrio base
                             background: theme.palette.mode === 'dark'
                                 ? alpha(theme.palette.background.paper, 0.04)
                                 : alpha(theme.palette.background.paper, 0.35),
                             WebkitBackdropFilter: 'blur(20px)',
                             backdropFilter: 'blur(20px)',
-                            // Diffuse neon border with secondary color
+                            // Borde neon difuso con color secundario
                             border: `1px solid ${alpha(theme.palette.secondary.main, 0.3)}`,
                             boxShadow: `
                                     0 0 20px ${alpha(theme.palette.secondary.main, 0.15)},
                                     0 0 40px ${alpha(theme.palette.secondary.main, 0.1)},
                                     inset 0 0 20px ${alpha(theme.palette.secondary.main, 0.05)}
                                 `,
-                            // Overall opacity
+                            // Opacidad general
                             opacity: 0.6,
-                            // Subtle inner glow
+                            // Brillo interior sutil
                             '&::before': {
                                 content: '""',
                                 position: 'absolute',
@@ -419,7 +419,7 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                                 pointerEvents: 'none',
                                 zIndex: 1
                             },
-                            // Decorative glow blobs
+                            // Manchas de brillo decorativas
                             '&::after': {
                                 content: '""',
                                 position: 'absolute',
@@ -436,14 +436,14 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                                 mixBlendMode: 'screen',
                                 opacity: 0.8
                             },
-                            // Ensure children are above decorative elements
+                            // Asegurar que los hijos esten sobre los elementos decorativos
                             '& > *': {
                                 position: 'relative',
                                 zIndex: 2
                             }
                         }}>
                             <Box sx={{position: 'relative', mb: 0.5}}>
-                                {/* image skeleton - matches GenericCardImage height */}
+                                {/* skeleton de imagen - coincide con la altura de GenericCardImage */}
                                 <MuiSkeleton
                                     variant="rectangular"
                                     width="100%"
@@ -455,7 +455,7 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                                     }}
                                 />
 
-                                {/* floating category chip skeleton */}
+                                {/* skeleton de chip de categoria flotante */}
                                 {showCategory && (
                                     <Box sx={{position: 'absolute', top: 12, left: 12}}>
                                         <MuiSkeleton
@@ -473,7 +473,7 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                             </Box>
 
                             <Stack spacing={0.5}>
-                                {/* title - h6 typography */}
+                                {/* titulo - tipografia h6 */}
                                 <MuiSkeleton
                                     variant="text"
                                     width="70%"
@@ -484,7 +484,7 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                                     }}
                                 />
 
-                                {/* subtitle - subtitle2 */}
+                                {/* subtitulo - subtitle2 */}
                                 <MuiSkeleton
                                     variant="text"
                                     width="45%"
@@ -495,7 +495,7 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                                     }}
                                 />
 
-                                {/* description - body2 */}
+                                {/* descripcion - body2 */}
                                 <MuiSkeleton
                                     variant="text"
                                     width="100%"
@@ -515,7 +515,7 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                                     }}
                                 />
 
-                                {/* price - subtitle1 */}
+                                {/* precio - subtitle1 */}
                                 <MuiSkeleton
                                     variant="text"
                                     width={80}
@@ -527,7 +527,7 @@ export function CardSkeleton({width = '100%', imageHeight = 160, showCategory = 
                                     }}
                                 />
 
-                                {/* button */}
+                                {/* boton */}
                                 <MuiSkeleton
                                     variant="rounded"
                                     width={160}

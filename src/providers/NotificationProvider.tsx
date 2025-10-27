@@ -1,18 +1,18 @@
 /**
- * NotificationProvider component for managing global notification state and actions.
+ * Componente NotificationProvider para gestionar el estado global de notificaciones y sus acciones.
  *
- * Provides a context for adding, removing, and clearing notifications, as well as automatically
- * removing notifications after a timeout. Notifications are stored in local state and exposed
- * to descendant components via the NotificationContext.
+ * Proporciona un contexto para agregar, eliminar y limpiar notificaciones, así como para eliminarlas
+ * automáticamente después de un tiempo de espera. Las notificaciones se almacenan en el estado local
+ * y se exponen a los componentes descendientes a través del NotificationContext.
  *
  * @module NotificationProvider
  * @context NotificationContext
  *
- * @param {NotificationProviderProps} props - The provider props.
- * @param {React.ReactNode} props.children - Child components to be wrapped by the provider.
- * @param {number} [props.defaultTimeout=4500] - Default timeout in milliseconds for auto-removal of notifications.
+ * @param {NotificationProviderProps} props - Las propiedades del proveedor.
+ * @param {React.ReactNode} props.children - Componentes hijos envueltos por el proveedor.
+ * @param {number} [props.defaultTimeout=4500] - Tiempo de espera predeterminado en milisegundos para la eliminación automática de notificaciones.
  *
- * @returns {JSX.Element} The provider component wrapping its children.
+ * @returns {JSX.Element} El componente proveedor que envuelve a sus hijos.
  *
  * @example
  * <NotificationProvider>
@@ -26,23 +26,23 @@ import type {NotificationProviderProps} from "../types/props/NotificationProvide
 
 export function NotificationProvider({children, defaultTimeout = 4500}: NotificationProviderProps) {
     /**
-     * State for the list of notifications.
+     * Estado para la lista de notificaciones.
      */
     const [notifications, setNotifications] = useState<NotificationItem[]>([]);
 
     /**
-     * Removes a notification by its id.
-     * @param id - The id of the notification to remove.
+     * Elimina una notificación por su id.
+     * @param id - El id de la notificación a eliminar.
      */
     const removeNotification = useCallback((id: string) => {
         setNotifications(curr => curr.filter(n => n.id !== id));
     }, []);
 
     /**
-     * Adds a notification to the list and schedules its removal after a timeout.
+     * Agrega una notificación a la lista y programa su eliminación después de un tiempo de espera.
      *
-     * @param n - Notification data.
-     * @returns The id of the added notification.
+     * @param n - Datos de la notificación.
+     * @returns El id de la notificación agregada.
      */
     const addNotification: NotificationContextValue['addNotification'] = (n) => {
         const id = n.id || crypto.randomUUID();
@@ -56,7 +56,7 @@ export function NotificationProvider({children, defaultTimeout = 4500}: Notifica
     };
 
     /**
-     * Clears all notifications from the list.
+     * Limpia todas las notificaciones de la lista.
      */
     const clear = useCallback(() => setNotifications([]), []);
 

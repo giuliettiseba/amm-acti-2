@@ -1,7 +1,7 @@
 /**
- * Custom React hooks for fetching and managing book data (libros) from the API.
+ * Hooks personalizados de React para obtener y gestionar datos de libros desde la API.
  *
- * Provides hooks to fetch the list of books and individual book details, with loading, error, and refetch support.
+ * Proporciona hooks para obtener la lista de libros y detalles de libros individuales, con soporte de carga, error y refetch.
  *
  * @module useLibros
  */
@@ -13,18 +13,18 @@ import type {LibroState} from "../types/states/libroState.ts";
 /**
  * useLibros
  *
- * Custom hook to fetch and manage the list of books.
- * Handles loading, error, and data states, and provides a refetch method.
+ * Hook personalizado para obtener y gestionar la lista de libros.
+ * Maneja estados de carga, error y datos, y proporciona un metodo refetch.
  *
- * @returns {LibrosState & {refetch: () => void}} State object with data, loading, error, and refetch.
+ * @returns {LibrosState & {refetch: () => void}} Objeto de estado con data, loading, error y refetch.
  */
 export function useLibros() {
     const [state, setState] = useState<LibrosState>({data: null, loading: true, error: null});
 
     /**
-     * Loads the list of books from the API.
+     * Carga la lista de libros desde la API.
      *
-     * @param {boolean} [force=false] - If true, forces a reload from the API, bypassing cache.
+     * @param {boolean} [force=false] - Si es true, fuerza una recarga desde la API, evitando cache.
      */
     const load = useCallback(async (force = false) => {
         setState(prev => ({...prev, loading: true, error: null}));
@@ -48,19 +48,19 @@ export function useLibros() {
 /**
  * useLibro
  *
- * Custom hook to fetch and manage a single book by ID.
- * Handles loading, error, and data states, and provides a refetch method.
+ * Hook personalizado para obtener y gestionar un libro individual por ID.
+ * Maneja estados de carga, error y datos, y proporciona un metodo refetch.
  *
- * @param {string | undefined} id - The ID of the book to fetch.
- * @returns {LibroState & {refetch: () => void}} State object with data, loading, error, and refetch.
+ * @param {string | undefined} id - El ID del libro a obtener.
+ * @returns {LibroState & {refetch: () => void}} Objeto de estado con data, loading, error y refetch.
  */
 export function useLibro(id: string | undefined) {
     const [state, setState] = useState<LibroState>({data: null, loading: !!id, error: null});
 
     /**
-     * Loads a single book by ID from the API.
+     * Carga un libro individual por ID desde la API.
      *
-     * @param {boolean} [force=false] - If true, forces a reload from the API, bypassing cache.
+     * @param {boolean} [force=false] - Si es true, fuerza una recarga desde la API, evitando cache.
      */
     const load = useCallback(async (force = false) => {
         if (!id) return;

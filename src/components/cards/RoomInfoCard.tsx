@@ -1,23 +1,26 @@
+// noinspection DuplicatedCode
+
 import {alpha, Card, CardContent, Typography, Box, Chip} from '@mui/material';
 import {People, LocationOn, Euro} from '@mui/icons-material';
 import type {Room} from '../../types';
+import type {JSX} from "react";
 
 /**
  * RoomInfoCard
  *
- * Muestra la información de la sala seleccionada en una tarjeta.
+ * Muestra la informacion de la sala seleccionada en una tarjeta.
  *
  * @param {object} props
  * @param {Room} props.room - Objeto de sala a mostrar.
  * @returns {JSX.Element}
  */
-export default function RoomInfoCard({room}: {room: Room}) {
+export default function RoomInfoCard({room}: {room: Room}): JSX.Element {
     /**
-     * Returns a color string for the MUI Chip component based on the room capacity.
-     * Only returns allowed MUI color values.
+     * Retorna una cadena de color para el componente MUI Chip basado en la capacidad de la sala.
+     * Solo retorna valores de color permitidos por MUI.
      *
-     * @param {Room['capacity']} capacity - The capacity value of the room.
-     * @returns {"default"|"primary"|"secondary"|"success"} The color for the Chip.
+     * @param {Room['capacity']} capacity - El valor de capacidad de la sala.
+     * @returns {"default"|"primary"|"secondary"|"success"} El color para el Chip.
      */
     function getChipColor(capacity: Room['capacity']): "default"|"primary"|"secondary"|"success" {
         switch (capacity) {

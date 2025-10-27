@@ -1,9 +1,9 @@
 /**
- * OrderProvider component for managing the shopping cart (carrito) state and actions.
+ * Componente OrderProvider para gestionar el estado y las acciones del carrito de compras (carrito).
  *
- * This provider handles adding, updating, and removing items (both products and books) from the cart,
- * persists the cart to localStorage, and exposes all cart-related actions and state via context.
- * It also triggers notifications on cart changes.
+ * Este proveedor maneja la adición, actualización y eliminación de elementos (tanto productos como libros) del carrito,
+ * persiste el carrito en localStorage y expone todas las acciones y el estado relacionados con el carrito a través del contexto.
+ * También activa notificaciones en los cambios del carrito.
  *
  * @module OrderProvider
  * @context OrderContext
@@ -13,29 +13,30 @@
  *   <App />
  * </OrderProvider>
  */
-import {type ReactNode, useEffect, useState} from 'react';
-import {OrderContext} from '../context/OrderContext';
-import type {CarritoItem, Libro, ProductoCafe} from '../types';
-import {useNotification} from '../context/NotificationContext';
+
+import {type ReactNode, useEffect, useState} from "react";
+import {useNotification} from "../context/NotificationContext.tsx";
+import type {CarritoItem, Libro, ProductoCafe} from "../types";
+import {OrderContext} from "../context/OrderContext.tsx";
 
 /**
- * Key used for persisting the cart in localStorage.
+ * Clave utilizada para persistir el carrito en localStorage.
  * @constant {string}
  */
 const STORAGE_KEY = 'carrito-pedidos';
 
 /**
- * Provides cart state and actions to descendant components via context.
+ * Proporciona el estado y las acciones del carrito a los componentes descendientes a través del contexto.
  */
-export const OrderProvider = ({children}: { children: ReactNode }) => {
-    // State for the cart items.
+const OrderProvider = ({children}: { children: ReactNode }) => {
+    // Estado para los elementos del carrito.
     const [carrito, setCarrito] = useState<CarritoItem[]>([]);
 
-    // Notification context for showing user feedback.
+    // Contexto de notificaciones para mostrar retroalimentación al usuario.
     const {addNotification} = useNotification();
 
     /**
-     * Loads cart from localStorage on mount.
+     * Carga el carrito desde localStorage al montar el componente.
      */
     useEffect(() => {
         const data = localStorage.getItem(STORAGE_KEY);
@@ -43,18 +44,18 @@ export const OrderProvider = ({children}: { children: ReactNode }) => {
     }, []);
 
     /**
-     * Persists cart to localStorage whenever it changes.
+     * Persiste el carrito en localStorage cada vez que cambia.
      */
     useEffect(() => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(carrito));
     }, [carrito]);
 
     /**
-     * Adds a product to the cart or updates its quantity if it already exists.
+     * Agrega un producto al carrito o actualiza su cantidad si ya existe.
      *
-     * @param producto - The product to add.
-     * @param cantidad - Quantity to add (default: 1).
-     * @returns Whether the product was added or updated.
+     * @param producto - El producto a agregar.
+     * @param cantidad - Cantidad a agregar (por defecto: 1).
+     * @returns Indica si el producto fue agregado o actualizado.
      */
     const agregarProducto = (producto: ProductoCafe, cantidad: number = 1): 'added' | 'updated' => {
         let result: 'added' | 'updated';
@@ -81,11 +82,11 @@ export const OrderProvider = ({children}: { children: ReactNode }) => {
     };
 
     /**
-     * Adds a book to the cart or updates its quantity if it already exists.
+     * Agrega un libro al carrito o actualiza su cantidad si ya existe.
      *
-     * @param libro - The book to add.
-     * @param cantidad - Quantity to add (default: 1).
-     * @returns Whether the book was added or updated.
+     * @param libro - El libro a agregar.
+     * @param cantidad - Cantidad a agregar (por defecto: 1).
+     * @returns Indica si el libro fue agregado o actualizado.
      */
     const agregarLibro = (libro: Libro, cantidad: number = 1): 'added' | 'updated' => {
         let result: 'added' | 'updated';
@@ -112,9 +113,9 @@ export const OrderProvider = ({children}: { children: ReactNode }) => {
     };
 
     /**
-     * Removes an item (product or book) from the cart.
+     * Elimina un elemento (producto o libro) del carrito.
      *
-     * @param {CarritoItem} item - The item to remove.
+     * @param {CarritoItem} item - El elemento a eliminar.
      */
     const quitarItem = (item: CarritoItem) => {
         setCarrito(prev => prev.filter(i => {
@@ -129,15 +130,15 @@ export const OrderProvider = ({children}: { children: ReactNode }) => {
     };
 
     /**
-     * Clears all items from the cart.
+     * Limpia todos los elementos del carrito.
      */
     const limpiarCarrito = () => setCarrito([]);
 
     /**
-     * Updates the quantity of a specific item in the cart.
+     * Actualiza la cantidad de un elemento específico en el carrito.
      *
-     * @param {CarritoItem} item - The item to update.
-     * @param {number} cantidad - The new quantity.
+     * @param {CarritoItem} item - El elemento a actualizar.
+     * @param {number} cantidad - La nueva cantidad.
      */
     const actualizarCantidad = (item: CarritoItem, cantidad: number) => {
         setCarrito(prev => prev.map(i => {
@@ -162,3 +163,4 @@ export const OrderProvider = ({children}: { children: ReactNode }) => {
         </OrderContext.Provider>
     );
 };
+export default OrderProvider

@@ -1,16 +1,16 @@
 /**
- * AuthProvider component for managing authentication state and actions.
+ * Componente AuthProvider para gestionar el estado y las acciones de autenticación.
  *
- * This provider handles user login, logout, and session persistence using localStorage.
- * It exposes the current user, authentication status, loading state, and auth actions via context.
+ * Este proveedor maneja el inicio de sesión, cierre de sesión y la persistencia de la sesión utilizando localStorage.
+ * Expone el usuario actual, el estado de autenticación, el estado de carga y las acciones de autenticación a través del contexto.
  *
  * @module AuthProvider
  * @context AuthContext
  *
- * @param {AuthProviderProps} props - The provider props.
- * @param {React.ReactNode} props.children - Child components to be wrapped by the provider.
+ * @param {AuthProviderProps} props - Las propiedades del proveedor.
+ * @param {React.ReactNode} props.children - Componentes hijos envueltos por el proveedor.
  *
- * @returns {JSX.Element} The provider component wrapping its children.
+ * @returns {JSX.Element} El componente proveedor que envuelve a sus hijos.
  *
  * @example
  * <AuthProvider>
@@ -28,11 +28,11 @@ const AUTH_KEY = 'nexus_auth_user';
 
 export function AuthProvider({children}: AuthProviderProps) {
     /**
-     * State for the current authenticated user.
+     * Estado para el usuario autenticado actual.
      */
     const [user, setUser] = useState<User | null>(null);
     /**
-     * State for loading status (e.g., during login or session restore).
+     * Estado para el indicador de carga (por ejemplo, durante el inicio de sesión o la restauración de la sesión).
      */
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -42,22 +42,22 @@ export function AuthProvider({children}: AuthProviderProps) {
         if (raw) {
             try {
                 setUser(JSON.parse(raw));
-            } catch { /* ignore */ }
+            } catch { /* ignorar */ }
         }
         setLoading(false);
     }, []);
 
     /**
-     * Logs in a user using the userService and persists the session.
+     * Inicia sesión un usuario utilizando el userService y persiste la sesión.
      *
-     * @param {string} username - The username for login.
-     * @param {string} password - The password for login.
-     * @throws Will throw if login fails.
+     * @param {string} username - El nombre de usuario para iniciar sesión.
+     * @param {string} password - La contraseña para iniciar sesión.
+     * @throws Lanza un error si el inicio de sesión falla.
      */
     const login = useCallback(async (username: string, password: string) => {
         setLoading(true);
         try {
-            // Use API login endpoint
+            // Usar el endpoint de inicio de sesión de la API
             const response = await userService.login({username, password});
             setUser(response.user);
             localStorage.setItem(AUTH_KEY, JSON.stringify(response.user));
@@ -71,7 +71,7 @@ export function AuthProvider({children}: AuthProviderProps) {
     }, []);
 
     /**
-     * Logs out the current user and clears the session from localStorage.
+     * Cierra la sesión del usuario actual y elimina la sesión de localStorage.
      */
     const logout = useCallback(() => {
         setUser(null);

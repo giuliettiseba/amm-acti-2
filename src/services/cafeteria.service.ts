@@ -56,26 +56,4 @@ export class CafeteriaService {
         productosCache.set(categoria, {data, timestamp: now});
         return data;
     }
-
-    /**
-     * Limpia toda la caché de categorías y productos.
-     * Útil cuando se necesita forzar la recarga de datos desde el servidor.
-     */
-    static clearCache(): void {
-        categoriasCache = null;
-        productosCache.clear();
-    }
-
-    /**
-     * Limpia solo la caché de productos de una categoría específica.
-     *
-     * @param {string} categoria - Nombre de la categoría cuya caché se quiere limpiar.
-     */
-    static clearProductosCache(categoria?: string): void {
-        if (categoria) {
-            productosCache.delete(categoria);
-        } else {
-            productosCache.clear();
-        }
-    }
 }

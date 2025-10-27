@@ -1,4 +1,4 @@
-// Tipos compartidos de la aplicación
+// Tipos compartidos de la aplicacion
 export type {Libro} from './Libro';
 export type {LoginContext} from './LoginContext.ts';
 export type {User} from './User';
@@ -6,7 +6,7 @@ export type {CoworkingSlot} from './CoworkingSlot';
 export type {AuthResponse} from './AuthResponse';
 export type {ApiError} from './ApiError';
 
-// Tipos para la cafetería
+// Tipos para la cafeteria
 export type {CategoriaProducto} from './CategoriaProducto';
 export type {ProductoCafe} from './ProductoCafe';
 

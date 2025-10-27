@@ -1,17 +1,17 @@
 /**
  * useSkeletonDelay
  *
- * Custom React hook to control the display timing of skeleton loaders during asynchronous loading states.
+ * Hook personalizado de React para controlar el tiempo de visualizacion de cargadores skeleton durante estados de carga asincrona.
  *
- * This hook prevents flickering by introducing a delay before showing the skeleton and ensures
- * a minimum visible duration once the skeleton is displayed. It is useful for improving perceived
- * loading performance and user experience in UI components.
+ * Este hook previene parpadeos al introducir un retraso antes de mostrar el skeleton y asegura
+ * una duracion visible minima una vez que el skeleton se muestra. Es util para mejorar la percepcion
+ * de rendimiento de carga y experiencia de usuario en componentes de UI.
  *
- * @param {boolean} loading - Whether the content is currently loading.
- * @param {UseSkeletonDelayOptions} [options] - Optional configuration for delay and minimum visible time.
- * @param {number} [options.delayMs=150] - Delay in milliseconds before showing the skeleton.
- * @param {number} [options.minVisibleMs=300] - Minimum time in milliseconds the skeleton should remain visible.
- * @returns {boolean} Whether the skeleton should be shown.
+ * @param {boolean} loading - Si el contenido esta actualmente cargando.
+ * @param {UseSkeletonDelayOptions} [options] - Configuracion opcional para retraso y tiempo minimo visible.
+ * @param {number} [options.delayMs=150] - Retraso en milisegundos antes de mostrar el skeleton.
+ * @param {number} [options.minVisibleMs=300] - Tiempo minimo en milisegundos que el skeleton debe permanecer visible.
+ * @returns {boolean} Si el skeleton debe mostrarse.
  *
  * @example
  * const showSkeleton = useSkeletonDelay(loading, { delayMs: 200, minVisibleMs: 400 });
@@ -50,12 +50,12 @@ export function useSkeletonDelay(loading: boolean, options: UseSkeletonDelayOpti
 
         // Cuando finaliza la carga
         if (!loading) {
-            // Cancelar delay pendiente si skeleton aún no salió
+            // Cancelar delay pendiente si skeleton aun no salio
             if (!showSkeleton && delayTimerRef.current) {
                 window.clearTimeout(delayTimerRef.current);
                 delayTimerRef.current = null;
             }
-            // Si skeleton visible, asegurar permanencia mínima
+            // Si skeleton visible, asegurar permanencia minima
             if (showSkeleton && skeletonShownAtRef.current) {
                 const elapsed = Date.now() - skeletonShownAtRef.current;
                 if (elapsed < minVisibleMs) {
@@ -72,7 +72,7 @@ export function useSkeletonDelay(loading: boolean, options: UseSkeletonDelayOpti
                     skeletonShownAtRef.current = null;
                 }
             } else {
-                // No llegó a mostrarse, asegurar estado oculto
+                // No llego a mostrarse, asegurar estado oculto
                 setShowSkeleton(false);
             }
         }

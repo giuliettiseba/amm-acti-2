@@ -15,13 +15,14 @@
 import {Box, Typography} from '@mui/material';
 import {MenuBook, Work, LocalCafe} from '@mui/icons-material';
 import LandingFeatureCard from '../components/cards/LandingFeatureCard.tsx';
+import React from "react";
 
 export default function LandingPage() {
     /**
      * Lista de funcionalidades principales a mostrar en la landing.
      * @type {Array<{icon: React.ReactNode, title: string, description: string, link: string}>}
      */
-    const features = [
+    const features: Array<{ icon: React.ReactNode; title: string; description: string; link: string; }> = [
         {
             icon: <MenuBook sx={{fontSize: 40}}/>,
             title: 'Catálogo de Libros',

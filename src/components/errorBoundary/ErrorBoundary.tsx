@@ -14,6 +14,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         console.error('ErrorBoundary atrapó un error', error, info);
     }
 
+
     render() {
         if (this.state.hasError) {
             return (

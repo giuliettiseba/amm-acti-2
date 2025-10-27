@@ -5,5 +5,5 @@ export interface NotificationItem {
     type: NotificationType;
     message: string;
     createdAt: number;
-    timeout?: number; // ms
+    timeout?: number; // milisegundos
 }

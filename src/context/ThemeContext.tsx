@@ -1,8 +1,8 @@
 /**
- * ThemeContext and useTheme hook for global theme state management.
+ * ThemeContext y hook useTheme para gestion global de estado de tema.
  *
- * Provides a React Context for theme state and actions, and a custom hook to access them.
- * The context value type is defined by ThemeContextType.
+ * Proporciona un Contexto de React para estado y acciones de tema, y un hook personalizado para acceder a ellos.
+ * El tipo de valor del contexto esta definido por ThemeContextType.
  *
  * @module ThemeContext
  * @context ThemeContext
@@ -13,20 +13,20 @@ import {createContext, useContext} from "react";
 import type {ThemeContextType} from "../types/ThemeContextType.ts";
 
 /**
- * React Context for theme state and actions.
+ * Contexto de React para estado y acciones de tema.
  *
- * Provides the theme context value throughout the component tree.
- * The context value type is defined by ThemeContextType.
+ * Proporciona el valor del contexto de tema a traves del arbol de componentes.
+ * El tipo de valor del contexto esta definido por ThemeContextType.
  */
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 /**
- * Custom hook to access the theme context.
+ * Hook personalizado para acceder al contexto de tema.
  *
- * Throws an error if used outside of a ThemeProvider.
+ * Lanza un error si se usa fuera de un ThemeProvider.
  *
- * @returns {ThemeContextType} The current theme context value.
- * @throws {Error} If the hook is used outside of a ThemeProvider.
+ * @returns {ThemeContextType} El valor actual del contexto de tema.
+ * @throws {Error} Si el hook se usa fuera de un ThemeProvider.
  */
 export function useTheme(): ThemeContextType {
     const ctx = useContext(ThemeContext);

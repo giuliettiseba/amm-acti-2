@@ -2,10 +2,10 @@ import {createContext, useContext} from 'react';
 import type {OrderContextType} from '../types';
 
 /**
- * React Context for order state and actions.
+ * Contexto de React para estado y acciones de pedido.
  *
- * Provides the order context value throughout the component tree.
- * The context value type is defined by `OrderContextType`.
+ * Proporciona el valor del contexto de pedido a traves del arbol de componentes.
+ * El tipo de valor del contexto esta definido por `OrderContextType`.
  *
  * @see OrderContextType
  */
@@ -13,15 +13,15 @@ export const OrderContext
     = createContext<OrderContextType | undefined>(undefined);
 
 /**
- * Custom hook to access the order context.
+ * Hook personalizado para acceder al contexto de pedido.
  *
- * Throws an error if used outside of an `OrderProvider`.
+ * Lanza un error si se usa fuera de un `OrderProvider`.
  *
- * @returns {OrderContextType} The current order context value.
- * @throws {Error} If the hook is used outside of an `OrderProvider`.
+ * @returns {OrderContextType} El valor actual del contexto de pedido.
+ * @throws {Error} Si el hook se usa fuera de un `OrderProvider`.
  */
 export function useOrder():OrderContextType {
     const ctx = useContext(OrderContext);
     if (!ctx) throw new Error('useOrder debe usarse dentro de OrderProvider');
     return ctx;
-};
+}

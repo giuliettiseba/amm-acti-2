@@ -1,16 +1,16 @@
 /**
- * Generic API client for the application.
+ * Cliente API generico para la aplicacion.
  *
- * Provides utility functions for making typed GET and POST requests to the backend API,
- * with error handling and base URL configuration.
+ * Proporciona funciones de utilidad para realizar solicitudes GET y POST tipadas a la API del backend,
+ * con manejo de errores y configuracion de URL base.
  *
  * @module apiClient
  */
-// Cliente API genérico para la aplicación
+// Cliente API generico para la aplicacion
 
 /**
- * The base URL for all API requests.
- * Uses the VITE_API_BASE_URL environment variable or defaults to 'http://localhost:3000/api'.
+ * La URL base para todas las solicitudes API.
+ * Usa la variable de entorno VITE_API_BASE_URL o por defecto 'http://localhost:3000/api'.
  * @constant {string}
  */
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
@@ -18,13 +18,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000
 import type {ApiGetEndpoint, ApiGetResponse} from '../types/api';
 
 /**
- * Performs a GET request to the specified API endpoint.
+ * Realiza una solicitud GET al endpoint API especificado.
  *
- * @template T The expected response type.
- * @param {string} endpoint - The API endpoint (relative to API_BASE_URL).
- * @param {RequestInit} [options={}] - Optional fetch options (headers, etc).
- * @returns {Promise<T>} The parsed JSON response.
- * @throws {Error} If the response is not OK, throws with the error message.
+ * @template T El tipo de respuesta esperado.
+ * @param {string} endpoint - El endpoint API (relativo a API_BASE_URL).
+ * @param {RequestInit} [options={}] - Opciones de fetch opcionales (encabezados, etc).
+ * @returns {Promise<T>} La respuesta JSON parseada.
+ * @throws {Error} Si la respuesta no es OK, lanza con el mensaje de error.
  */
 export async function apiGet<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const res = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -40,15 +40,15 @@ export async function apiGet<T>(endpoint: string, options: RequestInit = {}): Pr
 }
 
 /**
- * Performs a POST request to the specified API endpoint with a JSON body.
+ * Realiza una solicitud POST al endpoint API especificado con un cuerpo JSON.
  *
- * @template T The expected response type.
- * @template B The request body type.
- * @param {string} endpoint - The API endpoint (relative to API_BASE_URL).
- * @param {B} body - The request body to send as JSON.
- * @param {RequestInit} [options={}] - Optional fetch options (headers, etc).
- * @returns {Promise<T>} The parsed JSON response.
- * @throws {Error} If the response is not OK, throws with the error message.
+ * @template T El tipo de respuesta esperado.
+ * @template B El tipo de cuerpo de solicitud.
+ * @param {string} endpoint - El endpoint API (relativo a API_BASE_URL).
+ * @param {B} body - El cuerpo de solicitud a enviar como JSON.
+ * @param {RequestInit} [options={}] - Opciones de fetch opcionales (encabezados, etc).
+ * @returns {Promise<T>} La respuesta JSON parseada.
+ * @throws {Error} Si la respuesta no es OK, lanza con el mensaje de error.
  */
 export async function apiPost<T, B = unknown>(endpoint: string, body: B, options: RequestInit = {}): Promise<T> {
     const res = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -65,22 +65,22 @@ export async function apiPost<T, B = unknown>(endpoint: string, body: B, options
 }
 
 /**
- * Performs a typed GET request to a known API endpoint.
+ * Realiza una solicitud GET tipada a un endpoint API conocido.
  *
- * @template E The endpoint type (must extend ApiGetEndpoint).
- * @param {E} endpoint - The API endpoint (relative to API_BASE_URL).
- * @param {RequestInit} [options={}] - Optional fetch options.
- * @returns {Promise<ApiGetResponse<E>>} The typed response for the endpoint.
+ * @template E El tipo de endpoint (debe extender ApiGetEndpoint).
+ * @param {E} endpoint - El endpoint API (relativo a API_BASE_URL).
+ * @param {RequestInit} [options={}] - Opciones de fetch opcionales.
+ * @returns {Promise<ApiGetResponse<E>>} La respuesta tipada para el endpoint.
  */
 export async function apiGetTyped<E extends ApiGetEndpoint>(endpoint: E, options: RequestInit = {}): Promise<ApiGetResponse<E>> {
     return apiGet<ApiGetResponse<E>>(endpoint, options);
 }
 
 /**
- * Attempts to parse an error message from a failed fetch Response.
+ * Intenta parsear un mensaje de error de una respuesta fetch fallida.
  *
- * @param {Response} res - The fetch Response object.
- * @returns {Promise<string|undefined>} The error message if found, otherwise undefined.
+ * @param {Response} res - El objeto Response de fetch.
+ * @returns {Promise<string|undefined>} El mensaje de error si se encuentra, de lo contrario undefined.
  * @private
  */
 async function safeParseError(res: Response): Promise<string | undefined> {

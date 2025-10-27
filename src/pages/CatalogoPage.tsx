@@ -1,14 +1,14 @@
 /**
  * CatalogoPage
  *
- * Página de catálogo de libros.
+ * P\u00e1gina de cat\u00e1logo de libros.
  *
  * Permite buscar, filtrar y visualizar libros disponibles en la plataforma.
- * Incluye barra de búsqueda, animación de aparición secuencial de tarjetas, manejo de estados de carga,
- * error y vacíos, y muestra detalles de libros en un diálogo modal.
+ * Incluye barra de b\u00fasqueda, animaci\u00f3n de aparici\u00f3n secuencial de tarjetas, manejo de estados de carga,
+ * error y vac\u00edos, y muestra detalles de libros en un di\u00e1logo modal.
  *
  * @component
- * @returns {JSX.Element} Página de catálogo de libros con búsqueda, tarjetas y detalles.
+ * @returns {JSX.Element} P\u00e1gina de cat\u00e1logo de libros con b\u00fasqueda, tarjetas y detalles.
  *
  * @example
  * <CatalogoPage />
@@ -24,7 +24,7 @@ import {GenericCard, CardSkeleton} from "../components/cards/GenericCard.tsx";
 import {useOrder} from "../context/OrderContext.tsx";
 
 export default function CatalogoPage() {
-    // Fetch libros
+    // Obtener libros
     const {
         data: libros,
         loading,
@@ -33,12 +33,12 @@ export default function CatalogoPage() {
     } = useLibros();
 
     /**
-     * Estado para el término de búsqueda.
+     * Estado para el t\u00e9rmino de b\u00fasqueda.
      * @type {string}
      */
     const [searchTerm, setSearchTerm] = useState('');
     /**
-     * Estado para los índices de libros visibles (animación secuencial).
+     * Estado para los \u00edndices de libros visibles (animaci\u00f3n secuencial).
      * @type {number[]}
      */
     const [visibleLibros, setVisibleLibros] = useState<number[]>([]);
@@ -48,7 +48,7 @@ export default function CatalogoPage() {
      */
     const [selectedLibro, setSelectedLibro] = useState<Libro | null>(null);
     /**
-     * Estado para controlar la apertura del diálogo de detalles.
+     * Estado para controlar la apertura del di\u00e1logo de detalles.
      * @type {boolean}
      */
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -56,7 +56,7 @@ export default function CatalogoPage() {
     const showSkeleton = useSkeletonDelay(loading);
 
     /**
-     * Filtra los libros según el término de búsqueda.
+     * Filtra los libros seg\u00fan el t\u00e9rmino de b\u00fasqueda.
      * @type {Libro[]}
      */
     const librosFiltrados = useMemo(() => (
@@ -67,7 +67,7 @@ export default function CatalogoPage() {
         ) || []
     ), [libros, searchTerm]);
 
-    // Efecto para mostrar libros con animación secuencial
+    // Efecto para mostrar libros con animaci\u00f3n secuencial
     useEffect(() => {
         if (!loading && librosFiltrados && librosFiltrados.length > 0 && !showSkeleton) {
             setVisibleLibros([]);
@@ -86,7 +86,7 @@ export default function CatalogoPage() {
         }
     }, [loading]);
 
-    // Resetear animaciones cuando cambia el término de búsqueda
+    // Resetear animaciones cuando cambia el t\u00e9rmino de b\u00fasqueda
     useEffect(() => {
         if (librosFiltrados.length > 0 && !loading && !showSkeleton) {
             setVisibleLibros([]);
@@ -128,14 +128,14 @@ export default function CatalogoPage() {
                         }}
                         variant="outlined"
                         sx={(theme) => ({
-                            // Glass effect base
+                            // Efecto de vidrio base
                             '& .MuiOutlinedInput-root': {
                                 background: theme.palette.mode === 'dark'
                                     ? alpha(theme.palette.background.paper, 0.06)
                                     : alpha(theme.palette.background.paper, 0.48),
                                 WebkitBackdropFilter: 'blur(16px)',
                                 backdropFilter: 'blur(16px)',
-                                // Diffuse neon border with secondary color
+                                // Borde difuso de neón con color secundario
                                 borderRadius: 2,
                                 border: `1px solid ${alpha(theme.palette.secondary.main, 0.3)}`,
                                 boxShadow: `
@@ -169,7 +169,7 @@ export default function CatalogoPage() {
                 </Box>
             </Box>
 
-            {/* Error handling */}
+            {/* Manejo de errores */}
             {error && (
                 <Alert severity="error" sx={{mb: 3}}>
                     <Typography variant="h6">Error al cargar</Typography>
@@ -218,7 +218,7 @@ export default function CatalogoPage() {
                 onClose={() => setDialogOpen(false)}
             />
 
-            {/* Empty states */}
+            {/* Estados vacíos */}
             {!loading && !error && searchTerm && librosFiltrados.length === 0 && (
                 <CardEmptyState
                     title="Sin resultados"

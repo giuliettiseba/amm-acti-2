@@ -1,13 +1,13 @@
 import type {nexusThemeInterface} from "../types/NexusThemeInterface.ts";
 
 /**
- * Dark mode theme palette for the Nexus design system.
+ * Paleta de tema en modo oscuro para el sistema de diseno Nexus.
  * @type {nexusThemeInterface}
  */
 export const nexusThemeDark: nexusThemeInterface = {
     palette: {
-        primary: '#0ebd40',          // purple base
-        secondary: '#a534ef',        // orange base
+        primary: '#0ebd40',          // base morado
+        secondary: '#a534ef',        // base naranja
         danger: '#dc2626',
         warning: '#f59e0b',
         info: '#6366f1',
@@ -22,7 +22,7 @@ export const nexusThemeDark: nexusThemeInterface = {
 };
 
 /**
- * Light mode theme palette for the Nexus design system.
+ * Paleta de tema en modo claro para el sistema de diseno Nexus.
  * @type {nexusThemeInterface}
  */
 export const nexusThemeLight: nexusThemeInterface = {
@@ -41,15 +41,15 @@ export const nexusThemeLight: nexusThemeInterface = {
     }
 };
 
-// Alias para compatibilidad hacia atrás
+// Alias para compatibilidad hacia atras
 /**
- * Default export for backward compatibility (dark theme).
+ * Exportacion por defecto para compatibilidad hacia atras (tema oscuro).
  * @type {nexusThemeInterface}
  */
-export const nexusTheme: nexusThemeInterface = nexusThemeDark; // default export kept for backward compatibility
+export const nexusTheme: nexusThemeInterface = nexusThemeDark; // exportacion por defecto mantenida para compatibilidad hacia atras
 
 /**
- * Object mapping theme mode to the corresponding theme palette.
+ * Objeto que mapea el modo de tema a la paleta de tema correspondiente.
  * @type {{dark: nexusThemeInterface, light: nexusThemeInterface}}
  */
 export const themesByMode = {

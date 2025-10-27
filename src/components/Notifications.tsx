@@ -3,6 +3,26 @@ import type {NotificationItem} from "../types";
 import {useNotification} from "../context/NotificationContext.tsx";
 
 
+/**
+ * Notifications
+ *
+ * Un componente que muestra una lista de notificaciones flotantes utilizando Material-UI.
+ * Las notificaciones se muestran como alertas con diferentes niveles de severidad (error, advertencia, información, éxito).
+ * Cada notificación tiene un tiempo de vida configurable y se elimina automáticamente o al cerrarla manualmente.
+ *
+ * @component
+ * @returns {JSX.Element} Un contenedor de notificaciones flotantes.
+ *
+ * @example
+ * <Notifications />
+ */
+
+/**
+ * Contexto de notificaciones:
+ * - `notifications`: Un array de objetos de notificación que contiene información como id, tipo, mensaje y tiempo de vida.
+ * - `removeNotification`: Función para eliminar una notificación específica por su id.
+ */
+
 export default function Notifications() {
     const {notifications, removeNotification} = useNotification();
 
@@ -22,14 +42,14 @@ export default function Notifications() {
                         variant="filled"
                         sx={(theme) => ({
                             minWidth: 300,
+                            width: 'clamp(300px, 50vw, 500px)', // Ajustar dinamicamente el ancho basado en el tamano de pantalla
                             borderRadius: '12px',
-                            // Glass effect base
-                            background: theme.palette.mode === 'dark'
-                                ? alpha(theme.palette.background.paper, 0.06)
-                                : alpha(theme.palette.background.paper, 0.48),
+                            // Efecto de vidrio base
+                            color: theme.palette.text.primary,
+                            background: alpha(theme.palette.background.default, .8),
                             WebkitBackdropFilter: 'blur(16px)',
                             backdropFilter: 'blur(16px)',
-                            // Neon border with severity color
+                            // Borde neon con color de severidad
                             border: `1px solid ${alpha(
                                 notification.type === 'error' ? theme.palette.error.main :
                                 notification.type === 'warning' ? theme.palette.warning.main :

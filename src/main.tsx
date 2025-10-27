@@ -6,7 +6,7 @@ import {AuthProvider} from './providers/AuthProvider'
 import Notifications from './components/Notifications'
 import {ErrorBoundary} from './components/errorBoundary/ErrorBoundary.tsx'
 import {ThemeProvider} from './providers/ThemeProvider.tsx'
-import {OrderProvider} from './providers/OrderProvider'
+import OrderProvider from './providers/OrderProvider'
 import {NotificationProvider} from "./providers/NotificationProvider.tsx";
 
 createRoot(document.getElementById('root')!).render(

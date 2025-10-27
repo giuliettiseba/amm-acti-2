@@ -1,4 +1,4 @@
-// Definición centralizada de rutas de la API simulada
+// Definicion centralizada de rutas de la API simulada
 // Permite mapear conceptos de dominio (es/"libros") a endpoints reales (en/"books").
 
 export const API_ROUTES = {

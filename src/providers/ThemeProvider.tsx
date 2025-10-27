@@ -1,19 +1,19 @@
 /**
- * ThemeProvider component for global theme state and MUI theme integration.
+ * Componente ThemeProvider para el estado global del tema y la integración con el tema de MUI.
  *
- * This provider manages the application's color mode (dark/light), persists the user's preference,
- * and synchronizes with the system color scheme. It exposes theme state and actions via context,
- * and bridges the custom theme tokens to Material UI's ThemeProvider for consistent styling.
+ * Este proveedor gestiona el modo de color de la aplicación (oscuro/claro), persiste la preferencia del usuario
+ * y se sincroniza con el esquema de color del sistema. Expone el estado del tema y las acciones a través del contexto,
+ * y conecta los tokens del tema personalizado con el ThemeProvider de Material UI para un estilo consistente.
  *
  * @module ThemeProvider
  * @context ThemeContext
  *
- * @param {ThemeProviderProps} props - The provider props.
- * @param {React.ReactNode} props.children - Child components to be wrapped by the provider.
- * @param {object} [props.initialTheme] - Optional initial theme object.
- * @param {ThemeMode} [props.initialMode] - Optional initial color mode ('dark' or 'light').
+ * @param {ThemeProviderProps} props - Las propiedades del proveedor.
+ * @param {React.ReactNode} props.children - Componentes hijos envueltos por el proveedor.
+ * @param {object} [props.initialTheme] - Objeto de tema inicial opcional.
+ * @param {ThemeMode} [props.initialMode] - Modo de color inicial opcional ('dark' o 'light').
  *
- * @returns {JSX.Element} The provider component wrapping its children.
+ * @returns {JSX.Element} El componente proveedor que envuelve a sus hijos.
  *
  * @example
  * <ThemeProvider initialMode="dark">
@@ -29,13 +29,13 @@ import type {ThemeProviderProps} from "../types/props/ThemeProviderProps.ts";
 import type {ThemeMode} from "../types/ThemeMode.ts";
 
 /**
- * LocalStorage key for persisting the theme mode.
+ * Clave de LocalStorage para persistir el modo de tema.
  * @constant {string}
  */
 const LS_KEY = 'theme-mode';
 
 /**
- * Resolves the initial theme mode based on explicit prop, localStorage, or system preference.
+ * Resuelve el modo de tema inicial basado en la propiedad explícita, LocalStorage o la preferencia del sistema.
  */
 function resolveInitialMode(explicit?: ThemeMode): ThemeMode {
     if (explicit) return explicit;
@@ -49,9 +49,9 @@ function resolveInitialMode(explicit?: ThemeMode): ThemeMode {
 }
 
 export function ThemeProvider({children, initialTheme, initialMode}: ThemeProviderProps) {
-    // State for the current theme mode ('dark' or 'light').
+    // Estado para el modo de tema actual ('dark' o 'light').
     const [mode, setMode] = useState<ThemeMode>(() => resolveInitialMode(initialMode));
-    // State for the current theme object (tokens/colors).
+    // Estado para el objeto de tema actual (tokens/colores).
     const [theme, setThemeState] = useState(() => initialTheme ?? themesByMode[mode] ?? nexusTheme);
 
     useEffect(() => {
@@ -76,7 +76,7 @@ export function ThemeProvider({children, initialTheme, initialMode}: ThemeProvid
     }, []);
 
     /**
-     * Memoized context value for theme state and actions.
+     * Valor memorizado del contexto para el estado del tema y las acciones.
      * @type {ThemeContextType}
      */
     const value: ThemeContextType = useMemo<ThemeContextType>(() => ({
@@ -87,7 +87,7 @@ export function ThemeProvider({children, initialTheme, initialMode}: ThemeProvid
     }), [theme, mode]);
 
     /**
-     * Material UI theme object, bridged from custom theme tokens.
+     * Objeto de tema de Material UI, conectado desde los tokens de tema personalizados.
      */
     const muiTheme = createTheme({
         palette: {

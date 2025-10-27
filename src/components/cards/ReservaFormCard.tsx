@@ -8,13 +8,13 @@ import React from 'react';
  * Muestra el formulario de reserva de sala en una tarjeta.
  *
  * @param {object} props
- * @param {boolean} props.loading - Indica si el formulario está en estado de carga.
+ * @param {boolean} props.loading - Indica si el formulario esta en estado de carga.
  * @param {object} props.formData - Datos del formulario de reserva.
- * @param {function} props.handleInputChange - Función para manejar cambios en los campos de texto.
- * @param {function} props.handlePreferencesChange - Función para manejar cambios en las preferencias adicionales.
- * @param {function} props.handleSubmit - Función para manejar el envío del formulario.
+ * @param {function} props.handleInputChange - Funcion para manejar cambios en los campos de texto.
+ * @param {function} props.handlePreferencesChange - Funcion para manejar cambios en las preferencias adicionales.
+ * @param {function} props.handleSubmit - Funcion para manejar el envio del formulario.
  * @param {string[]} props.preferencesOptions - Opciones de preferencias adicionales.
- * @param {function} props.navigate - Función de navegación (por ejemplo, useNavigate de react-router).
+ * @param {function} props.navigate - Funcion de navegacion (por ejemplo, useNavigate de react-router).
  * @returns {JSX.Element}
  */
 export default function ReservaFormCard({
@@ -72,7 +72,7 @@ export default function ReservaFormCard({
                             type="datetime-local"
                             value={formData.startDate}
                             onChange={e => handleInputChange('startDate', e.target.value)}
-                            InputLabelProps={{shrink: true}}
+                            slotProps={{ inputLabel: { shrink: true } }}
                             required
                         />
                         <TextField
@@ -80,7 +80,7 @@ export default function ReservaFormCard({
                             type="datetime-local"
                             value={formData.endDate}
                             onChange={e => handleInputChange('endDate', e.target.value)}
-                            InputLabelProps={{shrink: true}}
+                            slotProps={{ inputLabel: { shrink: true } }}
                             required
                         />
                         <FormControl>
@@ -124,4 +124,3 @@ export default function ReservaFormCard({
         </Card>
     );
 }
-
